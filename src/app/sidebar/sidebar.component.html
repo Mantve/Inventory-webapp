@@ -1,0 +1,57 @@
+<div class="flex-shrink-0 p-3 bg-white" style="width: 280px;">
+    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+        <svg class="bi" width="32" height="24" fill="currentColor">
+        <use xlink:href="bootstrap-icons.svg#house-door"/>
+      </svg>
+
+        <span class="fs-5 fw-semibold">Menu</span>
+    </a>
+    <ul class="list-unstyled ps-0">
+        <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
+        Home
+      </button>
+            <div class="collapse show" id="home-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="#" class="link-dark rounded">Overview</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+        Rooms
+      </button>
+            <div class="collapse show" id="dashboard-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li *ngFor="let room of rooms"><a href="#" class="link-dark rounded">{{room}}</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+        Convenience
+      </button>
+            <div class="collapse" id="orders-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="#" class="link-dark rounded">Reminders</a></li>
+                    <li><a href="#" class="link-dark rounded">Shopping Lists</a></li>
+                    <li><a href="#" class="link-dark rounded">Friends</a></li>
+                </ul>
+            </div>
+        </li>
+        <li class="border-top my-3"></li>
+        <li class="mb-1">
+            <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="true">
+        Account
+      </button>
+            <div class="collapse show" id="account-collapse">
+                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                    <li><a href="#" class="link-dark rounded">New...</a></li>
+                    <li><a href="#" class="link-dark rounded">Profile</a></li>
+                    <li><a href="#" class="link-dark rounded">Settings</a></li>
+                    <li><a href="#" class="link-dark rounded">Sign out</a></li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+</div>
