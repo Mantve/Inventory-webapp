@@ -1,5 +1,5 @@
 export const environment = {
   production: true,
-  urlAddress: 'http://inventorymanageapi.azurewebsites.net'
+  urlAddress: 'https://inventorymanageapi.azurewebsites.net'
 
 };
