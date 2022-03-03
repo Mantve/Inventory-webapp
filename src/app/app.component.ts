@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { AuthenticationService } from './services/authentication.service';
 
 @Component({
   selector: 'app-root',
@@ -7,4 +8,9 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Inventory-webapp';
+  constructor(private _authService: AuthenticationService){}
+
+  ngOnInit(): void {
+      this._authService.sendAuthStateChangeNotification(this._authService.isLogged());
+    }
 }
