@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { RoomService } from '../services/room.service';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-sidebar',
@@ -14,23 +15,26 @@ export class SidebarComponent implements OnInit {
   public isUserAuthenticated!: boolean;
   rooms!: Array<RoomResponseDto>;
 
-  constructor(private _authService: AuthenticationService, private _roomService: RoomService, private _router: Router) {
+  constructor(private _authService: AuthenticationService, private _roomService: RoomService, private _router: Router, private _toastr: ToastrService) {
     this._authService.authChanged
       .subscribe(res => {
         this.isUserAuthenticated = res;
-      })
+      });
+      this._roomService.roomChanged
+      .subscribe(res => {
+          this.getRooms();
+      });
   }
 
   ngOnInit(): void {
-     this._roomService.getAll().subscribe(
+    this.getRooms();
+  }
+
+  public getRooms() {
+    this._roomService.getAll().subscribe(
       res => {
         this.rooms = res;
-    })
-
-    this._authService.authChanged
-      .subscribe(res => {
-        this.isUserAuthenticated = res;
-      })
+      });
   }
 
   public checkRole(): boolean {
@@ -40,9 +44,11 @@ export class SidebarComponent implements OnInit {
   public logout = () => {
     this._authService.logout('api/logout')
       .subscribe(res => {
+        this._toastr.success('Logged out successfully', 'Success');
         this._router.navigate(["/home"]);
       },
         (error) => {
+          this._toastr.success('An error has occured', 'Error');
         })
   }
 

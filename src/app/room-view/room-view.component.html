@@ -1,0 +1,10 @@
+<div *ngIf="room">
+    <h1>
+        {{room.name}}
+    </h1>
+    <button class="btn btn-danger" (click)="openDeleteModal(room.id, room.name)" aria-label="Delete Recipe">
+        <svg class="bi" width="32" height="32" fill="currentColor">
+            <use xlink:href="bootstrap-icons.svg#trash-fill"/>
+          </svg>   
+         </button>
+</div>

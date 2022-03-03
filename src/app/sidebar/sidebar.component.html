@@ -13,7 +13,9 @@
       </button>
             <div class="collapse show" id="home-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="link-dark rounded">Overview</a></li>
+                    <li>
+                        <a class="link-dark rounded" [routerLink]="['/home']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Overview</a>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -23,7 +25,9 @@
       </button>
             <div class="collapse show" id="dashboard-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li *ngFor="let room of rooms"><a href="#" class="link-dark rounded">{{room.name}}</a></li>
+                    <li *ngFor="let room of rooms">
+                        <a class="link-dark rounded" [routerLink]="['/room/'+room.id]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{room.name}}</a>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -31,11 +35,17 @@
             <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
         Convenience
       </button>
-            <div class="collapse" id="orders-collapse">
+            <div class="collapse show" id="orders-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="link-dark rounded">Reminders</a></li>
-                    <li><a href="#" class="link-dark rounded">Shopping Lists</a></li>
-                    <li><a href="#" class="link-dark rounded">Friends</a></li>
+                    <li>
+                        <a class="link-dark rounded" [routerLink]="['/authentication/login']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Reminders</a>
+                    </li>
+                    <li>
+                        <a class="link-dark rounded" [routerLink]="['/authentication/login']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Shopping Lists</a>
+                    </li>
+                    <li>
+                        <a class="link-dark rounded" [routerLink]="['/authentication/login']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Friends</a>
+                    </li>
                 </ul>
             </div>
         </li>
@@ -47,13 +57,24 @@
             <div class="collapse show" id="account-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <div *ngIf='!isUserAuthenticated'>
-                        <li><a href="/authentication/register" class="link-dark rounded">Register</a></li>
-                        <li><a href="/authentication/login" class="link-dark rounded">Login</a></li>
+
+                        <li>
+                            <a class="link-dark rounded" [routerLink]="['/authentication/register']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Register</a>
+                        </li>
+                        <li>
+                            <a class="link-dark rounded" [routerLink]="['/authentication/login']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Login</a>
+                        </li>
                     </div>
                     <div *ngIf='isUserAuthenticated'>
-                        <li><a href="#" class="link-dark rounded">Profile</a></li>
-                        <li><a href="#" class="link-dark rounded">Settings</a></li>
-                        <li (click)="logout()"><a href="#" class="link-dark rounded">Sign out</a></li>
+                        <li>
+                            <a class="link-dark rounded" [routerLink]="['/home']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Profile</a>
+                        </li>
+                        <li>
+                            <a class="link-dark rounded" [routerLink]="['/home']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Settings</a>
+                        </li>
+                        <li (click)="logout()">
+                            <a class="link-dark rounded" [routerLink]="['/home']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Sign Out</a>
+                        </li>
                     </div>
                 </ul>
             </div>

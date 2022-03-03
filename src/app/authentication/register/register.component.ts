@@ -4,6 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { MustMatch } from 'src/app/validators/mustmatch';
 import { ActivatedRoute, Router } from '@angular/router';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-register',
@@ -16,7 +17,7 @@ export class RegisterComponent implements OnInit {
   public errorMessage: string = '';
   public showError!: boolean;
 
-  constructor(private formBuilder: FormBuilder, private _authService: AuthenticationService, private _router: Router,  private _route: ActivatedRoute) { }
+  constructor(private formBuilder: FormBuilder, private _authService: AuthenticationService, private _router: Router,  private _route: ActivatedRoute, private _toastr: ToastrService) { }
 
   ngOnInit(): void {
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
@@ -49,10 +50,12 @@ export class RegisterComponent implements OnInit {
     this._authService.registerUser("api/register", user)
     .subscribe(res => {
       if(res.status === 200){
+        this._toastr.success('Registered successfully', 'Success');
         this._router.navigate(["/authentication/login"]);
     }
     },
     error => {
+      this._toastr.error('Error creating account', 'Error');
       this.errorMessage = "An error has occured";
       this.showError = true;
         })

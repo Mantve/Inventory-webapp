@@ -3,6 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { AuthenticationService } from './../../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   public showError!: boolean;
   private _returnUrl!: string;
 
-  constructor(private _authService: AuthenticationService, private _router: Router, private _route: ActivatedRoute) { }
+  constructor(private _authService: AuthenticationService, private _router: Router, private _route: ActivatedRoute, private _toastr: ToastrService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -34,7 +35,7 @@ export class LoginComponent implements OnInit {
     return this.loginForm.controls[controlName].hasError(errorName)
   }
 
-  public loginUser = (loginFormValue : any) => {
+  public loginUser = (loginFormValue: any) => {
 
     this.showError = false;
     const login = { ...loginFormValue };
@@ -46,10 +47,13 @@ export class LoginComponent implements OnInit {
     this._authService.loginUser('api/login', userForAuth)
       .subscribe(res => {
         this._authService.sendAuthStateChangeNotification(res.status === 200);
+        if (res.status === 200)
+          this._toastr.success('Logged in successfully', 'Success');
         this._router.navigate([this._returnUrl]);
       },
         (error) => {
           this.errorMessage = "An error has occured";
+          this._toastr.error('Error Logging in', 'Error');
           this.showError = true;
         })
   }
