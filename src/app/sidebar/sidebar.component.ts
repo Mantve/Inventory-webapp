@@ -48,7 +48,7 @@ export class SidebarComponent implements OnInit {
         this._router.navigate(["/home"]);
       },
         (error) => {
-          this._toastr.success('An error has occured', 'Error');
+          this._toastr.error('An error has occured', 'Error');
         })
   }
 

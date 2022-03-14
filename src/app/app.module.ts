@@ -14,6 +14,7 @@ import { RoomDeleteComponent } from './room-delete/room-delete.component';
 import { ToastrModule } from 'ngx-toastr';
 import { RoomCreateComponent } from './room-create/room-create.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ItemCreateComponent } from './item-create/item-create.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -32,7 +33,8 @@ const routes: Routes = [
     NotFoundComponent,
     RoomViewComponent,
     RoomDeleteComponent,
-    RoomCreateComponent
+    RoomCreateComponent,
+    ItemCreateComponent
   ],
   imports: [
     HttpClientModule,

@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
     this.authStatus = this.authService.isLogged();
   }
 
-  openCreateRecipeModal() {
+  openCreateRoomModal() {
     const modalRef = this.modalService.open(RoomCreateComponent,
       {
         scrollable: true,
@@ -43,7 +43,7 @@ export class HomeComponent implements OnInit {
         break;
 
       case "room-create-fail":
-        this.toastr.error('An error occurred when deleting the room', 'Error');
+        this.toastr.error('An error occurred when creating the room', 'Error');
         break;
 
       default:

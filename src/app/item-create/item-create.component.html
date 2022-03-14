@@ -1,0 +1,61 @@
+<div class="modal-header">
+    <h5 class="modal-title">Create item</h5>
+    <button type="button" class="close" data-dismiss="modal" (click)="closeModal('dismiss')">
+      <span aria-hidden="true"> &times;</span>
+    </button>
+</div>
+
+<div class="modal-body">
+    <form [formGroup]="form" (ngSubmit)="onSubmit('changes saved!')">
+
+        <div class="form-group row">
+            <label for="name" class="col-form-label col-sm-2">Name:</label>
+            <div class="col-sm-10">
+                <input type="text" id="name" formControlName="name" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="name" class="col-form-label col-sm-2">Quantity:</label>
+            <div class="col-sm-10">
+                <input type="number" min="1" id="quantity" formControlName="quantity" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="name" class="col-form-label col-sm-2">Value:</label>
+            <div class="col-sm-10">
+                <input type="number" id="value" formControlName="value" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="name" class="col-form-label col-sm-2">Category:</label>
+            <div class="col-sm-10">
+                <input type="number" id="categoryId" formControlName="categoryId" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="name" class="col-form-label col-sm-2">Location:</label>
+            <div class="col-sm-10">
+                <input type="number" id="roomId" formControlName="roomId" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="name" class="col-form-label col-sm-2">Detailed location:</label>
+            <div class="col-sm-10">
+                <input type="number" id="parentItemId" formControlName="parentItemId" class="form-control" />
+            </div>
+        </div>
+        <div class="form-group row">
+            <label for="name" class="col-form-label col-sm-2">Comments:</label>
+            <div class="col-sm-10">
+                <input type="text" id="comments" formControlName="comments" class="form-control" />
+            </div>
+        </div>
+    </form>
+
+
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal('close')"> Close</button>
+    <button type="button" class="btn btn-primary" [disabled]="!form.valid" (click)="onSubmit('changes saved!')">Save</button>
+</div>
