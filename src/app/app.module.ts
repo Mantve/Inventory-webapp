@@ -15,10 +15,16 @@ import { ToastrModule } from 'ngx-toastr';
 import { RoomCreateComponent } from './room-create/room-create.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ItemCreateComponent } from './item-create/item-create.component';
+import { TreeModule } from '@circlon/angular-tree-component';
+import { ItemViewComponent } from './item-view/item-view.component';
+import { RoomEditComponent } from './room-edit/room-edit.component';
+import { ItemDeleteComponent } from './item-delete/item-delete.component';
+import { ItemEditComponent } from './item-edit/item-edit.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'room/:roomNo', component: RoomViewComponent },
+  { path: 'item/:itemNo', component: ItemViewComponent },
   { path: 'authentication', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },
   { path: '404', component: NotFoundComponent },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -34,7 +40,11 @@ const routes: Routes = [
     RoomViewComponent,
     RoomDeleteComponent,
     RoomCreateComponent,
-    ItemCreateComponent
+    ItemCreateComponent,
+    ItemViewComponent,
+    RoomEditComponent,
+    ItemDeleteComponent,
+    ItemEditComponent
   ],
   imports: [
     HttpClientModule,
@@ -48,6 +58,7 @@ const routes: Routes = [
     ToastrModule.forRoot({
       positionClass: 'toast-top-right'
     }),
+    [TreeModule]
   ],
   providers: [],
   bootstrap: [AppComponent]

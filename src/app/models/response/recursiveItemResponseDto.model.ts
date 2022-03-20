@@ -1,4 +1,5 @@
 import { CategoryResponseDto } from "./categoryResponseDto.model";
+import { ItemResponseDto } from "./itemResponseDto.model";
 import { RoomResponseDto } from "./roomResponseDto.model";
 
 export interface RecursiveItemResponseDto {
@@ -8,5 +9,6 @@ export interface RecursiveItemResponseDto {
     categoryDto: CategoryResponseDto,
     comments: string,
     room: RoomResponseDto,
-    items:Array<RecursiveItemResponseDto>
+    items:Array<RecursiveItemResponseDto>,
+    parentItem:ItemResponseDto
 }

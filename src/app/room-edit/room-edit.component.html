@@ -1,5 +1,5 @@
 <div class="modal-header">
-    <h5 class="modal-title">Create room</h5>
+    <h5 class="modal-title">Edit room</h5>
     <button type="button" class="close" data-dismiss="modal" (click)="closeModal('dismiss')">
       <span aria-hidden="true"> &times;</span>
     </button>
@@ -14,13 +14,11 @@
                 <input type="text" id="name" formControlName="name" class="form-control" />
             </div>
         </div>
-
     </form>
-
 
 </div>
 
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal('close')"> Close</button>
-    <button type="button" class="btn btn-primary" [disabled]="!form.valid" (click)="onSubmit('saved!')">Save</button>
+    <button type="button" class="btn btn-primary" [disabled]="!form.valid" (click)="onSubmit('changes saved!')">Save</button>
 </div>

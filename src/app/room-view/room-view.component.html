@@ -2,14 +2,73 @@
     <h1>
         {{room.name}}
     </h1>
-    <button class="btn btn-danger" (click)="openDeleteModal(room.id, room.name)" aria-label="Delete Recipe">
+    <button class="btn btn-danger" (click)="openRoomDeleteModal(room.id, room.name)" aria-label="Delete room">
         <svg class="bi" width="32" height="32" fill="currentColor">
-            <use xlink:href="bootstrap-icons.svg#trash-fill"/>
-          </svg>   
-         </button>
-    <button class="btn btn-primary" (click)="openItemCreateModal()" aria-label="Create item">
-            <svg class="bi" width="32" height="32" fill="currentColor">
-                <use xlink:href="bootstrap-icons.svg#pen-fill"/>
-              </svg>   
-             </button>
+            <use xlink:href="bootstrap-icons.svg#trash-fill" />
+        </svg>
+    </button>
+    <button class="btn btn-primary" (click)="openRoomEditModal(room.id)" aria-label="Edit room">
+        <svg class="bi" width="32" height="32" fill="currentColor">
+            <use xlink:href="bootstrap-icons.svg#pen-fill" />
+        </svg>
+    </button>
+    <button class="btn btn-success" (click)="openItemCreateModal(room.id)" aria-label="Create item">
+        <svg class="bi" width="32" height="32" fill="currentColor">
+            <use xlink:href="bootstrap-icons.svg#plus" />
+        </svg>
+    </button>
+    <!--
+    <li *ngFor="let item of items">
+        <a class="link-dark rounded" [routerLink]="['/room/'+room.id]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{item.name}}</a>
+    </li>
+
+    <tree-root [nodes]=items></tree-root>
+
+    <li *ngFor="let item of items">
+        <a class="btn btn-danger" type="button" data-bs-toggle="collapse" attr.data-bs-target="#item{{item.id}}" aria-expanded="false" attr.aria-controls="item{{item.id}}">{{item.name}}</a>
+        <div class="collapse" attr.id="item{{item.id}}">
+            <a class="btn btn-primary">{{item.name}}</a>
+        </div>
+    </li>
+
+  
+    <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+        Button with data-bs-target
+    </button>
+    <div class="collapse" id="collapseExample">
+        <div class="card card-body">
+            Some placeholder content for the collapse component. This panel is hidden by default but revealed when the user activates the relevant trigger.
+        </div>
+    </div>
+    
+    {{items | json}}
+-->
+    <div class="container">
+        <ul class="list-group">
+            <ng-container *ngTemplateOutlet="recursiveitemsTmpl; context:{ items: items }"></ng-container>
+        </ul>
+    </div>
+
+
+    <ng-template #recursiveitemsTmpl let-items="items">
+        <li class="list-group-item border-0 border-start" *ngFor="let item of items">
+            <span data-bs-toggle="collapse" attr.data-bs-target="#item{{item.id}}" aria-expanded="false">
+                <svg type="button" class="bi " *ngIf="item.items.length> 0" width="32" height="32" fill="currentColor">
+                    <use xlink:href="bootstrap-icons.svg#plus" />
+                </svg>
+                <b>{{item.id}}:</b> 
+             <a attr.aria-controls="item{{item.id}}" [routerLink]="['/item/'+item.id]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
+                {{item.name}}
+             </a>   
+            </span>
+            <ul class="list-group" *ngIf="item.items.length > 0">
+                <div class="collapse" attr.id="item{{item.id}}">
+                    <ng-container *ngTemplateOutlet="recursiveitemsTmpl; context:{ items: item.items }">
+                    </ng-container>
+                </div>
+            </ul>
+        </li>
+    </ng-template>
+
+
 </div>

@@ -3,24 +3,24 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
-import { RecursiveItemResponseDto } from '../models/response/recursiveItemResponseDto.model';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
 import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
 import { RoomService } from '../services/room.service';
 
 @Component({
-  selector: 'app-item-create',
-  templateUrl: './item-create.component.html',
-  styleUrls: ['./item-create.component.css']
+  selector: 'app-item-edit',
+  templateUrl: './item-edit.component.html',
+  styleUrls: ['./item-edit.component.css']
 })
-export class ItemCreateComponent implements OnInit {
+export class ItemEditComponent implements OnInit {
 
   @Input() fromParent: any;
-  @Output() createEvent = new EventEmitter<string>();
+  @Output() editEvent = new EventEmitter<string>();
   form!: FormGroup;
   rooms!: Array<RoomResponseDto>;
   items!: Array<ItemResponseDto>;
+  savedItem!: ItemResponseDto;
   categories!: Array<CategoryResponseDto>
 
   constructor(
@@ -34,21 +34,30 @@ export class ItemCreateComponent implements OnInit {
       name: ["", Validators.required],
       quantity: ["1", Validators.required],
       value: ["0", Validators.required],
-      categoryId: [, Validators.required],
+      categoryId: ["2", Validators.required],
       parentItemId: [],
       comments: [""],
-      roomId: [, Validators.required]
+      roomId: [Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this.loadRooms();
-    this.loadItems(this.fromParent.roomNo);
-    this.loadCategories();
-    this.form.patchValue({
-      parentItemId: this.fromParent.itemNo,
-      roomId: this.fromParent.roomNo
+    this._itemService.get(this.fromParent.itemNo).subscribe(result => {
+      this.savedItem = result
+      this.loadRooms();
+      this.loadCategories();
+      this.loadItems(result.room.id);
+      this.form = this._formBuilder.group({
+        name: [result.name, Validators.required],
+        quantity: [result.quantity, Validators.required],
+        value: [result.value, Validators.required],
+        categoryId: [result.category?.id, Validators.required],
+        parentItemId: [result.parentItem?.id],
+        comments: [result.comments],
+        roomId: [result.room.id, Validators.required]
+      });
     })
+
   }
 
   loadItems(roomNo: number) {
@@ -66,7 +75,6 @@ export class ItemCreateComponent implements OnInit {
         this.rooms = res;
       }, error => console.error(error))
   }
-
   
   loadCategories() {
     this._categoryService.getAll().subscribe(
@@ -82,11 +90,11 @@ export class ItemCreateComponent implements OnInit {
   }
 
   onSubmit(sendData: any) {
-    this._itemService.create(this.form.value).subscribe((res: any) => {
-      this.createEvent.emit("item-create-success");
+    this._itemService.update(this.fromParent.itemNo,this.form.value).subscribe((res: any) => {
+      this.editEvent.emit("item-edit-success");
       this._activeModal.close(sendData);
     }, (error: any) => {
-      this.createEvent.emit("item-create-fail");
+      this.editEvent.emit("item-edit-fail");
       console.error(error)
     })
   }

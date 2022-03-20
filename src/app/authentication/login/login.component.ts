@@ -4,6 +4,7 @@ import { AuthenticationService } from './../../services/authentication.service';
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
+import { RoomService } from 'src/app/services/room.service';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,11 @@ export class LoginComponent implements OnInit {
   public showError!: boolean;
   private _returnUrl!: string;
 
-  constructor(private _authService: AuthenticationService, private _router: Router, private _route: ActivatedRoute, private _toastr: ToastrService) { }
+  constructor(private _authService: AuthenticationService,
+    private _router: Router,
+    private _route: ActivatedRoute,
+    private _toastr: ToastrService,
+    private _roomService: RoomService) { }
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
@@ -47,8 +52,10 @@ export class LoginComponent implements OnInit {
     this._authService.loginUser('api/login', userForAuth)
       .subscribe(res => {
         this._authService.sendAuthStateChangeNotification(res.status === 200);
-        if (res.status === 200)
+        if (res.status === 200) {
+          this._roomService.sendRoomUpdateNotification();
           this._toastr.success('Logged in successfully', 'Success');
+        }
         this._router.navigate([this._returnUrl]);
       },
         (error) => {

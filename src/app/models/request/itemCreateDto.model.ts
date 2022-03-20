@@ -3,7 +3,7 @@ export interface ItemCreateDto {
     quantity: number,
     value:number,
     categoryId:number,
-    parentItemId:number
+    parentItemId?:number
     comments: string,
     roomId: number
 }

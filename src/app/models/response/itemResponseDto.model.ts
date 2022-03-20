@@ -6,7 +6,8 @@ export interface ItemResponseDto {
     name: string,
     quantity: number,
     value:number,
-    categoryDto: CategoryResponseDto,
+    category: CategoryResponseDto,
     comments: string,
-    room: RoomResponseDto
+    room: RoomResponseDto,
+    parentItem: ItemResponseDto
 }
