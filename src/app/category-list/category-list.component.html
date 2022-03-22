@@ -1,0 +1,20 @@
+<button class="btn btn-success " (click)="openCategoryCreateModal() " aria-label="Create category ">
+    <svg class="bi " width="16 " height="16 " fill="currentColor ">
+        <use xlink:href="bootstrap-icons.svg#plus " />
+    </svg>
+</button>
+
+<li *ngFor="let category of categories">
+    <a class="link-dark rounded">{{category.name}}</a>
+    <button class="btn btn-danger " (click)="openCategoryDeleteModal(category.id, category.name) " aria-label="Delete category ">
+            <svg class="bi " width="16 " height="16 " fill="currentColor ">
+                <use xlink:href="bootstrap-icons.svg#trash-fill " />
+            </svg>
+        </button>
+    <button class="btn btn-primary " (click)="openCategoryEditModal(category.id) " aria-label="Edit category ">
+            <svg class="bi " width="16 " height="16 " fill="currentColor ">
+                <use xlink:href="bootstrap-icons.svg#pen-fill " />
+            </svg>
+        </button>
+
+</li>

@@ -20,9 +20,14 @@ import { ItemViewComponent } from './item-view/item-view.component';
 import { RoomEditComponent } from './room-edit/room-edit.component';
 import { ItemDeleteComponent } from './item-delete/item-delete.component';
 import { ItemEditComponent } from './item-edit/item-edit.component';
+import { CategoryCreateComponent } from './category-create/category-create.component';
+import { CategoryEditComponent } from './category-edit/category-edit.component';
+import { CategoryDeleteComponent } from './category-delete/category-delete.component';
+import { CategoryListComponent } from './category-list/category-list.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'categories', component: CategoryListComponent },
   { path: 'room/:roomNo', component: RoomViewComponent },
   { path: 'item/:itemNo', component: ItemViewComponent },
   { path: 'authentication', loadChildren: () => import('./authentication/authentication.module').then(m => m.AuthenticationModule) },
@@ -44,7 +49,11 @@ const routes: Routes = [
     ItemViewComponent,
     RoomEditComponent,
     ItemDeleteComponent,
-    ItemEditComponent
+    ItemEditComponent,
+    CategoryCreateComponent,
+    CategoryEditComponent,
+    CategoryDeleteComponent,
+    CategoryListComponent
   ],
   imports: [
     HttpClientModule,

@@ -1,6 +1,8 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import { CategoryCreateComponent } from '../category-create/category-create.component';
 import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
 import { RecursiveItemResponseDto } from '../models/response/recursiveItemResponseDto.model';
@@ -26,6 +28,8 @@ export class ItemCreateComponent implements OnInit {
   constructor(
     private _formBuilder: FormBuilder,
     private _activeModal: NgbActiveModal,
+    private modalService: NgbModal,
+    private toastr: ToastrService,
     private _itemService: ItemService,
     private _roomService: RoomService,
     private _categoryService: CategoryService
@@ -93,6 +97,40 @@ export class ItemCreateComponent implements OnInit {
 
   closeModal(sendData: any) {
     this._activeModal.close(sendData);
+  }
+
+  openCategoryCreateModal() {
+    const modalRef = this.modalService.open(CategoryCreateComponent,
+      {
+        scrollable: true,
+        size: 'xl',
+        //windowClass: 'myCustomModalClass',
+        centered: true
+        // keyboard: false,
+        // backdrop: 'static'
+      });
+
+
+    modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.result.then((result) => {
+      this.loadCategories();
+    }, (reason) => {
+    });
+  }
+
+  statusChangeEvent(state: string) {
+    switch (state) {
+
+      case "category-create-success":
+        this.toastr.success('Category was created successfully', 'Success');
+        break;
+
+      case "category-create-fail":
+        this.toastr.error('An error occurred while creating the category', 'Error');
+        break;
+
+      default:
+    }
   }
 
 }
