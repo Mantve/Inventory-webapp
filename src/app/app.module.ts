@@ -24,9 +24,14 @@ import { CategoryCreateComponent } from './category-create/category-create.compo
 import { CategoryEditComponent } from './category-edit/category-edit.component';
 import { CategoryDeleteComponent } from './category-delete/category-delete.component';
 import { CategoryListComponent } from './category-list/category-list.component';
+import { NavbarComponent } from './navbar/navbar.component';
+import { FriendsListComponent } from './friends-list/friends-list.component';
+import { FriendRequestSendComponent } from './friend-request-send/friend-request-send.component';
+import { FriendRequestListComponent } from './friend-request-list/friend-request-list.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'friends', component: FriendsListComponent },
   { path: 'categories', component: CategoryListComponent },
   { path: 'room/:roomNo', component: RoomViewComponent },
   { path: 'item/:itemNo', component: ItemViewComponent },
@@ -53,7 +58,11 @@ const routes: Routes = [
     CategoryCreateComponent,
     CategoryEditComponent,
     CategoryDeleteComponent,
-    CategoryListComponent
+    CategoryListComponent,
+    NavbarComponent,
+    FriendsListComponent,
+    FriendRequestSendComponent,
+    FriendRequestListComponent
   ],
   imports: [
     HttpClientModule,

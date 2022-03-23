@@ -1,0 +1,11 @@
+<li *ngFor="let friend of friends">
+    <a class="link-dark rounded">{{friend.username}}</a>
+    <button class="btn btn-danger " aria-label="unfriend">
+            <svg class="bi " width="16 " height="16 " fill="currentColor ">
+                <use xlink:href="bootstrap-icons.svg#trash-fill " />
+            </svg>
+        </button>
+
+</li>
+<app-friend-request-send></app-friend-request-send>
+<app-friend-request-list></app-friend-request-list>

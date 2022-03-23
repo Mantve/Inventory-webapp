@@ -49,7 +49,7 @@ export class RegisterComponent implements OnInit {
 
     this._authService.registerUser("api/register", user)
     .subscribe(res => {
-      if(res.status === 200){
+      if(res.status === 201){
         this._toastr.success('Registered successfully', 'Success');
         this._router.navigate(["/authentication/login"]);
     }

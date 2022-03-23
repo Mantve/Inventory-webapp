@@ -108,31 +108,33 @@ export class CategoryListComponent implements OnInit {
   statusChangeEvent(state: string) {
     switch (state) {
 
-      case "room-delete-success":
-        this.toastr.success('Room has been deleted successfully', 'Success');
-        this._router.navigate([this.route.parent]);
+      case "category-delete-success":
+        this.toastr.success('category has been deleted successfully', 'Success');
         break;
 
-      case "room-delete-fail":
-        this.toastr.error('An error occurred while deleting the room', 'Error');
+      case "category-delete-fail":
+        this.toastr.error('An error occurred while deleting the category', 'Error');
         break;
 
-      case "item-create-success":
-        this.toastr.success('Item was created successfully', 'Success');
+      case "category-create-success":
+        this.toastr.success('category was created successfully', 'Success');
         break;
 
-      case "item-create-fail":
-        this.toastr.error('An error occurred while creating the item', 'Error');
+      case "category-create-fail":
+        this.toastr.error('An error occurred while creating the category', 'Error');
         break;
 
-        case "room-edit-success":
-          this.toastr.success('Room was modified successfully', 'Success');
+        case "category-edit-success":
+          this.toastr.success('category was modified successfully', 'Success');
           break;
   
-        case "room-edit-fail":
-          this.toastr.error('An error occurred while saving changes', 'Error');
+        case "category-edit-fail":
+          this.toastr.error('An error occurred while category saving changes', 'Error');
           break;
-      default:
+          case "item-edit-success":
+            this.toastr.success('Item has been modified successfully', 'Success');
+            break;
+    
     }
   }
 }

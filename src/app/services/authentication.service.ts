@@ -1,6 +1,6 @@
 import { RegistrationDto } from '../models/request/registrationDto.model';
 import { RegistrationResponseDto } from './../models/response/registrationResponseDto.model';
-import { userResponseDto } from './../models/response/userResponseDto.model';
+import { UserResponseDto } from './../models/response/userResponseDto.model';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { EnvironmentUrlService } from './environment-url.service';
@@ -39,8 +39,16 @@ export class AuthenticationService {
     return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), "", { observe: 'response', withCredentials: true });
   }
 
-  public getUser = (route: string) => {
-    return this._http.get<userResponseDto>(this.createCompleteRoute(route, this._envUrl.urlAddress), { observe: 'response', withCredentials: true });
+  public getUser = () => {
+    return this._http.get<UserResponseDto>(this.createCompleteRoute('api/user', this._envUrl.urlAddress), { observe: 'response', withCredentials: true });
+  }
+
+  public getFriends = () => {
+    return this._http.get<UserResponseDto[]>(this.createCompleteRoute('api/friends', this._envUrl.urlAddress), { withCredentials: true });
+  }
+
+  public addFriend = (messageId:number) => {
+    return this._http.post(this.createCompleteRoute('api/friends/'+messageId, this._envUrl.urlAddress),"",  { withCredentials: true });
   }
 
   public getRole = () => {
