@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { RoomCreateComponent } from '../room-create/room-create.component';
 import { AuthenticationService } from '../services/authentication.service';
+import { constants } from '../_constants';
 
 @Component({
   selector: 'app-home',
@@ -20,15 +21,7 @@ export class HomeComponent implements OnInit {
   }
 
   openCreateRoomModal() {
-    const modalRef = this.modalService.open(RoomCreateComponent,
-      {
-        scrollable: true,
-        size: 'xl',
-        //windowClass: 'myCustomModalClass',
-        centered: true
-        // keyboard: false,
-        // backdrop: 'static'
-      });
+    const modalRef = this.modalService.open(RoomCreateComponent, constants.ngbModalConfig);
 
     modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {

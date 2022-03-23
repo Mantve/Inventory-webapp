@@ -28,6 +28,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FriendsListComponent } from './friends-list/friends-list.component';
 import { FriendRequestSendComponent } from './friend-request-send/friend-request-send.component';
 import { FriendRequestListComponent } from './friend-request-list/friend-request-list.component';
+import { ListListComponent } from './list-list/list-list.component';
+import { ListViewComponent } from './list-view/list-view.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -62,7 +64,9 @@ const routes: Routes = [
     NavbarComponent,
     FriendsListComponent,
     FriendRequestSendComponent,
-    FriendRequestListComponent
+    FriendRequestListComponent,
+    ListListComponent,
+    ListViewComponent
   ],
   imports: [
     HttpClientModule,

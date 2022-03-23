@@ -7,9 +7,9 @@ import { RoomService } from '../services/room.service';
 import { ToastrService } from 'ngx-toastr';
 import { ItemCreateComponent } from '../item-create/item-create.component';
 import { ItemService } from '../services/item.service';
-import { ItemResponseDto } from '../models/response/itemResponseDto.model';
 import { RecursiveItemResponseDto } from '../models/response/recursiveItemResponseDto.model';
 import { RoomEditComponent } from '../room-edit/room-edit.component';
+import { constants } from '../_constants';
 
 @Component({
   selector: 'app-room-view',
@@ -54,14 +54,7 @@ export class RoomViewComponent implements OnInit {
   }
 
   openRoomDeleteModal(roomNo: number, name: string) {
-    const modalRef = this.modalService.open(RoomDeleteComponent,
-      {
-        scrollable: true,
-        //windowClass: 'myCustomModalClass',
-        centered: true
-        // keyboard: false,
-        // backdrop: 'static'
-      });
+    const modalRef = this.modalService.open(RoomDeleteComponent,constants.ngbModalConfig);
 
     let data = {
       roomNo: roomNo,
@@ -76,14 +69,7 @@ export class RoomViewComponent implements OnInit {
   }
 
   openRoomEditModal(roomNo: number) {
-    const modalRef = this.modalService.open(RoomEditComponent,
-      {
-        scrollable: true,
-        //windowClass: 'myCustomModalClass',
-        centered: true
-        // keyboard: false,
-        // backdrop: 'static'
-      });
+    const modalRef = this.modalService.open(RoomEditComponent,constants.ngbModalConfig);
 
     let data = {
       roomNo: roomNo
@@ -98,20 +84,12 @@ export class RoomViewComponent implements OnInit {
   }
 
   openItemCreateModal(roomNo: number) {
-    const modalRef = this.modalService.open(ItemCreateComponent,
-      {
-        scrollable: true,
-        size: 'xl',
-        //windowClass: 'myCustomModalClass',
-        centered: true
-        // keyboard: false,
-        // backdrop: 'static'
-      });
+    const modalRef = this.modalService.open(ItemCreateComponent,constants.ngbModalConfig);
 
       let data = {
         roomNo: roomNo
       }
-      
+
     modalRef.componentInstance.fromParent = data;
     modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {

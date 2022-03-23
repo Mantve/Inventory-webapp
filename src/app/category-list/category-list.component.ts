@@ -10,6 +10,7 @@ import { CategoryResponseDto } from '../models/response/categoryResponseDto.mode
 import { RoomDeleteComponent } from '../room-delete/room-delete.component';
 import { RoomEditComponent } from '../room-edit/room-edit.component';
 import { CategoryService } from '../services/category.service';
+import { constants } from '../_constants';
 
 @Component({
   selector: 'app-category-list',
@@ -42,14 +43,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   openCategoryDeleteModal(categoryNo: number, name: string) {
-    const modalRef = this.modalService.open(CategoryDeleteComponent,
-      {
-        scrollable: true,
-        //windowClass: 'myCustomModalClass',
-        centered: true
-        // keyboard: false,
-        // backdrop: 'static'
-      });
+    const modalRef = this.modalService.open(CategoryDeleteComponent,constants.ngbModalConfig);
 
     let data = {
       categoryNo: categoryNo,
@@ -65,14 +59,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   openCategoryEditModal(categoryNo: number) {
-    const modalRef = this.modalService.open(CategoryEditComponent,
-      {
-        scrollable: true,
-        //windowClass: 'myCustomModalClass',
-        centered: true
-        // keyboard: false,
-        // backdrop: 'static'
-      });
+    const modalRef = this.modalService.open(CategoryEditComponent,constants.ngbModalConfig);
 
     let data = {
       categoryNo: categoryNo
@@ -87,15 +74,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   openCategoryCreateModal() {
-    const modalRef = this.modalService.open(CategoryCreateComponent,
-      {
-        scrollable: true,
-        size: 'xl',
-        //windowClass: 'myCustomModalClass',
-        centered: true
-        // keyboard: false,
-        // backdrop: 'static'
-      });
+    const modalRef = this.modalService.open(CategoryCreateComponent,constants.ngbModalConfig);
 
 
     modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))

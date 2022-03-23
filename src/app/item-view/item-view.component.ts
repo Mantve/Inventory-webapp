@@ -8,6 +8,7 @@ import { ItemEditComponent } from '../item-edit/item-edit.component';
 import { RecursiveItemResponseDto } from '../models/response/recursiveItemResponseDto.model';
 import { RoomDeleteComponent } from '../room-delete/room-delete.component';
 import { ItemService } from '../services/item.service';
+import { constants } from '../_constants';
 
 @Component({
   selector: 'app-item-view',
@@ -45,15 +46,7 @@ export class ItemViewComponent implements OnInit {
 
   
   openItemCreateModal(roomNo: number, itemNo:number) {
-    const modalRef = this.modalService.open(ItemCreateComponent,
-      {
-        scrollable: true,
-        size: 'xl',
-        //windowClass: 'myCustomModalClass',
-        centered: true
-        // keyboard: false,
-        // backdrop: 'static'
-      });
+    const modalRef = this.modalService.open(ItemCreateComponent,constants.ngbModalConfig);
 
       let data = {
         roomNo: roomNo,
@@ -69,14 +62,7 @@ export class ItemViewComponent implements OnInit {
   }
 
   openItemDeleteModal(itemNo: number, name: string) {
-    const modalRef = this.modalService.open(ItemDeleteComponent,
-      {
-        scrollable: true,
-        //windowClass: 'myCustomModalClass',
-        centered: true
-        // keyboard: false,
-        // backdrop: 'static'
-      });
+    const modalRef = this.modalService.open(ItemDeleteComponent,constants.ngbModalConfig);
 
     let data = {
       itemNo: itemNo,
@@ -91,14 +77,7 @@ export class ItemViewComponent implements OnInit {
 
   
   openItemEditModal(itemNo: number) {
-    const modalRef = this.modalService.open(ItemEditComponent,
-      {
-        scrollable: true,
-        //windowClass: 'myCustomModalClass',
-        centered: true
-        // keyboard: false,
-        // backdrop: 'static'
-      });
+    const modalRef = this.modalService.open(ItemEditComponent,constants.ngbModalConfig);
 
     let data = {
       itemNo: itemNo

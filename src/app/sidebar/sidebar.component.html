@@ -7,7 +7,7 @@
         <span class="fs-5 fw-semibold">Menu</span>
     </a>
     <ul class="list-unstyled ps-0">
-        <li class="mb-1">
+        <li class="mb-1" *ngIf='isUserAuthenticated'>
             <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#home-collapse" aria-expanded="true">
         Home
       </button>
@@ -22,7 +22,7 @@
                 </ul>
             </div>
         </li>
-        <li class="mb-1">
+        <li class="mb-1" *ngIf='isUserAuthenticated'>
             <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
         Rooms
       </button>
@@ -34,17 +34,17 @@
                 </ul>
             </div>
         </li>
-        <li class="mb-1">
+        <li class="mb-1" *ngIf='isUserAuthenticated'>
             <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
         Convenience
       </button>
             <div class="collapse show" id="orders-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                     <li>
-                        <a class="link-dark rounded" [routerLink]="['/authentication/login']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Reminders</a>
+                        <a class="link-dark rounded" [routerLink]="['/reminders']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Reminders</a>
                     </li>
                     <li>
-                        <a class="link-dark rounded" [routerLink]="['/authentication/login']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Shopping Lists</a>
+                        <a class="link-dark rounded" [routerLink]="['/lists']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Shopping Lists</a>
                     </li>
                     <li>
                         <a class="link-dark rounded" [routerLink]="['/friends']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Friends</a>
@@ -52,7 +52,7 @@
                 </ul>
             </div>
         </li>
-        <li class="border-top my-3"></li>
+        <li class="border-top my-3" *ngIf='isUserAuthenticated'></li>
         <li class="mb-1">
             <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse" data-bs-target="#account-collapse" aria-expanded="true">
         Account

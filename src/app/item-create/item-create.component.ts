@@ -10,6 +10,7 @@ import { RoomResponseDto } from '../models/response/roomResponseDto.model';
 import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
 import { RoomService } from '../services/room.service';
+import { constants } from '../_constants';
 
 @Component({
   selector: 'app-item-create',
@@ -100,15 +101,7 @@ export class ItemCreateComponent implements OnInit {
   }
 
   openCategoryCreateModal() {
-    const modalRef = this.modalService.open(CategoryCreateComponent,
-      {
-        scrollable: true,
-        size: 'xl',
-        //windowClass: 'myCustomModalClass',
-        centered: true
-        // keyboard: false,
-        // backdrop: 'static'
-      });
+    const modalRef = this.modalService.open(CategoryCreateComponent,constants.ngbModalConfig);
 
 
     modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
