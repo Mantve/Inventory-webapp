@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
-import { RoomDeleteComponent } from '../room-delete/room-delete.component';
 import { RoomService } from '../services/room.service';
 import { ToastrService } from 'ngx-toastr';
 import { ItemCreateComponent } from '../item-create/item-create.component';
@@ -10,6 +9,8 @@ import { ItemService } from '../services/item.service';
 import { RecursiveItemResponseDto } from '../models/response/recursiveItemResponseDto.model';
 import { RoomEditComponent } from '../room-edit/room-edit.component';
 import { constants } from '../_constants';
+import { Observable } from 'rxjs';
+import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
 
 @Component({
   selector: 'app-room-view',
@@ -54,11 +55,15 @@ export class RoomViewComponent implements OnInit {
   }
 
   openRoomDeleteModal(roomNo: number, name: string) {
-    const modalRef = this.modalService.open(RoomDeleteComponent,constants.ngbModalConfig);
+    const modalRef = this.modalService.open(DeletionConfirmationModalComponent,constants.ngbModalConfig);
 
     let data = {
-      roomNo: roomNo,
-      name: name
+      type: "room",
+      name: name,
+      successMessage: "room-delete-success",
+      failMessage: "room-delete-fail",
+      onSubmit:  (): Observable<object> => 
+        this._roomService.delete(roomNo)
     }
 
     modalRef.componentInstance.fromParent = data;

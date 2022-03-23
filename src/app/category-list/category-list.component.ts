@@ -2,13 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
 import { CategoryCreateComponent } from '../category-create/category-create.component';
-import { CategoryDeleteComponent } from '../category-delete/category-delete.component';
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
-import { ItemCreateComponent } from '../item-create/item-create.component';
+import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
 import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
-import { RoomDeleteComponent } from '../room-delete/room-delete.component';
-import { RoomEditComponent } from '../room-edit/room-edit.component';
 import { CategoryService } from '../services/category.service';
 import { constants } from '../_constants';
 
@@ -43,11 +41,15 @@ export class CategoryListComponent implements OnInit {
   }
 
   openCategoryDeleteModal(categoryNo: number, name: string) {
-    const modalRef = this.modalService.open(CategoryDeleteComponent,constants.ngbModalConfig);
-
+    const modalRef = this.modalService.open(DeletionConfirmationModalComponent,constants.ngbModalConfig);
+   
     let data = {
-      categoryNo: categoryNo,
-      name: name
+      type: "category",
+      name: name,
+      successMessage: "category-delete-success",
+      failMessage: "category-delete-fail",
+      onSubmit:  (): Observable<object> => 
+        this._categoryService.delete(categoryNo)
     }
 
     modalRef.componentInstance.fromParent = data;

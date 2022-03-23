@@ -10,7 +10,6 @@ import { SidebarComponent } from './sidebar/sidebar.component';
 import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RoomViewComponent } from './room-view/room-view.component';
-import { RoomDeleteComponent } from './room-delete/room-delete.component';
 import { ToastrModule } from 'ngx-toastr';
 import { RoomCreateComponent } from './room-create/room-create.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -18,11 +17,9 @@ import { ItemCreateComponent } from './item-create/item-create.component';
 import { TreeModule } from '@circlon/angular-tree-component';
 import { ItemViewComponent } from './item-view/item-view.component';
 import { RoomEditComponent } from './room-edit/room-edit.component';
-import { ItemDeleteComponent } from './item-delete/item-delete.component';
 import { ItemEditComponent } from './item-edit/item-edit.component';
 import { CategoryCreateComponent } from './category-create/category-create.component';
 import { CategoryEditComponent } from './category-edit/category-edit.component';
-import { CategoryDeleteComponent } from './category-delete/category-delete.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FriendsListComponent } from './friends-list/friends-list.component';
@@ -30,6 +27,7 @@ import { FriendRequestSendComponent } from './friend-request-send/friend-request
 import { FriendRequestListComponent } from './friend-request-list/friend-request-list.component';
 import { ListListComponent } from './list-list/list-list.component';
 import { ListViewComponent } from './list-view/list-view.component';
+import { DeletionConfirmationModalComponent } from './deletion-confirmation-modal/deletion-confirmation-modal.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -50,23 +48,21 @@ const routes: Routes = [
     HomeComponent,
     NotFoundComponent,
     RoomViewComponent,
-    RoomDeleteComponent,
     RoomCreateComponent,
     ItemCreateComponent,
     ItemViewComponent,
     RoomEditComponent,
-    ItemDeleteComponent,
     ItemEditComponent,
     CategoryCreateComponent,
     CategoryEditComponent,
-    CategoryDeleteComponent,
     CategoryListComponent,
     NavbarComponent,
     FriendsListComponent,
     FriendRequestSendComponent,
     FriendRequestListComponent,
     ListListComponent,
-    ListViewComponent
+    ListViewComponent,
+    DeletionConfirmationModalComponent
   ],
   imports: [
     HttpClientModule,
