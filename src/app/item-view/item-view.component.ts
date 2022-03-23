@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { Observable } from 'rxjs';
+import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
 import { ItemCreateComponent } from '../item-create/item-create.component';
-import { ItemDeleteComponent } from '../item-delete/item-delete.component';
 import { ItemEditComponent } from '../item-edit/item-edit.component';
 import { RecursiveItemResponseDto } from '../models/response/recursiveItemResponseDto.model';
-import { RoomDeleteComponent } from '../room-delete/room-delete.component';
 import { ItemService } from '../services/item.service';
 import { constants } from '../_constants';
 
@@ -62,12 +62,17 @@ export class ItemViewComponent implements OnInit {
   }
 
   openItemDeleteModal(itemNo: number, name: string) {
-    const modalRef = this.modalService.open(ItemDeleteComponent,constants.ngbModalConfig);
+    const modalRef = this.modalService.open(DeletionConfirmationModalComponent,constants.ngbModalConfig);
 
     let data = {
-      itemNo: itemNo,
-      name: name
+      type: "item",
+      name: name,
+      successMessage: "item-delete-success",
+      failMessage: "item-delete-fail",
+      onSubmit:  (): Observable<object> => 
+        this._itemService.delete(itemNo)
     }
+
     modalRef.componentInstance.fromParent = data;
     modalRef.componentInstance.deleteEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((res) => {

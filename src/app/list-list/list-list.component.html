@@ -1,0 +1,19 @@
+<button class="btn btn-success" (click)="openListCreateModal()" aria-label="Create list">
+        <svg class="bi" width="32" height="32" fill="currentColor">
+            <use xlink:href="bootstrap-icons.svg#plus" />
+        </svg>
+    </button>
+<li *ngFor="let list of lists">
+    <a class="link-dark rounded" [routerLink]="['/list/'+list.id]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{list.name}}</a>
+
+    <button class="btn btn-danger" (click)="openListDeleteModal(list.id, list.name)" aria-label="Delete list">
+        <svg class="bi" width="32" height="32" fill="currentColor">
+            <use xlink:href="bootstrap-icons.svg#trash-fill" />
+        </svg>
+    </button>
+    <button class="btn btn-primary" (click)="openListEditModal(list.id)" aria-label="Edit list">
+        <svg class="bi" width="32" height="32" fill="currentColor">
+            <use xlink:href="bootstrap-icons.svg#pen-fill" />
+        </svg>
+    </button>
+</li>

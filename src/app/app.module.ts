@@ -28,9 +28,14 @@ import { FriendRequestListComponent } from './friend-request-list/friend-request
 import { ListListComponent } from './list-list/list-list.component';
 import { ListViewComponent } from './list-view/list-view.component';
 import { DeletionConfirmationModalComponent } from './deletion-confirmation-modal/deletion-confirmation-modal.component';
+import { ListCreateComponent } from './list-create/list-create.component';
+import { ListEditComponent } from './list-edit/list-edit.component';
+import { ListItemCreateComponent } from './list-item-create/list-item-create.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'lists', component: ListListComponent },
+  { path: 'list/:listNo', component: ListViewComponent },
   { path: 'friends', component: FriendsListComponent },
   { path: 'categories', component: CategoryListComponent },
   { path: 'room/:roomNo', component: RoomViewComponent },
@@ -62,7 +67,10 @@ const routes: Routes = [
     FriendRequestListComponent,
     ListListComponent,
     ListViewComponent,
-    DeletionConfirmationModalComponent
+    DeletionConfirmationModalComponent,
+    ListCreateComponent,
+    ListEditComponent,
+    ListItemCreateComponent
   ],
   imports: [
     HttpClientModule,

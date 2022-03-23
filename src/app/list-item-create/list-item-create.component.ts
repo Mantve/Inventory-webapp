@@ -1,30 +1,29 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryCreateComponent } from '../category-create/category-create.component';
-import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
+import { ItemCreateComponent } from '../item-create/item-create.component';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
-import { RecursiveItemResponseDto } from '../models/response/recursiveItemResponseDto.model';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
-import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
+import { ListItemService } from '../services/list-item.service';
 import { RoomService } from '../services/room.service';
 import { constants } from '../_constants';
 
 @Component({
-  selector: 'app-item-create',
-  templateUrl: './item-create.component.html',
-  styleUrls: ['./item-create.component.css']
+  selector: 'app-list-item-create',
+  templateUrl: './list-item-create.component.html',
+  styleUrls: ['./list-item-create.component.css']
 })
-export class ItemCreateComponent implements OnInit {
+export class ListItemCreateComponent implements OnInit {
 
   @Input() fromParent: any;
   @Output() createEvent = new EventEmitter<string>();
+  selectedRoom!: number
   form!: FormGroup;
   rooms!: Array<RoomResponseDto>;
   items!: Array<ItemResponseDto>;
-  categories!: Array<CategoryResponseDto>
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -33,31 +32,23 @@ export class ItemCreateComponent implements OnInit {
     private toastr: ToastrService,
     private _itemService: ItemService,
     private _roomService: RoomService,
-    private _categoryService: CategoryService
+    private _listItemService: ListItemService
   ) {
     this.form = this._formBuilder.group({
-      name: ["", Validators.required],
-      quantity: ["1", Validators.required],
-      value: ["0", Validators.required],
-      categoryId: [, Validators.required],
-      parentItemId: [],
-      comments: [""],
-      roomId: [, Validators.required]
+      parentListId: [, Validators.required],
+      itemId: [, Validators.required],
+      roomId: [, Validators.required],
+      completed: [false]
     });
   }
 
   ngOnInit(): void {
     this.loadRooms();
-    this.loadItems(this.fromParent.roomNo);
-    this.loadCategories();
+    if (this.selectedRoom)
+      this.loadItems(this.selectedRoom);
     this.form.patchValue({
-      parentItemId: this.fromParent.itemNo,
+      parentListId: this.fromParent.listNo,
     })
-    if(this.fromParent.roomNo){
-    this.form.patchValue({
-      roomId: this.fromParent.roomNo
-    })
-  }
   }
 
   loadItems(roomNo: number) {
@@ -76,26 +67,18 @@ export class ItemCreateComponent implements OnInit {
       }, error => console.error(error))
   }
 
-  
-  loadCategories() {
-    this._categoryService.getAll().subscribe(
-      res => {
-        this.categories = res;
-      }, error => console.error(error))
-  }
-
   onRoomChange() {
     let select = document.querySelector("#roomId") as HTMLSelectElement;
-    let roomNo = Number(select.value);
-    this.loadItems(roomNo);
+    this.selectedRoom = Number(select.value);
+    this.loadItems(this.selectedRoom);
   }
 
   onSubmit(sendData: any) {
-    this._itemService.create(this.form.value).subscribe((res: any) => {
-      this.createEvent.emit("item-create-success");
+    this._listItemService.create(this.form.value).subscribe((res: any) => {
+      this.createEvent.emit("listItem-create-success");
       this._activeModal.close(sendData);
     }, (error: any) => {
-      this.createEvent.emit("item-create-fail");
+      this.createEvent.emit("listItem-create-fail");
       console.error(error)
     })
   }
@@ -104,13 +87,11 @@ export class ItemCreateComponent implements OnInit {
     this._activeModal.close(sendData);
   }
 
-  openCategoryCreateModal() {
-    const modalRef = this.modalService.open(CategoryCreateComponent,constants.ngbModalConfig);
-
-
+  openItemCreateModal() {
+    const modalRef = this.modalService.open(ItemCreateComponent, constants.ngbModalConfig);
     modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
-      this.loadCategories();
+      this.loadItems(this.selectedRoom);
     }, (reason) => {
     });
   }
@@ -118,12 +99,12 @@ export class ItemCreateComponent implements OnInit {
   statusChangeEvent(state: string) {
     switch (state) {
 
-      case "category-create-success":
-        this.toastr.success('Category was created successfully', 'Success');
+      case "item-create-success":
+        this.toastr.success('Item was created successfully', 'Success');
         break;
 
-      case "category-create-fail":
-        this.toastr.error('An error occurred while creating the category', 'Error');
+      case "item-create-fail":
+        this.toastr.error('An error occurred while creating the item', 'Error');
         break;
 
       default:
