@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { ItemCreateComponent } from '../item-create/item-create.component';
+import { ItemEditComponent } from '../item-edit/item-edit.component';
 import { RepeatFrequency } from '../models/enums/repeatFrequency.model';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
@@ -90,8 +90,12 @@ export class ReminderCreateComponent implements OnInit {
   }
 
   openItemCreateModal() {
-    const modalRef = this.modalService.open(ItemCreateComponent, constants.ngbModalConfig);
-    modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    const modalRef = this.modalService.open(ItemEditComponent, constants.ngbModalConfig);
+    let data = {
+      new:true
+    }
+    modalRef.componentInstance.fromParent = data;
+    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
       this.loadItems(this.selectedRoom);
     }, (reason) => {

@@ -4,13 +4,13 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
 import { RoomService } from '../services/room.service';
 import { ToastrService } from 'ngx-toastr';
-import { ItemCreateComponent } from '../item-create/item-create.component';
 import { ItemService } from '../services/item.service';
 import { RecursiveItemResponseDto } from '../models/response/recursiveItemResponseDto.model';
 import { RoomEditComponent } from '../room-edit/room-edit.component';
 import { constants } from '../_constants';
 import { Observable } from 'rxjs';
 import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
+import { ItemEditComponent } from '../item-edit/item-edit.component';
 
 @Component({
   selector: 'app-room-view',
@@ -89,14 +89,15 @@ export class RoomViewComponent implements OnInit {
   }
 
   openItemCreateModal(roomNo: number) {
-    const modalRef = this.modalService.open(ItemCreateComponent,constants.ngbModalConfig);
+    const modalRef = this.modalService.open(ItemEditComponent,constants.ngbModalConfig);
 
       let data = {
-        roomNo: roomNo
+        roomNo: roomNo,
+        new:true
       }
 
     modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
       this.loadItems(this.roomNo);
     }, (reason) => {

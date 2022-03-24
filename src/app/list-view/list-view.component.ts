@@ -4,7 +4,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
-import { ItemCreateComponent } from '../item-create/item-create.component';
 import { ListItemCreateComponent } from '../list-item-create/list-item-create.component';
 import { ListItemResponseDto } from '../models/response/listItemResponseDto.model';
 import { ListResponseDto } from '../models/response/listResponseDto.model';

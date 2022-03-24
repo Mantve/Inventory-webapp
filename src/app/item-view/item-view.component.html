@@ -7,12 +7,12 @@
             <use xlink:href="bootstrap-icons.svg#trash-fill" />
         </svg>
     </button>
-    <button class="btn btn-primary" (click)="openItemEditModal(item.id)" aria-label="Edit room">
+    <button class="btn btn-primary" (click)="openItemEditModal(item.room.id,item.id,false)" aria-label="Edit room">
         <svg class="bi" width="32" height="32" fill="currentColor">
             <use xlink:href="bootstrap-icons.svg#pen-fill" />
         </svg>
     </button>
-    <button class="btn btn-success" (click)="openItemCreateModal(item.room.id,item.id)" aria-label="Create item">
+    <button class="btn btn-success" (click)="openItemEditModal(item.room.id,item.id,true)" aria-label="Create item">
     <svg class="bi" width="32" height="32" fill="currentColor">
         <use xlink:href="bootstrap-icons.svg#plus" />
     </svg>

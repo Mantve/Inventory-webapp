@@ -13,7 +13,6 @@ import { RoomViewComponent } from './room-view/room-view.component';
 import { ToastrModule } from 'ngx-toastr';
 import { RoomCreateComponent } from './room-create/room-create.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ItemCreateComponent } from './item-create/item-create.component';
 import { TreeModule } from '@circlon/angular-tree-component';
 import { ItemViewComponent } from './item-view/item-view.component';
 import { RoomEditComponent } from './room-edit/room-edit.component';
@@ -58,7 +57,6 @@ const routes: Routes = [
     NotFoundComponent,
     RoomViewComponent,
     RoomCreateComponent,
-    ItemCreateComponent,
     ItemViewComponent,
     RoomEditComponent,
     ItemEditComponent,

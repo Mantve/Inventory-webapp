@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryCreateComponent } from '../category-create/category-create.component';
-import { ItemCreateComponent } from '../item-create/item-create.component';
+import { ItemEditComponent } from '../item-edit/item-edit.component';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
 import { ItemService } from '../services/item.service';
@@ -88,8 +88,12 @@ export class ListItemCreateComponent implements OnInit {
   }
 
   openItemCreateModal() {
-    const modalRef = this.modalService.open(ItemCreateComponent, constants.ngbModalConfig);
-    modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    const modalRef = this.modalService.open(ItemEditComponent, constants.ngbModalConfig);
+    let data = {
+      new:true
+    };
+    modalRef.componentInstance.fromParent = data;
+    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
       this.loadItems(this.selectedRoom);
     }, (reason) => {

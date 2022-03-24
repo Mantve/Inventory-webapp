@@ -4,7 +4,6 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
-import { ItemCreateComponent } from '../item-create/item-create.component';
 import { ItemEditComponent } from '../item-edit/item-edit.component';
 import { RecursiveItemResponseDto } from '../models/response/recursiveItemResponseDto.model';
 import { ItemService } from '../services/item.service';
@@ -44,23 +43,6 @@ export class ItemViewComponent implements OnInit {
       }, error => console.error(error))
   }
 
-  
-  openItemCreateModal(roomNo: number, itemNo:number) {
-    const modalRef = this.modalService.open(ItemCreateComponent,constants.ngbModalConfig);
-
-      let data = {
-        roomNo: roomNo,
-        itemNo: itemNo
-      }
-      
-    modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
-    modalRef.result.then((result) => {
-      this.loadItem(this.itemNo);
-    }, (reason) => {
-    });
-  }
-
   openItemDeleteModal(itemNo: number, name: string) {
     const modalRef = this.modalService.open(DeletionConfirmationModalComponent,constants.ngbModalConfig);
 
@@ -81,11 +63,13 @@ export class ItemViewComponent implements OnInit {
   }
 
   
-  openItemEditModal(itemNo: number) {
+  openItemEditModal(roomNo: number, itemNo: number, createNew:boolean) {
     const modalRef = this.modalService.open(ItemEditComponent,constants.ngbModalConfig);
 
     let data = {
-      itemNo: itemNo
+      roomNo: roomNo,
+      itemNo: itemNo,
+      new: createNew
     }
 
     modalRef.componentInstance.fromParent = data;

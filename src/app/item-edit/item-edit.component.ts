@@ -1,12 +1,15 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import { CategoryCreateComponent } from '../category-create/category-create.component';
 import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
 import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
 import { RoomService } from '../services/room.service';
+import { constants } from '../_constants';
 
 @Component({
   selector: 'app-item-edit',
@@ -15,17 +18,20 @@ import { RoomService } from '../services/room.service';
 })
 export class ItemEditComponent implements OnInit {
 
+
   @Input() fromParent: any;
   @Output() editEvent = new EventEmitter<string>();
   form!: FormGroup;
   rooms!: Array<RoomResponseDto>;
   items!: Array<ItemResponseDto>;
-  savedItem!: ItemResponseDto;
   categories!: Array<CategoryResponseDto>
+  savedItem!: ItemResponseDto;
 
   constructor(
     private _formBuilder: FormBuilder,
     private _activeModal: NgbActiveModal,
+    private modalService: NgbModal,
+    private toastr: ToastrService,
     private _itemService: ItemService,
     private _roomService: RoomService,
     private _categoryService: CategoryService
@@ -34,29 +40,45 @@ export class ItemEditComponent implements OnInit {
       name: ["", Validators.required],
       quantity: ["1", Validators.required],
       value: ["0", Validators.required],
-      categoryId: ["2", Validators.required],
+      categoryId: [, Validators.required],
       parentItemId: [],
       comments: [""],
-      roomId: [Validators.required]
+      roomId: [, Validators.required]
     });
   }
 
   ngOnInit(): void {
-    this._itemService.get(this.fromParent.itemNo).subscribe(result => {
-      this.savedItem = result
+    if (!this.fromParent.new) {
+      this._itemService.get(this.fromParent.itemNo).subscribe(result => {
+        this.savedItem = result
+        this.loadRooms();
+        this.loadCategories();
+        this.loadItems(result.room.id);
+        this.form = this._formBuilder.group({
+          name: [result.name, Validators.required],
+          quantity: [result.quantity, Validators.required],
+          value: [result.value, Validators.required],
+          categoryId: [result.category?.id, Validators.required],
+          parentItemId: [result.parentItem?.id],
+          comments: [result.comments],
+          roomId: [result.room.id, Validators.required]
+        });
+      })
+    }
+    else {
       this.loadRooms();
       this.loadCategories();
-      this.loadItems(result.room.id);
-      this.form = this._formBuilder.group({
-        name: [result.name, Validators.required],
-        quantity: [result.quantity, Validators.required],
-        value: [result.value, Validators.required],
-        categoryId: [result.category?.id, Validators.required],
-        parentItemId: [result.parentItem?.id],
-        comments: [result.comments],
-        roomId: [result.room.id, Validators.required]
-      });
-    })
+      this.loadItems(this.fromParent.roomNo);
+      this.form.patchValue({
+        parentItemId: this.fromParent.itemNo,
+      })
+      if (this.fromParent.roomNo) {
+        console.log(this.fromParent.roomNo)
+        this.form.patchValue({
+          roomId: this.fromParent.roomNo
+        })
+      }
+    }
 
   }
 
@@ -75,7 +97,8 @@ export class ItemEditComponent implements OnInit {
         this.rooms = res;
       }, error => console.error(error))
   }
-  
+
+
   loadCategories() {
     this._categoryService.getAll().subscribe(
       res => {
@@ -90,17 +113,47 @@ export class ItemEditComponent implements OnInit {
   }
 
   onSubmit(sendData: any) {
-    this._itemService.update(this.fromParent.itemNo,this.form.value).subscribe((res: any) => {
-      this.editEvent.emit("item-edit-success");
+    this._itemService.create(this.form.value).subscribe((res: any) => {
+      if (!this.fromParent.new)
+        this.editEvent.emit("item-edit-success");
+      else
+        this.editEvent.emit("item-create-success");
       this._activeModal.close(sendData);
     }, (error: any) => {
-      this.editEvent.emit("item-edit-fail");
+      if (!this.fromParent.new)
+        this.editEvent.emit("item-edit-fail");
+      else
+        this.editEvent.emit("item-create-fail");
       console.error(error)
     })
   }
 
   closeModal(sendData: any) {
     this._activeModal.close(sendData);
+  }
+
+  openCategoryCreateModal() {
+    const modalRef = this.modalService.open(CategoryCreateComponent, constants.ngbModalConfig);
+    modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.result.then((result) => {
+      this.loadCategories();
+    }, (reason) => {
+    });
+  }
+
+  statusChangeEvent(state: string) {
+    switch (state) {
+
+      case "category-create-success":
+        this.toastr.success('Category was created successfully', 'Success');
+        break;
+
+      case "category-create-fail":
+        this.toastr.error('An error occurred while creating the category', 'Error');
+        break;
+
+      default:
+    }
   }
 
 }
