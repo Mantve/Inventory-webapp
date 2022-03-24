@@ -1,0 +1,19 @@
+<button class="btn btn-success" (click)="openReminderCreateModal()" aria-label="Create reminder">
+    <svg class="bi" width="32" height="32" fill="currentColor">
+        <use xlink:href="bootstrap-icons.svg#plus" />
+    </svg>
+</button>
+<li *ngFor="let reminder of reminders">
+    <a class="link-dark rounded">{{reminder.item.name}} {{reminder.reminderTime}}</a>
+
+    <button class="btn btn-danger" (click)="openReminderDeleteModal(reminder.id, reminder.item.name)" aria-label="Delete reminder">
+    <svg class="bi" width="32" height="32" fill="currentColor">
+        <use xlink:href="bootstrap-icons.svg#trash-fill" />
+    </svg>
+</button>
+    <button class="btn btn-primary" (click)="openReminderEditModal(reminder.id)" aria-label="Edit reminder">
+    <svg class="bi" width="32" height="32" fill="currentColor">
+        <use xlink:href="bootstrap-icons.svg#pen-fill" />
+    </svg>
+</button>
+</li>

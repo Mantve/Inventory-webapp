@@ -31,10 +31,14 @@ import { DeletionConfirmationModalComponent } from './deletion-confirmation-moda
 import { ListCreateComponent } from './list-create/list-create.component';
 import { ListEditComponent } from './list-edit/list-edit.component';
 import { ListItemCreateComponent } from './list-item-create/list-item-create.component';
+import { ReminderListComponent } from './reminder-list/reminder-list.component';
+import { ReminderCreateComponent } from './reminder-create/reminder-create.component';
+import { ReminderEditComponent } from './reminder-edit/reminder-edit.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'lists', component: ListListComponent },
+  { path: 'reminders', component: ReminderListComponent },
   { path: 'list/:listNo', component: ListViewComponent },
   { path: 'friends', component: FriendsListComponent },
   { path: 'categories', component: CategoryListComponent },
@@ -70,7 +74,10 @@ const routes: Routes = [
     DeletionConfirmationModalComponent,
     ListCreateComponent,
     ListEditComponent,
-    ListItemCreateComponent
+    ListItemCreateComponent,
+    ReminderListComponent,
+    ReminderCreateComponent,
+    ReminderEditComponent
   ],
   imports: [
     HttpClientModule,

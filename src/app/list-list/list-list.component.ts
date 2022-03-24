@@ -19,8 +19,6 @@ import { constants } from '../_constants';
 })
 export class ListListComponent implements OnInit {
 
-
-
   lists!: Array<ListResponseDto>;
 
   constructor(
