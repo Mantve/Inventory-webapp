@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
 import { ListItemCreateComponent } from '../list-item-create/list-item-create.component';
+import { ListItemUpdateDto } from '../models/request/listItemUpdateDto.model';
 import { ListItemResponseDto } from '../models/response/listItemResponseDto.model';
 import { ListResponseDto } from '../models/response/listResponseDto.model';
 import { RoomEditComponent } from '../room-edit/room-edit.component';
@@ -42,19 +43,19 @@ export class ListViewComponent implements OnInit {
   loadList(listNo: number) {
     this._listService.get(listNo).subscribe(
       res => {
-        this.list= res;
+        this.list = res;
       }, error => console.error(error))
   }
 
   openListItemDeleteModal(listNo: number, name: string) {
-    const modalRef = this.modalService.open(DeletionConfirmationModalComponent,constants.ngbModalConfig);
+    const modalRef = this.modalService.open(DeletionConfirmationModalComponent, constants.ngbModalConfig);
 
     let data = {
       type: "listItem",
       name: name,
       successMessage: "listItem-delete-success",
       failMessage: "listItem-delete-fail",
-      onSubmit:  (): Observable<object> => 
+      onSubmit: (): Observable<object> =>
         this._listItemService.delete(listNo)
     }
 
@@ -66,11 +67,11 @@ export class ListViewComponent implements OnInit {
   }
 
   openListItemCreateModal(listNo: number) {
-    const modalRef = this.modalService.open(ListItemCreateComponent,constants.ngbModalConfig);
+    const modalRef = this.modalService.open(ListItemCreateComponent, constants.ngbModalConfig);
 
-      let data = {
-        listNo: listNo
-      }
+    let data = {
+      listNo: listNo
+    }
 
     modalRef.componentInstance.fromParent = data;
     modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
@@ -78,6 +79,19 @@ export class ListViewComponent implements OnInit {
       this.loadList(this.listNo);
     }, (reason) => {
     });
+  }
+
+  listItemChecked(listItemId: number, event: any) {
+
+    let dto = {
+      completed: event.target.checked
+    }
+    this._listItemService.update(listItemId, dto).subscribe(
+      res => {
+      }, (error) => {
+        console.error(error);
+        this.loadList(this.listNo)
+      })
   }
 
   statusChangeEvent(state: string) {
@@ -100,13 +114,13 @@ export class ListViewComponent implements OnInit {
         this.toastr.error('An error occurred while creating the item', 'Error');
         break;
 
-        case "room-edit-success":
-          this.toastr.success('Room was modified successfully', 'Success');
-          break;
-  
-        case "room-edit-fail":
-          this.toastr.error('An error occurred while saving changes', 'Error');
-          break;
+      case "room-edit-success":
+        this.toastr.success('Room was modified successfully', 'Success');
+        break;
+
+      case "room-edit-fail":
+        this.toastr.error('An error occurred while saving changes', 'Error');
+        break;
       default:
     }
   }
