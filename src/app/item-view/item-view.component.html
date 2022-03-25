@@ -1,49 +1,31 @@
 <div *ngIf="item">
-    <h1>
-        {{item.name}}
-    </h1>
-    <button class="btn btn-danger" (click)="openItemDeleteModal(item.id, item.name)" aria-label="Delete item">
-        <svg class="bi" width="32" height="32" fill="currentColor">
-            <use xlink:href="bootstrap-icons.svg#trash-fill" />
-        </svg>
-    </button>
-    <button class="btn btn-primary" (click)="openItemEditModal(item.room.id,item.id,false)" aria-label="Edit room">
-        <svg class="bi" width="32" height="32" fill="currentColor">
-            <use xlink:href="bootstrap-icons.svg#pen-fill" />
-        </svg>
-    </button>
-    <button class="btn btn-success" (click)="openItemEditModal(item.room.id,item.id,true)" aria-label="Create item">
-    <svg class="bi" width="32" height="32" fill="currentColor">
-        <use xlink:href="bootstrap-icons.svg#plus" />
-    </svg>
-</button>
-
-    <div class="container">
-        <ul class="list-group">
-            <ng-container *ngTemplateOutlet="recursiveitemsTmpl; context:{ items: item.items }"></ng-container>
-        </ul>
-    </div>
-
-    <ng-template #recursiveitemsTmpl let-items="items">
-
-        <li class="list-group-item border-0 border-start" *ngFor="let item of items">
-            <span data-bs-toggle="collapse" attr.data-bs-target="#item{{item.id}}" aria-expanded="false">
-                <svg type="button" class="bi " *ngIf="item.items.length> 0" width="32" height="32" fill="currentColor">
+    <div
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        <h1 class="h2">{{item.name}}</h1>
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <!-- TODO: spacing-->
+            <button type="button" class="btn btn-sm btn-outline-success"
+                (click)="openItemEditModal(item.room.id,item.id,true)" aria-label="Create item">
+                <svg class="bi" width="24" height="24" fill="currentColor">
                     <use xlink:href="bootstrap-icons.svg#plus" />
                 </svg>
-                <b>{{item.id}}:</b> 
-             <a attr.aria-controls="item{{item.id}}" [routerLink]="['/item/'+item.id]" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">
-                {{item.name}}
-             </a>   
-            </span>
-            <ul class="list-group" *ngIf="item.items.length > 0">
-                <div class="collapse" attr.id="item{{item.id}}">
-                    <ng-container *ngTemplateOutlet="recursiveitemsTmpl; context:{ items: item.items }">
-                    </ng-container>
-                </div>
-            </ul>
-        </li>
-    </ng-template>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-primary"
+                (click)="openItemEditModal(item.room.id,item.id,false)" aria-label="Edit room">
+                <svg class="bi" width="24" height="24" fill="currentColor">
+                    <use xlink:href="bootstrap-icons.svg#pen-fill" />
+                </svg>
+            </button>
+            <button type="button" class="btn btn-sm btn-outline-danger"
+                (click)="openItemDeleteModal(item.id, item.name)" aria-label="Delete item">
+                <svg class="bi" width="24" height="24" fill="currentColor">
+                    <use xlink:href="bootstrap-icons.svg#trash-fill" />
+                </svg>
+            </button>
+        </div>
+    </div>
+
+    <app-item-list [items]="item.items"></app-item-list>
 
 
 </div>

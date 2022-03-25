@@ -33,6 +33,7 @@ import { ListItemCreateComponent } from './list-item-create/list-item-create.com
 import { ReminderListComponent } from './reminder-list/reminder-list.component';
 import { ReminderCreateComponent } from './reminder-create/reminder-create.component';
 import { ReminderEditComponent } from './reminder-edit/reminder-edit.component';
+import { ItemListComponent } from './item-list/item-list.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -75,7 +76,8 @@ const routes: Routes = [
     ListItemCreateComponent,
     ReminderListComponent,
     ReminderCreateComponent,
-    ReminderEditComponent
+    ReminderEditComponent,
+    ItemListComponent
   ],
   imports: [
     HttpClientModule,
