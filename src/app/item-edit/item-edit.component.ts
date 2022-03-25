@@ -63,6 +63,7 @@ export class ItemEditComponent implements OnInit {
           comments: [result.comments],
           roomId: [result.room.id, Validators.required]
         });
+        console.log(result.parentItem?.name)
       })
     }
     else {
@@ -98,7 +99,6 @@ export class ItemEditComponent implements OnInit {
       }, error => console.error(error))
   }
 
-
   loadCategories() {
     this._categoryService.getAll().subscribe(
       res => {
@@ -113,19 +113,24 @@ export class ItemEditComponent implements OnInit {
   }
 
   onSubmit(sendData: any) {
-    this._itemService.create(this.form.value).subscribe((res: any) => {
-      if (!this.fromParent.new)
+    if (!this.fromParent.new) {
+      this._itemService.update(this.fromParent.itemNo, this.form.value).subscribe((res: any) => {
         this.editEvent.emit("item-edit-success");
-      else
-        this.editEvent.emit("item-create-success");
-      this._activeModal.close(sendData);
-    }, (error: any) => {
-      if (!this.fromParent.new)
+        this._activeModal.close(sendData);
+      }, (error: any) => {
         this.editEvent.emit("item-edit-fail");
-      else
+        console.error(error)
+      })
+    }
+    else {
+      this._itemService.create(this.form.value).subscribe((res: any) => {
+        this.editEvent.emit("item-create-success");
+        this._activeModal.close(sendData);
+      }, (error: any) => {
         this.editEvent.emit("item-create-fail");
-      console.error(error)
-    })
+        console.error(error)
+      })
+    }
   }
 
   closeModal(sendData: any) {

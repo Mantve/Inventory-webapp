@@ -1,29 +1,38 @@
-<div class="list-group" *ngIf="list">
-    <div class="d-flex w-100 justify-content-between" *ngFor="let listItem of list.items">
-        <label class="list-group-item d-flex gap-3 w-100">
-            <input class="form-check-input flex-shrink-0" (change)="listItemChecked(listItem.id,$event)" type="checkbox"
-                [value]="listItem.completed" [checked]="listItem.completed" style="font-size: 1.375em;">
-            <span class="pt-1 form-checked-content w-100">
-                <strong class="w-100" type="button" [routerLink]="['/item/'+listItem.item.id]" routerLinkActive="active"
-                    [routerLinkActiveOptions]="{exact: true}">{{listItem.item.name}}</strong>
-                <small class="d-block text-muted">
-                    {{listItem.item.comments}} </small>
-            </span>
-        </label>
-        <!--TODO: make button height equal, perhaps making Small to stay permanently-->
-        <button type="button" class="btn btn-sm btn-outline-danger"
-            (click)="openListItemDeleteModal(listItem.id, listItem.item.name)" aria-label="Delete item">
-            <svg class="bi" width="24" height="24" fill="currentColor">
-                <use xlink:href="bootstrap-icons.svg#trash-fill" />
-            </svg>
-        </button>
+<div class="container shadow-sm p-3 mb-5 bg-body rounded">
+    <div class="list-group" *ngIf="list">
+        <div class="d-flex w-100 justify-content-between " *ngFor="let listItem of list.items">
+            <label class="list-group-item d-flex gap-3 w-100 border-end-0">
+                <input class="form-check-input flex-shrink-0" (change)="listItemChecked(listItem.id,$event)"
+                    type="checkbox" [value]="listItem.completed" [checked]="listItem.completed"
+                    style="font-size: 1.375em;">
+                <span class="pt-1 form-checked-content w-100">
+                    <strong class="w-100" type="button" [routerLink]="['/item/'+listItem.item.id]"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">{{listItem.item.name}}</strong>
+                    <small class="d-block text-muted">
+                        {{listItem.item.comments}} </small>
+                </span>
+            </label>
+            <div class="border border-start-0">
+                <!--TODO: make button height equal, perhaps making Small to stay permanently-->
+                <button type="button" class="w-100 h-100 btn btn-sm btn-outline-danger border-0"
+                    (click)="openListItemDeleteModal(listItem.id, listItem.item.name)" aria-label="Delete item">
+                    <svg class="bi" width="24" height="24" fill="currentColor">
+                        <use xlink:href="bootstrap-icons.svg#trash-fill" />
+                    </svg>
+                </button>
+            </div>
+
+        </div>
     </div>
+    <button class="btn btn-sm btn-outline-success w-100" (click)="openListItemCreateModal(listNo)"
+        aria-label="Create list">
+        <svg class="bi" width="24" height="24" fill="currentColor">
+            <use xlink:href="bootstrap-icons.svg#plus" />
+        </svg>
+    </button>
 </div>
-<button class="btn btn-sm btn-outline-success w-100" (click)="openListItemCreateModal(listNo)" aria-label="Create list">
-    <svg class="bi" width="24" height="24" fill="currentColor">
-        <use xlink:href="bootstrap-icons.svg#plus" />
-    </svg>
-</button>
+
 <!--someday for dynamic input
           <label class="list-group-item d-flex gap-3 bg-light">
       <input class="form-check-input form-check-input-placeholder bg-light flex-shrink-0" disabled="" type="checkbox" value="" style="font-size: 1.375em;">

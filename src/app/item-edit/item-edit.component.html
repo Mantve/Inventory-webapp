@@ -48,7 +48,7 @@
                 <select class="form-select" (change)="onRoomChange()" id="roomId" formControlName="roomId">
                     <option [ngValue]="null" selected>-- Select a room --</option>
                     <option *ngFor="let room of rooms" attr.value={{room.id}}
-                        [selected]="(((savedItem && room.id==savedItem.room.id) || (fromParent.roomNo && room.id==fromParent.roomNo)) ? true : null)">{{room.name}}</option>
+                        [selected]="(((savedItem && room.id==savedItem.room.id) || (fromParent.new && fromParent.roomNo && room.id==fromParent.roomNo)) ? true : null)">{{room.name}}</option>
                 </select>
             </div>
         </div>
@@ -58,7 +58,7 @@
                 <select class="form-select" id="parentItemId" formControlName="parentItemId">
                     <option [ngValue]="null" selected>-- Not selected --</option>
                     <option *ngFor="let item of items" attr.value={{item.id}}
-                        [selected]="(((savedItem && item.id==savedItem.parentItem?.id) || (fromParent.itemNo && item.id==fromParent.itemNo)) ? true : null) ">{{item.name}}</option>
+                        [selected]="(((savedItem && item.id==savedItem.parentItem?.id) || (fromParent.new && fromParent.itemNo && item.id==fromParent.itemNo)) ? true : null) ">{{item.name}}</option>
                 </select>
             </div>
         </div>

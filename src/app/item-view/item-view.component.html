@@ -1,8 +1,8 @@
 <div *ngIf="item">
     <div
-        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom px-3">
         <h1 class="h2">{{item.name}}</h1>
-        <div class="btn-toolbar mb-2 mb-md-0 gap-1">
+        <div class="btn-toolbar mb-2 mb-md-0">
             <!-- TODO: do we need spacing?-->
             <button type="button" class="btn btn-sm btn-outline-success"
                 (click)="openItemEditModal(item.room.id,item.id,true)" aria-label="Create item">
