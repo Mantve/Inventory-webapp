@@ -53,6 +53,8 @@ export class LoginComponent implements OnInit {
       .subscribe(res => {
         this._authService.sendAuthStateChangeNotification(res.status === 200);
         if (res.status === 200) {
+          localStorage.setItem('user',JSON.stringify(res.body));
+          sessionStorage.setItem('loggedAt', Date.now().toString());
           this._roomService.sendRoomUpdateNotification();
           this._toastr.success('Logged in successfully', 'Success');
         }

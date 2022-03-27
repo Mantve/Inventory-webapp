@@ -6,7 +6,6 @@ import { Injectable } from '@angular/core';
 import { EnvironmentUrlService } from './environment-url.service';
 import { UserForAuthenticationDto } from '../models/request/userForAuthenticationDto.model';
 import { Subject } from 'rxjs';
-import { CookieService } from 'ngx-cookie-service';
 import jwtDecode from 'jwt-decode';
 
 @Injectable({
@@ -16,7 +15,7 @@ export class AuthenticationService {
   private _authChangeSub = new Subject<boolean>()
   public authChanged = this._authChangeSub.asObservable();
 
-  constructor(private _http: HttpClient, private _envUrl: EnvironmentUrlService, private cookieService: CookieService) { }
+  constructor(private _http: HttpClient, private _envUrl: EnvironmentUrlService) { }
 
   public registerUser = (route: string, body: RegistrationDto) => {
     return this._http.post<RegistrationResponseDto>(this.createCompleteRoute(route, this._envUrl.urlAddress), body, { observe: 'response', withCredentials: true });
@@ -31,7 +30,7 @@ export class AuthenticationService {
   }
 
   public loginUser = (route: string, body: UserForAuthenticationDto) => {
-    return this._http.post(this.createCompleteRoute(route, this._envUrl.urlAddress), body, { observe: 'response', withCredentials: true });
+    return this._http.post<UserResponseDto>(this.createCompleteRoute(route, this._envUrl.urlAddress), body, { observe: 'response', withCredentials: true });
   }
 
   public logout = (route: string) => {
@@ -52,29 +51,29 @@ export class AuthenticationService {
   }
 
   public getRole = () => {
-    let token = this.cookieService.get('jwt');
-    if (!token)
+    let user = localStorage.getItem('user');
+    if (!user)
       return "";
-    return (jwtDecode(token) as any)["http://schemas.microsoft.com/ws/2008/06/identity/claims/role"];
+    return (JSON.parse(user))["role"];
   }
 
   public getName = () => {
-    let token = this.cookieService.get('jwt');
-    if (!token)
+    let user = localStorage.getItem('user');
+    if (!user)
       return "";
-    return (jwtDecode(token) as any)["http://schemas.xmlsoap.org/ws/2005/05/identity/claims/name"];
+    return (JSON.parse(user))["username"];
   }
 
+ 
   public isLogged = () => {
-    let token = this.cookieService.get('jwt');
-    if (!token || token == ""){
+    let loginDate = sessionStorage.getItem('loggedAt');
+    if (!loginDate || loginDate == ""){
       console.log("no token found")
       return false;
     }
-    let exp = (jwtDecode(token) as any)["exp"];
-    if (!exp || Number(exp) < new Date().getTime()/1000)
+    if (Number(loginDate) < new Date().getTime()/1000)
     {
-      console.log("expired" + " " + Number(exp) + "<" +(new Date().getTime()/1000))
+      console.log("expired" + " " + Number(loginDate) + "<" +(new Date().getTime()/1000))
       return false;
     }
     return true;
