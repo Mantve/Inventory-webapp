@@ -11,6 +11,8 @@ import { constants } from '../_constants';
 import { Observable } from 'rxjs';
 import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
 import { ItemEditComponent } from '../item-edit/item-edit.component';
+import { AuthenticationService } from '../services/authentication.service';
+import { RoomShareComponent } from '../room-share/room-share.component';
 
 @Component({
   selector: 'app-room-view',
@@ -22,6 +24,7 @@ export class RoomViewComponent implements OnInit {
   roomNo!: number;
   room!: RoomResponseDto;
   items!: Array<RecursiveItemResponseDto>;
+  username!: string
 
   constructor(
     private _roomService: RoomService,
@@ -29,10 +32,16 @@ export class RoomViewComponent implements OnInit {
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private toastr: ToastrService,
-    private _itemService: ItemService) {
-  }
+    private _itemService: ItemService,
+    private _authenticationService: AuthenticationService) {      
+    }
 
   ngOnInit(): void {
+    this._authenticationService.getUser().subscribe(
+      res => {
+        this.username = res.body?.username || "";
+      }, error => console.error(error))
+
     this.route.params.subscribe(params => {
       this.roomNo = params['roomNo'];
       this.loadRoom(this.roomNo);
@@ -101,6 +110,20 @@ export class RoomViewComponent implements OnInit {
     modalRef.result.then((result) => {
       this.loadItems(this.roomNo);
     }, (reason) => {
+    });
+  }
+
+  openRoomShareModal(roomNo: number) {
+    const modalRef = this.modalService.open(RoomShareComponent,constants.ngbModalConfig);
+    let data = {
+      roomNo: roomNo
+    }
+
+    modalRef.componentInstance.fromParent = data;
+    modalRef.result.then((res) => {
+      this.loadRoom(roomNo);
+    }, (error) => {
+      this.loadRoom(roomNo);
     });
   }
 

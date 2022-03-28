@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { RoomCreateComponent } from '../room-create/room-create.component';
+import { RoomEditComponent } from '../room-edit/room-edit.component';
 import { AuthenticationService } from '../services/authentication.service';
 import { constants } from '../_constants';
 
@@ -21,9 +21,12 @@ export class HomeComponent implements OnInit {
   }
 
   openCreateRoomModal() {
-    const modalRef = this.modalService.open(RoomCreateComponent, constants.ngbModalConfig);
-
-    modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    const modalRef = this.modalService.open(RoomEditComponent, constants.ngbModalConfig);
+    let data = {
+      new: true
+    }
+    modalRef.componentInstance.fromParent = data;
+    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
     }, (reason) => {
     });

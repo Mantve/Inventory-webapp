@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ToastrService } from 'ngx-toastr';
 import { MessageType } from '../models/enums/messageType.model';
 import { MessageService } from '../services/message.service';
 
@@ -12,6 +13,7 @@ export class FriendRequestSendComponent implements OnInit {
   form!: FormGroup;
 
   constructor(
+    private _toastr: ToastrService,
     private _formBuilder: FormBuilder,
     private _messageService: MessageService) {
     this.form = this._formBuilder.group({
@@ -23,8 +25,10 @@ export class FriendRequestSendComponent implements OnInit {
   
 sendRequest(){
   this._messageService.create(this.form.value).subscribe((res: any) => {
-    
+    this._toastr.success('Friend request has been sent successfully', 'Success');
+
   }, (error: any) => {
+    this._toastr.error(error.error.detail, 'Error sending friend request');
     console.error(error)
   })
 }

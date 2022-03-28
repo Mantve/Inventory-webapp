@@ -1,14 +1,24 @@
-<li *ngFor="let request of requests">
-    <a class="link-dark rounded">{{request.author.username}}</a>
-    <button class="btn btn-success " (click)="acceptFriendRequest(request.id)" aria-label="friend">
-        <svg class="bi " width="16 " height="16 " fill="currentColor ">
-            <use xlink:href="bootstrap-icons.svg#checkmark " />
-        </svg>
-    </button>
-    <button class="btn btn-danger " aria-label="unfriend">
-            <svg class="bi " width="16 " height="16 " fill="currentColor ">
-                <use xlink:href="bootstrap-icons.svg#trash-fill " />
-            </svg>
-        </button>
-
-</li>
+<div class="list-group" *ngIf="requests">
+    <div *ngFor="let request of requests" class="d-flex justify-content-between border">
+        <label class="list-group-item d-flex gap-3 w-100 border-0">
+            <span class="pt-1 w-100">
+                <strong class="w-100">{{request.author.username}}</strong>
+                <small class="d-block text-muted">{{request.contents}} </small>
+            </span>
+        </label>
+        <div class="d-flex position-relative ">
+            <button class="w-100 h-100 btn btn-sm btn-outline-success border-0 "
+                (click)="acceptFriendRequest(request.id)" aria-label="friend">
+                <svg class="bi " width="24 " height="24 " fill="currentColor ">
+                    <use xlink:href="bootstrap-icons.svg#check-lg " />
+                </svg>
+            </button>
+            <button class="w-100 h-100 btn btn-sm btn-outline-danger border-0" 
+               (click)="openRequestDeleteModal(request.id, request.author.username)" aria-label="unfriend">
+                <svg class="bi " width="24 " height="24 " fill="currentColor ">
+                    <use xlink:href="bootstrap-icons.svg#trash-fill " />
+                </svg>
+            </button>
+        </div>
+    </div>
+</div>

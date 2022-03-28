@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
 import { RoomCreateDto } from '../models/request/roomCreateDto.model';
+import { RoomShareDto } from '../models/request/roomShareDto.model';
 import { RoomUpdateDto } from '../models/request/roomUpdateDto.model';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
 import { EnvironmentUrlService } from './environment-url.service';
@@ -38,4 +39,9 @@ export class RoomService {
   public delete(id: number) {
     return this.http.delete(`${this._envUrl.urlAddress}/api/room/${id}`, { withCredentials: true });
   }
+
+  public share(id: number, username: RoomShareDto) {
+    return this.http.put(`${this._envUrl.urlAddress}/api/room/${id}/share`, username, { withCredentials: true });
+  }
+
 }

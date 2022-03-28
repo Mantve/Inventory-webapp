@@ -6,6 +6,6 @@ export interface UserResponseDto {
     username: string,
     role: string,
     friends: Array<UserResponseDto>,
-    rooms: Array<RoomResponseDto>,
+    createdRooms: Array<RoomResponseDto>,
     lists: Array<ListResponseDto>
 }

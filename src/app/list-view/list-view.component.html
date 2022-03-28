@@ -1,6 +1,6 @@
 <div class="container shadow-sm p-3 mb-5 bg-body rounded">
     <div class="list-group" *ngIf="list">
-        <div class="d-flex w-100 justify-content-between " *ngFor="let listItem of list.items">
+        <div class="d-flex justify-content-between " *ngFor="let listItem of list.items">
             <label class="list-group-item d-flex gap-3 w-100 border-end-0">
                 <input class="form-check-input flex-shrink-0" (change)="listItemChecked(listItem.id,$event)"
                     type="checkbox" [value]="listItem.completed" [checked]="listItem.completed"
@@ -22,14 +22,11 @@
                     </svg>
                 </button>
             </div>
-
         </div>
     </div>
-    <button class="btn btn-sm btn-outline-success w-100" (click)="openListItemCreateModal(listNo)"
+    <button class="btn btn-sm btn-outline-success w-100 position-relative" (click)="openListItemCreateModal(listNo)"
         aria-label="Create list">
-        <svg class="bi" width="24" height="24" fill="currentColor">
-            <use xlink:href="bootstrap-icons.svg#plus" />
-        </svg>
+        <strong>Add item</strong>
     </button>
 </div>
 

@@ -11,7 +11,6 @@ import { HomeComponent } from './home/home.component';
 import { NotFoundComponent } from './not-found/not-found.component';
 import { RoomViewComponent } from './room-view/room-view.component';
 import { ToastrModule } from 'ngx-toastr';
-import { RoomCreateComponent } from './room-create/room-create.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ItemViewComponent } from './item-view/item-view.component';
 import { RoomEditComponent } from './room-edit/room-edit.component';
@@ -33,6 +32,7 @@ import { ReminderListComponent } from './reminder-list/reminder-list.component';
 import { ReminderCreateComponent } from './reminder-create/reminder-create.component';
 import { ReminderEditComponent } from './reminder-edit/reminder-edit.component';
 import { ItemListComponent } from './item-list/item-list.component';
+import { RoomShareComponent } from './room-share/room-share.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -56,7 +56,6 @@ const routes: Routes = [
     HomeComponent,
     NotFoundComponent,
     RoomViewComponent,
-    RoomCreateComponent,
     ItemViewComponent,
     RoomEditComponent,
     ItemEditComponent,
@@ -76,7 +75,8 @@ const routes: Routes = [
     ReminderListComponent,
     ReminderCreateComponent,
     ReminderEditComponent,
-    ItemListComponent
+    ItemListComponent,
+    RoomShareComponent
   ],
   imports: [
     HttpClientModule,

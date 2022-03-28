@@ -1,0 +1,15 @@
+<div class="container shadow-sm p-3 mb-5 bg-body rounded">
+    <div class="list-group" *ngIf="friends">
+        <div class="d-flex justify-content-between " *ngFor="let friend of friends">
+            <label class="list-group-item d-flex gap-3 w-100 ">
+                <input class="form-check-input flex-shrink-0"
+                    (change)="listItemChecked(room.id, friend.username, $event)" type="checkbox"
+                    [value]="isSharedWith(friend.username)" [checked]="isSharedWith(friend.username)" style="font-size: 1.375em;">
+                <span class="pt-1 form-checked-content w-100">
+                    <strong class="w-100" type="button">{{friend.username}}</strong>
+                    <!--<small class="d-block text-muted"> {{listItem.item.comments}} </small> -->
+                </span>
+            </label>
+        </div>
+    </div>
+</div>

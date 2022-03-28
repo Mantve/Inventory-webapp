@@ -1,20 +1,20 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { RoomCreateComponent } from './room-create.component';
+import { RoomShareComponent } from './room-share.component';
 
-describe('RoomCreateComponent', () => {
-  let component: RoomCreateComponent;
-  let fixture: ComponentFixture<RoomCreateComponent>;
+describe('RoomShareComponent', () => {
+  let component: RoomShareComponent;
+  let fixture: ComponentFixture<RoomShareComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ RoomCreateComponent ]
+      declarations: [ RoomShareComponent ]
     })
     .compileComponents();
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(RoomCreateComponent);
+    fixture = TestBed.createComponent(RoomShareComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

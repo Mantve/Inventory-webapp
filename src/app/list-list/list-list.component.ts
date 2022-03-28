@@ -84,6 +84,10 @@ export class ListListComponent implements OnInit {
     });
   }
 
+  getRandomNumber() {
+    return  Math.floor(Math.random() *10) ;
+  }
+
   statusChangeEvent(state: string) {
     switch (state) {
 

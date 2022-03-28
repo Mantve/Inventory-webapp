@@ -15,10 +15,17 @@ export class AuthenticationService {
   private _authChangeSub = new Subject<boolean>()
   public authChanged = this._authChangeSub.asObservable();
 
+  private _friendChangeSub = new Subject<boolean>()
+  public friendChanged = this._friendChangeSub.asObservable();
+
   constructor(private _http: HttpClient, private _envUrl: EnvironmentUrlService) { }
 
   public registerUser = (route: string, body: RegistrationDto) => {
     return this._http.post<RegistrationResponseDto>(this.createCompleteRoute(route, this._envUrl.urlAddress), body, { observe: 'response', withCredentials: true });
+  }
+
+  public sendFriendStateChangeNotification = () => {
+    this._friendChangeSub.next(true);
   }
 
   public sendAuthStateChangeNotification = (isAuthenticated: boolean) => {
@@ -48,6 +55,10 @@ export class AuthenticationService {
 
   public addFriend = (messageId:number) => {
     return this._http.post(this.createCompleteRoute('api/friends/'+messageId, this._envUrl.urlAddress),"",  { withCredentials: true });
+  }
+
+  public unfriend = (username:string) => {
+    return this._http.delete(this.createCompleteRoute('api/friends/'+username, this._envUrl.urlAddress), { withCredentials: true });
   }
 
   public getRole = () => {
