@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ListService } from '../services/list.service';
@@ -8,7 +8,7 @@ import { ListService } from '../services/list.service';
   templateUrl: './list-create.component.html',
   styleUrls: ['./list-create.component.css']
 })
-export class ListCreateComponent implements OnInit {
+export class ListCreateComponent  {
   @Input() fromParent: any;
   @Output() createEvent = new EventEmitter<string>();
   form!: FormGroup;
@@ -21,9 +21,6 @@ export class ListCreateComponent implements OnInit {
     this.form = this._formBuilder.group({
       name: ["", Validators.required]
     });
-  }
-
-  ngOnInit(): void {
   }
 
   onSubmit(sendData: any) {

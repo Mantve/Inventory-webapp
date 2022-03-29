@@ -52,7 +52,7 @@ export class ItemEditComponent implements OnInit {
       this._itemService.get(this.fromParent.itemNo).subscribe(result => {
         this.savedItem = result
         this.loadRooms();
-        this.loadCategories();
+        this.loadCategories(this.fromParent.roomNo);
         this.loadItems(result.room.id);
         this.form = this._formBuilder.group({
           name: [result.name, Validators.required],
@@ -63,12 +63,11 @@ export class ItemEditComponent implements OnInit {
           comments: [result.comments],
           roomId: [result.room.id, Validators.required]
         });
-        console.log(result.parentItem?.name)
       })
     }
     else {
       this.loadRooms();
-      this.loadCategories();
+      this.loadCategories(this.fromParent.roomNo);
       this.loadItems(this.fromParent.roomNo);
       this.form.patchValue({
         parentItemId: this.fromParent.itemNo,
@@ -99,17 +98,38 @@ export class ItemEditComponent implements OnInit {
       }, error => console.error(error))
   }
 
-  loadCategories() {
+  loadCategories(roomNo?: number) {
     this._categoryService.getAll().subscribe(
       res => {
+        if (roomNo) {
+          this.loadCategoriesFromRoom(roomNo, res);
+        }
+
         this.categories = res;
       }, error => console.error(error))
   }
+
+  loadCategoriesFromRoom(roomNo: number, categories: Array<CategoryResponseDto>) {
+    this._categoryService.getAllFromRoom(roomNo).subscribe(
+      res => {
+        res.forEach(category => {
+          if (!categories.some(c => c.id === category.id)) {
+            categories.push(category);
+          }
+        });
+      
+        this.categories = categories;
+      }, error => console.error(error))
+  }
+
+
 
   onRoomChange() {
     let select = document.querySelector("#roomId") as HTMLSelectElement;
     let roomNo = Number(select.value);
     this.loadItems(roomNo);
+    this.loadCategories(roomNo);
+    console.log("room changed"+roomNo);
   }
 
   onSubmit(sendData: any) {

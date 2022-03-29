@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { CategoryService } from '../services/category.service';
@@ -8,7 +8,7 @@ import { CategoryService } from '../services/category.service';
   templateUrl: './category-create.component.html',
   styleUrls: ['./category-create.component.css']
 })
-export class CategoryCreateComponent implements OnInit {
+export class CategoryCreateComponent  {
 
   @Input() fromParent: any;
   @Output() createEvent = new EventEmitter<string>();
@@ -22,9 +22,6 @@ export class CategoryCreateComponent implements OnInit {
       name: ["", Validators.required],
       description: [""]
     });
-  }
-
-  ngOnInit(): void {
   }
 
   onSubmit(sendData: any) {

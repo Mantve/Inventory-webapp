@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MessageType } from '../models/enums/messageType.model';
@@ -9,7 +9,7 @@ import { MessageService } from '../services/message.service';
   templateUrl: './friend-request-send.component.html',
   styleUrls: ['./friend-request-send.component.css']
 })
-export class FriendRequestSendComponent implements OnInit {
+export class FriendRequestSendComponent  {
   form!: FormGroup;
 
   constructor(
@@ -32,8 +32,5 @@ sendRequest(){
     console.error(error)
   })
 }
-
-  ngOnInit(): void {
-  }
 
 }

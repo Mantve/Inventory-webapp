@@ -47,8 +47,9 @@
         <div class="form-group row">
             <label for="name" class="col-form-label col-sm-2">Repeat:</label>
             <div class="col-sm-10">
+                
                 <select class="form-select" id="repeatFrequency" formControlName="repeatFrequency">
-                    <option *ngFor="let frequency of frequencies | keyvalue" attr.value={{frequency.key}}>{{frequency.value}}</option>
+                    <option *ngFor="let frequency of frequencies | keyvalue" [ngValue]="frequency.key">{{frequency.value}}</option>
                 </select> </div>
         </div>
     </form>

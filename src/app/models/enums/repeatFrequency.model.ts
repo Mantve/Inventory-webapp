@@ -1,10 +1,10 @@
 export enum RepeatFrequency{
-    None,
-    OneDay,
-    OneWeek,
-    TwoWeeks,
-    OneMonth,
-    ThreeMonths,
-    SixMonths,
-    OneYear
+    'None',
+    'One day',
+    'One week',
+    'Two weeks',
+    'One month',
+    'Three months',
+    'Six months',
+    'One year'
 }

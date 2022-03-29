@@ -22,7 +22,7 @@ export class ReminderCreateComponent implements OnInit {
   @Input() fromParent: any;
   @Output() createEvent = new EventEmitter<string>();
   selectedRoom!: number
-  frequencies!:any
+  frequencies = Object.keys(RepeatFrequency).filter(k => isNaN(Number(k)));
   form!: FormGroup;
   rooms!: Array<RoomResponseDto>;
   items!: Array<ItemResponseDto>;
@@ -36,13 +36,14 @@ export class ReminderCreateComponent implements OnInit {
     private _roomService: RoomService,
     private _reminderService: ReminderService
   ) {
-    this.frequencies= RepeatFrequency;
+
+console.log(this.frequencies);
     this.form = this._formBuilder.group({
       itemId: [, Validators.required],
       roomId: [, Validators.required],
       reminderTime: [Date.now, Validators.required],
       reason: [],
-      repeatFrequency: [RepeatFrequency.None, Validators.required]
+      repeatFrequency: [0, Validators.required]
     });
   }
 

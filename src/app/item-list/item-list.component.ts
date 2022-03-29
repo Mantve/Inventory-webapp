@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
 import { RecursiveItemResponseDto } from '../models/response/recursiveItemResponseDto.model';
 
@@ -7,12 +7,9 @@ import { RecursiveItemResponseDto } from '../models/response/recursiveItemRespon
   templateUrl: './item-list.component.html',
   styleUrls: ['./item-list.component.css']
 })
-export class ItemListComponent implements OnInit {
+export class ItemListComponent  {
 
   @Input() items!: Array<RecursiveItemResponseDto>;
   constructor() { }
-
-  ngOnInit(): void {
-  }
 
 }

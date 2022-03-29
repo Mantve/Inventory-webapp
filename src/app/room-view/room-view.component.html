@@ -6,10 +6,10 @@
                 <h2>{{room.name}}</h2>
                 <div class="d-flex align-self-center">
                     <div *ngFor="let user of room.sharedWith">
-                        <span *ngIf="user.username == room.author.username" class="badge bg-dark m-1">{{user.username}}</span>
+                        <span *ngIf="user.username === room.author.username" class="badge bg-dark m-1">{{user.username}}</span>
                     </div>
                     <div *ngFor="let user of room.sharedWith" >
-                        <span *ngIf="user.username != room.author.username" class="badge bg-secondary m-1">{{user.username}}</span>
+                        <span *ngIf="user.username !== room.author.username" class="badge bg-secondary m-1">{{user.username}}</span>
                     </div>
                 </div>
 
@@ -24,19 +24,19 @@
                     <use xlink:href="bootstrap-icons.svg#plus" />
                 </svg>
             </button>
-            <button *ngIf="username == room.author.username" type="button" class="btn btn-sm btn-outline-primary"
+            <button *ngIf="username === room.author.username" type="button" class="btn btn-sm btn-outline-primary"
                 (click)="openRoomEditModal(room.id)" aria-label="Edit room">
                 <svg class="bi" width="24" height="24" fill="currentColor">
                     <use xlink:href="bootstrap-icons.svg#pen-fill" />
                 </svg>
             </button>
-            <button *ngIf="username == room.author.username" type="button" class="btn btn-sm btn-outline-dark"
+            <button *ngIf="username === room.author.username" type="button" class="btn btn-sm btn-outline-dark"
                 (click)="openRoomShareModal(room.id)" aria-label="Delete room">
                 <svg class="bi" width="24" height="24" fill="currentColor">
                     <use xlink:href="bootstrap-icons.svg#gear-fill" />
                 </svg>
             </button>
-            <button *ngIf="username == room.author.username" type="button" class="btn btn-sm btn-outline-danger"
+            <button *ngIf="username === room.author.username" type="button" class="btn btn-sm btn-outline-danger"
                 (click)="openRoomDeleteModal(room.id, room.name)" aria-label="Delete room">
                 <svg class="bi" width="24" height="24" fill="currentColor">
                     <use xlink:href="bootstrap-icons.svg#trash-fill" />

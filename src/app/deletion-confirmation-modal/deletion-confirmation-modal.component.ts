@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 
 @Component({
@@ -6,15 +6,12 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
   templateUrl: './deletion-confirmation-modal.component.html',
   styleUrls: ['./deletion-confirmation-modal.component.css']
 })
-export class DeletionConfirmationModalComponent implements OnInit {
+export class DeletionConfirmationModalComponent  {
   @Input() fromParent: any;
   @Output() deleteEvent = new EventEmitter<string>();
 
   constructor(
     private _activeModal: NgbActiveModal) {
-  }
-
-  ngOnInit(): void {
   }
 
   closeModal(sendData: any) {
