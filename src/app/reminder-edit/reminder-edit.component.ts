@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ItemEditComponent } from '../item-edit/item-edit.component';
 import { RepeatFrequency } from '../models/enums/repeatFrequency.model';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
+import { ReminderResponseDto } from '../models/response/reminderResponseDto.model';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
 import { ItemService } from '../services/item.service';
 import { ReminderService } from '../services/reminder.service';
@@ -26,6 +27,7 @@ export class ReminderEditComponent implements OnInit {
   form!: FormGroup;
   rooms!: Array<RoomResponseDto>;
   items!: Array<ItemResponseDto>;
+  savedReminder!: ReminderResponseDto;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -47,9 +49,28 @@ export class ReminderEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadRooms();
-    if (this.selectedRoom)
-      this.loadItems(this.selectedRoom);
+    console.log(this.fromParent)
+    if(!this.fromParent.new){
+      this._reminderService.get(this.fromParent.reminderId).subscribe(
+        res => {
+          console.log(res)
+          this.savedReminder = res;
+          this.loadRooms();
+          this.loadItems(this.savedReminder.item.room.id);
+          this.form.patchValue({
+            itemId: res.item.id,
+            roomId: res.item.room.id,
+            reminderTime: res.reminderTime,
+            reason: res.reason,
+            repeatFrequency: res.repeatFrequency
+          });
+        })
+    }
+    else{
+      this.loadRooms();
+      if (this.selectedRoom)
+        this.loadItems(this.selectedRoom);
+    }
   }
 
   loadItems(roomNo: number) {
@@ -76,6 +97,16 @@ export class ReminderEditComponent implements OnInit {
   }
 
   onSubmit(sendData: any) {
+    if (!this.fromParent.new) {
+      this._reminderService.update(this.fromParent.reminderId ,this.form.value).subscribe((res: any) => {
+        this.editEvent.emit("listItem-create-success");
+        this._activeModal.close(sendData);
+      }, (error: any) => {
+        this.editEvent.emit("listItem-create-fail");
+        console.error(error)
+      })
+    }
+    else {
     this._reminderService.create(this.form.value).subscribe((res: any) => {
       this.editEvent.emit("listItem-create-success");
       this._activeModal.close(sendData);
@@ -83,6 +114,7 @@ export class ReminderEditComponent implements OnInit {
       this.editEvent.emit("listItem-create-fail");
       console.error(error)
     })
+  }
   }
 
   closeModal(sendData: any) {

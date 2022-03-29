@@ -52,7 +52,7 @@ export class ItemEditComponent implements OnInit {
       this._itemService.get(this.fromParent.itemNo).subscribe(result => {
         this.savedItem = result
         this.loadRooms();
-        this.loadCategories(this.fromParent.roomNo);
+        this.loadCategories(result.room.id);
         this.loadItems(result.room.id);
         this.form = this._formBuilder.group({
           name: [result.name, Validators.required],

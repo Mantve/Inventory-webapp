@@ -29,7 +29,6 @@ import { ListCreateComponent } from './list-create/list-create.component';
 import { ListEditComponent } from './list-edit/list-edit.component';
 import { ListItemCreateComponent } from './list-item-create/list-item-create.component';
 import { ReminderListComponent } from './reminder-list/reminder-list.component';
-import { ReminderCreateComponent } from './reminder-create/reminder-create.component';
 import { ReminderEditComponent } from './reminder-edit/reminder-edit.component';
 import { ItemListComponent } from './item-list/item-list.component';
 import { RoomShareComponent } from './room-share/room-share.component';
@@ -73,7 +72,6 @@ const routes: Routes = [
     ListEditComponent,
     ListItemCreateComponent,
     ReminderListComponent,
-    ReminderCreateComponent,
     ReminderEditComponent,
     ItemListComponent,
     RoomShareComponent

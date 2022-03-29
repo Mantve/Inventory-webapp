@@ -4,10 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
-import { ListCreateComponent } from '../list-create/list-create.component';
-import { ListEditComponent } from '../list-edit/list-edit.component';
 import { ReminderResponseDto } from '../models/response/reminderResponseDto.model';
-import { ReminderCreateComponent } from '../reminder-create/reminder-create.component';
 import { ReminderEditComponent } from '../reminder-edit/reminder-edit.component';
 import { ReminderService } from '../services/reminder.service';
 import { constants } from '../_constants';
@@ -56,15 +53,16 @@ export class ReminderListComponent implements OnInit {
     modalRef.componentInstance.fromParent = data;
     modalRef.componentInstance.deleteEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((res) => {
+      this.loadReminders();
     }, (error) => {
       this.loadReminders();
     });
   }
 
-  openReminderEditModal(reminderNo: number) {
+  openReminderEditModal(reminderId: number) {
     const modalRef = this.modalService.open(ReminderEditComponent,constants.ngbModalConfig);
     let data = {
-      reminderNo: reminderNo
+      reminderId: reminderId
     }
 
     modalRef.componentInstance.fromParent = data;
@@ -76,9 +74,14 @@ export class ReminderListComponent implements OnInit {
   }
 
   openReminderCreateModal() {
-    const modalRef = this.modalService.open(ReminderCreateComponent,constants.ngbModalConfig);
+    const modalRef = this.modalService.open(ReminderEditComponent,constants.ngbModalConfig);
 
-    modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    let data = {
+      new: true
+    }
+
+    modalRef.componentInstance.fromParent = data;
+    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
       this.loadReminders();
     }, (reason) => {

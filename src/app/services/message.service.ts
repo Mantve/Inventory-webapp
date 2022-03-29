@@ -29,6 +29,10 @@ export class MessageService {
     return this.http.post(`${this._envUrl.urlAddress}/api/message`, data, { withCredentials: true });
   }
 
+  public update(id: number, data: MessageCreateDto) {
+    return this.http.put(`${this._envUrl.urlAddress}/api/message/${id}`, data, { withCredentials: true });
+  }
+
   public delete(id: number) {
     return this.http.delete(`${this._envUrl.urlAddress}/api/message/${id}`, { withCredentials: true });
   }
