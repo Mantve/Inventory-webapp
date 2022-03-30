@@ -1,30 +1,39 @@
+<div
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom  px-3">
+    <h2>Categories</h2>
+    <div class="btn-toolbar mb-2 mb-md-0">
+        <button class="btn btn-success" (click)="openCategoryCreateModal()" aria-label="Create category">
+            New category
+        </button>
+    </div>
+</div>
+
 <div class="container shadow-sm p-3 mb-5 bg-body rounded">
+    <div class="list-group" *ngIf="categories">
 
-<li class="list-group-item list-group-item-action d-flex gap-3 py-3 " *ngFor="let category of categories">
+        <div class="d-flex justify-content-between border" *ngFor="let category of categories">
 
-    <span class="d-flex gap-2 w-100 justify-content-between">
+            <label class="list-group-item d-flex gap-3 w-100 border-0">
+                <span class="pt-1 w-100">
+                    <strong class="w-100">{{category.name}}</strong>
+                    <small class="d-block text-muted"> {{category.description}}</small>
+                </span>
+            </label>
 
-        <div>
-            <h6 class="mb-0">{{category.name}}</h6>
-            <p class="mb-0 opacity-75">{{category.description}}</p>
+            <div class="d-flex position-relative">
+                <button type="button" class="w-100 h-100 btn btn-sm btn-outline-primary border-0"
+                    (click)="openCategoryEditModal(category.id) " aria-label="Edit category">
+                    <svg class="bi" width="24" height="24" fill="currentColor">
+                        <use xlink:href="bootstrap-icons.svg#pen-fill" />
+                    </svg>
+                </button>
+                <button type="button" class="w-100 h-100 btn btn-sm btn-outline-danger border-0"
+                    (click)="openCategoryDeleteModal(category.id, category.name) " aria-label="Delete category">
+                    <svg class="bi" width="24" height="24" fill="currentColor">
+                        <use xlink:href="bootstrap-icons.svg#trash-fill" />
+                    </svg>
+                </button>
+            </div>
         </div>
-        <div class="btn-toolbar mb-2 mb-md-0">
-            <button type="button" class="btn btn-sm btn-outline-primary" (click)="openCategoryEditModal(category.id) " aria-label="Edit category ">
-                <svg class="bi " width="16 " height="16 " fill="currentColor ">
-                    <use xlink:href="bootstrap-icons.svg#pen-fill " />
-                </svg>
-            </button>
-            <button type="button" class="btn btn-sm btn-outline-danger" (click)="openCategoryDeleteModal(category.id, category.name) "
-                aria-label="Delete category ">
-                <svg class="bi " width="16 " height="16 " fill="currentColor ">
-                    <use xlink:href="bootstrap-icons.svg#trash-fill " />
-                </svg>
-            </button>
-
-        </div>
-    </span>
-</li>
-<button type="button" class="btn btn-sm btn-outline-success w-100 position-relative" (click)="openCategoryCreateModal() " aria-label="Create category ">
-    <strong>Add category</strong>
-</button>
+    </div>
 </div>

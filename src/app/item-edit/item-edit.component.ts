@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
-import { CategoryCreateComponent } from '../category-create/category-create.component';
+import { CategoryEditComponent } from '../category-edit/category-edit.component';
 import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
@@ -158,8 +158,12 @@ export class ItemEditComponent implements OnInit {
   }
 
   openCategoryCreateModal() {
-    const modalRef = this.modalService.open(CategoryCreateComponent, constants.ngbModalConfig);
-    modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    const modalRef = this.modalService.open(CategoryEditComponent, constants.ngbModalConfig);
+    let data = {
+      new: true
+    }
+    modalRef.componentInstance.fromParent = data;
+    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
       this.loadCategories();
     }, (reason) => {

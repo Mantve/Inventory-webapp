@@ -11,11 +11,11 @@ import { CategoryService } from '../services/category.service';
 })
 export class CategoryEditComponent implements OnInit {
 
- 
+
   @Input() fromParent: any;
   @Output() editEvent = new EventEmitter<string>();
   form!: FormGroup;
-  category!: CategoryResponseDto;
+  savedCategory!: CategoryResponseDto;
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -29,24 +29,40 @@ export class CategoryEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this._categoryService.get(this.fromParent.categoryNo).subscribe(result => {
-      this.category = result
-      this.form = this._formBuilder.group({
-        id: [result.id, Validators.required],
-        name: [result.name, Validators.required],
-        description: [result.description, Validators.required]
-      });
-    })
+    if (!this.fromParent.new) {
+
+      this._categoryService.get(this.fromParent.categoryNo).subscribe(result => {
+        this.savedCategory = result
+        this.form = this._formBuilder.group({
+          id: [result.id, Validators.required],
+          name: [result.name, Validators.required],
+          description: [result.description]
+        });
+      })
+    }
+
   }
 
   onSubmit(sendData: any) {
-    this._categoryService.update(this.fromParent.categoryNo, this.form.value).subscribe((res: any) => {
-      this.editEvent.emit("category-edit-success");
-      this._activeModal.close(sendData);
-    }, (error: any) => {
-      this.editEvent.emit("category-edit-fail");
-      console.error(error)
-    })
+    if (!this.fromParent.new) {
+
+      this._categoryService.update(this.fromParent.categoryNo, this.form.value).subscribe((res: any) => {
+        this.editEvent.emit("category-edit-success");
+        this._activeModal.close(sendData);
+      }, (error: any) => {
+        this.editEvent.emit("category-edit-fail");
+        console.error(error)
+      })
+    }
+    else {
+      this._categoryService.create(this.form.value).subscribe((res: any) => {
+        this.editEvent.emit("category-create-success");
+        this._activeModal.close(sendData);
+      }, (error: any) => {
+        this.editEvent.emit("category-create-fail");
+        console.error(error)
+      })
+    }
   }
 
   closeModal(sendData: any) {

@@ -3,7 +3,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
-import { CategoryCreateComponent } from '../category-create/category-create.component';
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
 import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
 import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
@@ -76,10 +75,13 @@ export class CategoryListComponent implements OnInit {
   }
 
   openCategoryCreateModal() {
-    const modalRef = this.modalService.open(CategoryCreateComponent,constants.ngbModalConfig);
+    const modalRef = this.modalService.open(CategoryEditComponent,constants.ngbModalConfig);
 
-
-    modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    let data = {
+      new: true
+    }
+    modalRef.componentInstance.fromParent = data;
+    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
       this.loadCategories();
     }, (reason) => {

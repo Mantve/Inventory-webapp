@@ -15,7 +15,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ItemViewComponent } from './item-view/item-view.component';
 import { RoomEditComponent } from './room-edit/room-edit.component';
 import { ItemEditComponent } from './item-edit/item-edit.component';
-import { CategoryCreateComponent } from './category-create/category-create.component';
 import { CategoryEditComponent } from './category-edit/category-edit.component';
 import { CategoryListComponent } from './category-list/category-list.component';
 import { NavbarComponent } from './navbar/navbar.component';
@@ -58,7 +57,6 @@ const routes: Routes = [
     ItemViewComponent,
     RoomEditComponent,
     ItemEditComponent,
-    CategoryCreateComponent,
     CategoryEditComponent,
     CategoryListComponent,
     NavbarComponent,

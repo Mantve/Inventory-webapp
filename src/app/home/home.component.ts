@@ -45,4 +45,8 @@ export class HomeComponent implements OnInit {
       default:
     }
   }
+
+  getUsername() {
+    return this.authService.getName();
+  }
 }
