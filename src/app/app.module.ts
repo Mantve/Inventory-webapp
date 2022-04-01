@@ -31,6 +31,8 @@ import { ReminderListComponent } from './reminder-list/reminder-list.component';
 import { ReminderEditComponent } from './reminder-edit/reminder-edit.component';
 import { ItemListComponent } from './item-list/item-list.component';
 import { RoomShareComponent } from './room-share/room-share.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -85,6 +87,12 @@ const routes: Routes = [
     NgbModule,
     ToastrModule.forRoot({
       positionClass: 'toast-top-right'
+    }),
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
     }),
   ],
   providers: [],

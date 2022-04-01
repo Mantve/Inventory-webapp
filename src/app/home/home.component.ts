@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { SwPush } from '@angular/service-worker';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { RoomEditComponent } from '../room-edit/room-edit.component';
@@ -12,8 +13,15 @@ import { constants } from '../_constants';
 })
 export class HomeComponent implements OnInit {
 
+  readonly VAPID_PUBLIC_KEY = "BIVRDkY314VGwydMAeG-q0_VUDwbfs4zvBAKjJ57UCbWIr4e8DHFhPgfu1x94O_EsGxNPkuCFeM-2Y3SmSnv8Ao";
 
-  constructor(private modalService: NgbModal, private toastr: ToastrService, private authService: AuthenticationService) { }
+  constructor(
+    private modalService: NgbModal, 
+    private toastr: ToastrService,
+     private authService: AuthenticationService,
+     private swPush: SwPush,
+       // private newsletterService: NewsletterService
+        ) { }
 
   authStatus!: boolean
   ngOnInit(): void {
@@ -49,4 +57,14 @@ export class HomeComponent implements OnInit {
   getUsername() {
     return this.authService.getName();
   }
+
+  subscribeToNotifications() {
+
+    this.swPush.requestSubscription({
+        serverPublicKey: this.VAPID_PUBLIC_KEY
+    })
+    .then(sub => { console.log(JSON.stringify(sub));})
+    //.then(sub => this.newsletterService.addPushSubscriber(sub).subscribe())
+    .catch(err => console.error("Could not subscribe to notifications", err));
+}
 }

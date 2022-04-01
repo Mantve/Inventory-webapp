@@ -1,7 +1,7 @@
 <div class="container shadow-sm p-3 mb-5 bg-body rounded">
     <div class="list-group" *ngIf="list">
-        <div class="d-flex justify-content-between " *ngFor="let listItem of list.items">
-            <label class="list-group-item d-flex gap-3 w-100 border-end-0">
+        <div class="d-flex justify-content-between border" *ngFor="let listItem of list.items">
+            <label class="list-group-item d-flex gap-3 w-100 border-0">
                 <input class="form-check-input flex-shrink-0" (change)="listItemChecked(listItem.id,$event)"
                     type="checkbox" [value]="listItem.completed" [checked]="listItem.completed"
                     style="font-size: 1.375em;">
@@ -13,9 +13,8 @@
                         {{listItem.item.comments}} </small>
                 </span>
             </label>
-            <div class="border border-start-0">
-                <!--TODO: make button height equal, perhaps making Small to stay permanently-->
-                <button type="button" class="w-100 h-100 btn btn-sm btn-outline-danger border-0"
+            <div >
+                <button type="button" class="w-100 h-100 btn btn-sm btn-outline-danger border-0 position-relative"
                     (click)="openListItemDeleteModal(listItem.id, listItem.item.name)" aria-label="Delete item">
                     <svg class="bi" width="24" height="24" fill="currentColor">
                         <use xlink:href="bootstrap-icons.svg#trash-fill" />

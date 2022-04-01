@@ -7,7 +7,6 @@
 
 <div class="modal-body">
     <form [formGroup]="form" (ngSubmit)="onSubmit('changes saved!')">
-        <div class="form-group row">
             <div class="input-group">
                 <label for="name" class="col-form-label col-2">Room:</label>
                 <select class="form-select" (change)="onRoomChange()" id="roomId" formControlName="roomId">
@@ -15,9 +14,12 @@
                     <option *ngFor="let room of rooms" attr.value={{room.id}}
                         [selected]="room.id===fromParent.roomNo ? true : null">{{room.name}}</option>
                 </select>
+                <button class="btn btn-success" type="button" (click)="openRoomCreateModal()" aria-label="Create room">
+                    <svg class="bi" width="32" height="32" fill="currentColor">
+                        <use xlink:href="bootstrap-icons.svg#plus" />
+                    </svg>
+                </button>
             </div>
-        </div>
-        <div class="form-group row">
             <div class="input-group">
                 <label for="name" class="col-form-label col-2">Item:</label>
                 <select class="form-select" id="parentItemId" formControlName="itemId">
@@ -31,7 +33,6 @@
                     </svg>
                 </button>
             </div>
-        </div>
     </form>
 
 

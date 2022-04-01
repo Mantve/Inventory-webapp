@@ -5,6 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ItemEditComponent } from '../item-edit/item-edit.component';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
+import { RoomEditComponent } from '../room-edit/room-edit.component';
 import { ItemService } from '../services/item.service';
 import { ListItemService } from '../services/list-item.service';
 import { RoomService } from '../services/room.service';
@@ -95,6 +96,19 @@ export class ListItemCreateComponent implements OnInit {
     modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
       this.loadItems(this.selectedRoom);
+    }, (reason) => {
+    });
+  }
+
+  openRoomCreateModal() {
+    const modalRef = this.modalService.open(RoomEditComponent, constants.ngbModalConfig);
+    let data = {
+      new: true
+    }
+    modalRef.componentInstance.fromParent = data;
+    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.result.then((result) => {
+      this.loadRooms();
     }, (reason) => {
     });
   }

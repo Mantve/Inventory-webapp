@@ -4,5 +4,6 @@ import { RoomResponseDto } from "./roomResponseDto.model";
 export interface ListResponseDto {
     id: number,
     name: string,
-    items: Array<ListItemResponseDto>
+    items: Array<ListItemResponseDto>,
+    itemCount: number
 }

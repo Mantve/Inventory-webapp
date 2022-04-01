@@ -55,6 +55,7 @@ export class ListListComponent implements OnInit {
     modalRef.componentInstance.fromParent = data;
     modalRef.componentInstance.deleteEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((res) => {
+      this.loadLists();
     }, (error) => {
     });
   }
