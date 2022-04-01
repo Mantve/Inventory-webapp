@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
- // urlAddress: 'https://inventorymanageapi.azurewebsites.net'
-  urlAddress: 'http://localhost:5000'
+  urlAddress: 'https://inventorymanageapi.azurewebsites.net'
+  //urlAddress: 'http://localhost:5000'
 
 };
