@@ -5,10 +5,7 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
 import { ListItemCreateComponent } from '../list-item-create/list-item-create.component';
-import { ListItemUpdateDto } from '../models/request/listItemUpdateDto.model';
-import { ListItemResponseDto } from '../models/response/listItemResponseDto.model';
 import { ListResponseDto } from '../models/response/listResponseDto.model';
-import { RoomEditComponent } from '../room-edit/room-edit.component';
 import { ListItemService } from '../services/list-item.service';
 import { ListService } from '../services/list.service';
 import { constants } from '../_constants';
@@ -16,7 +13,7 @@ import { constants } from '../_constants';
 @Component({
   selector: 'app-list-view',
   templateUrl: './list-view.component.html',
-  styleUrls: ['./list-view.component.css']
+  styleUrls: ['./list-view.component.scss']
 })
 export class ListViewComponent implements OnInit {
 

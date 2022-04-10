@@ -6,5 +6,6 @@ export interface ReminderResponseDto {
     item: ItemResponseDto,
     reason: string,
     reminderTime: Date,
-    repeatFrequency: RepeatFrequency
+    repeatFrequency: RepeatFrequency,
+    expired: boolean
 }

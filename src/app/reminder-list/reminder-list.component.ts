@@ -12,7 +12,7 @@ import { constants } from '../_constants';
 @Component({
   selector: 'app-reminder-list',
   templateUrl: './reminder-list.component.html',
-  styleUrls: ['./reminder-list.component.css']
+  styleUrls: ['./reminder-list.component.scss']
 })
 export class ReminderListComponent implements OnInit {
 
@@ -35,18 +35,19 @@ export class ReminderListComponent implements OnInit {
     this._reminderService.getAll().subscribe(
       res => {
         this.reminders = res;
+        this.sortByDate();
       }, error => console.error(error))
   }
 
   openReminderDeleteModal(reminderNo: number, name: string) {
-    const modalRef = this.modalService.open(DeletionConfirmationModalComponent,constants.ngbModalConfig);
+    const modalRef = this.modalService.open(DeletionConfirmationModalComponent, constants.ngbModalConfig);
 
     let data = {
       type: "reminder",
-      name: "reminder for "+name,
+      name: "reminder for " + name,
       successMessage: "reminder-delete-success",
       failMessage: "reminder-delete-fail",
-      onSubmit:  (): Observable<object> => 
+      onSubmit: (): Observable<object> =>
         this._reminderService.delete(reminderNo)
     }
 
@@ -60,7 +61,7 @@ export class ReminderListComponent implements OnInit {
   }
 
   openReminderEditModal(reminderId: number) {
-    const modalRef = this.modalService.open(ReminderEditComponent,constants.ngbModalConfig);
+    const modalRef = this.modalService.open(ReminderEditComponent, constants.ngbModalConfig);
     let data = {
       reminderId: reminderId
     }
@@ -74,7 +75,7 @@ export class ReminderListComponent implements OnInit {
   }
 
   openReminderCreateModal() {
-    const modalRef = this.modalService.open(ReminderEditComponent,constants.ngbModalConfig);
+    const modalRef = this.modalService.open(ReminderEditComponent, constants.ngbModalConfig);
 
     let data = {
       new: true
@@ -85,6 +86,37 @@ export class ReminderListComponent implements OnInit {
     modalRef.result.then((result) => {
       this.loadReminders();
     }, (reason) => {
+    });
+  }
+
+  onSortChange() {
+    let select = document.querySelector("#sortSelect") as HTMLSelectElement;
+    let sortType = select.value;
+    switch (sortType) {
+      case "date":
+        this.sortByDate();
+        break;
+      case "name":
+        this.sortByName();
+        break;
+    }
+  }
+
+  sortByDate() {
+    this.reminders.sort((a, b) => {
+      return new Date(a.reminderTime).getTime() - new Date(b.reminderTime).getTime();
+    });
+  }
+
+  sortByName() {
+    this.reminders.sort((a, b) => {
+      if (a.item.name < b.item.name) {
+        return -1;
+      }
+      if (a.item.name > b.item.name) {
+        return 1;
+      }
+      return 0;
     });
   }
 
@@ -107,13 +139,13 @@ export class ReminderListComponent implements OnInit {
         this.toastr.error('An error occurred while creating the reminder', 'Error');
         break;
 
-        case "reminder-edit-success":
-          this.toastr.success('Reminder was modified successfully', 'Success');
-          break;
-  
-        case "reminder-edit-fail":
-          this.toastr.error('An error occurred while saving changes', 'Error');
-          break;
+      case "reminder-edit-success":
+        this.toastr.success('Reminder was modified successfully', 'Success');
+        break;
+
+      case "reminder-edit-fail":
+        this.toastr.error('An error occurred while saving changes', 'Error');
+        break;
       default:
     }
   }

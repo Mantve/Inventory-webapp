@@ -7,7 +7,7 @@ import { CategoryService } from '../services/category.service';
 @Component({
   selector: 'app-category-edit',
   templateUrl: './category-edit.component.html',
-  styleUrls: ['./category-edit.component.css']
+  styleUrls: ['./category-edit.component.scss']
 })
 export class CategoryEditComponent implements OnInit {
 

@@ -4,7 +4,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-deletion-confirmation-modal',
   templateUrl: './deletion-confirmation-modal.component.html',
-  styleUrls: ['./deletion-confirmation-modal.component.css']
+  styleUrls: ['./deletion-confirmation-modal.component.scss']
 })
 export class DeletionConfirmationModalComponent  {
   @Input() fromParent: any;

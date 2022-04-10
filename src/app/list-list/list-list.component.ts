@@ -14,7 +14,7 @@ import { constants } from '../_constants';
 @Component({
   selector: 'app-list-list',
   templateUrl: './list-list.component.html',
-  styleUrls: ['./list-list.component.css']
+  styleUrls: ['./list-list.component.scss']
 })
 export class ListListComponent implements OnInit {
 

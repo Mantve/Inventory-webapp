@@ -9,57 +9,67 @@
 <div class="modal-body">
     <form [formGroup]="form" (ngSubmit)="onSubmit('changes saved!')">
 
-            <div class="input-group">
-                <label for="name" class="col-form-label col-2">Name:</label>
-                <input type="text" id="name" formControlName="name" class="form-control" />
-            </div>
+        <div class="input-group">
+            <label for="name" class="col-form-label col-2">Name:</label>
+            <input type="text" id="name" formControlName="name" class="form-control" />
+        </div>
 
-            <div class="input-group">
-                <label for="name" class="col-form-label col-2">Quantity:</label>
-                <input type="number" min="0" id="quantity" formControlName="quantity" class="form-control" />
-            </div>
+        <div class="input-group">
+            <label for="name" class="col-form-label col-2">Quantity:</label>
+            <input type="number" min="0" id="quantity" formControlName="quantity" class="form-control" />
+        </div>
 
-            <div class="input-group">
-                <label for="name" class="col-form-label col-2">Value:</label>
-                <input type="number" id="value" formControlName="value" class="form-control" />
-            </div>
+        <div class="input-group">
+            <label for="name" class="col-form-label col-2">Value:</label>
+            <input type="number" id="value" formControlName="value" class="form-control" />
+        </div>
 
-            <div class="input-group">
-                <label for="name" class="col-form-label col-2">Location:</label>
-                <select class="form-select" (change)="onRoomChange()" id="roomId" formControlName="roomId">
-                    <option [ngValue]="null" selected>-- Select a room --</option>
-                    <option *ngFor="let room of rooms" attr.value={{room.id}}
-                        [selected]="(((savedItem && room.id===savedItem.room.id) || (fromParent.new && fromParent.roomNo && room.id===fromParent.roomNo)) ? true : null)">{{room.name}}</option>
-                </select>
-            </div>
+        <div class="input-group">
+            <label for="name" class="col-form-label col-2">Location:</label>
+            <select class="form-select" (change)="onRoomChange()" id="roomId" formControlName="roomId">
+                <option [ngValue]="null" selected>-- Select a room --</option>
+                <option *ngFor="let room of rooms" attr.value={{room.id}}
+                    [selected]="(((savedItem && room.id===savedItem.room.id) ||
+                    (fromParent.new && fromParent.roomNo && room.id===fromParent.roomNo)) ? true : null)">
+                    {{room.name}}</option>
+            </select>
+            <button class="btn btn-success" type="button" (click)="openCategoryCreateModal()" aria-label="Create item">
+                <svg class="bi" width="32" height="32" fill="currentColor">
+                    <use xlink:href="bootstrap-icons.svg#plus" />
+                </svg>
+            </button>
+        </div>
 
-            <div class="input-group">
-                <label for="name" class="col-form-label col-2">Detailed location:</label>
-                <select class="form-select" id="parentItemId" formControlName="parentItemId">
-                    <option [ngValue]="null" selected>-- Not selected --</option>
-                    <option *ngFor="let item of items" attr.value={{item.id}}
-                        [selected]="(((savedItem && item.id===savedItem.parentItem?.id) || (fromParent.new && fromParent.itemNo && item.id===fromParent.itemNo)) ? true : null) ">{{item.name}}</option>
-                </select>
-            </div>
+        <div class="input-group">
+            <label for="name" class="col-form-label col-2">Detailed location:</label>
+            <select class="form-select" id="parentItemId" formControlName="parentItemId">
+                <option [ngValue]="null" selected>-- Not selected --</option>
+                <option *ngFor="let item of items" attr.value={{item.id}}
+                    [selected]="(((savedItem && item.id===savedItem.parentItem?.id) || 
+                    (fromParent.new && fromParent.itemNo && item.id===fromParent.itemNo)) ? true : null) ">
+                    {{item.name}}</option>
+            </select>
+        </div>
 
-            <div class="input-group">
-                <label for="name" class="col-form-label col-2">Category:</label>
-                <select class="form-select" id="categoryId" formControlName="categoryId">
-                    <option selected [ngValue]="null">-- Select a category --</option>
-                    <option *ngFor="let category of categories" attr.value={{category.id}}
-                        [selected]="savedItem && category.id===savedItem.category?.id ? true : null">{{category.name}}</option>
-                </select>
-                <button class="btn btn-success" type="button" (click)="openCategoryCreateModal()" aria-label="Create item">
-                    <svg class="bi" width="32" height="32" fill="currentColor">
-                        <use xlink:href="bootstrap-icons.svg#plus" />
-                    </svg>
-                </button>
-            </div>
+        <div class="input-group">
+            <label for="name" class="col-form-label col-2">Category:</label>
+            <select class="form-select" id="categoryId" formControlName="categoryId">
+                <option selected [ngValue]="null">-- Select a category --</option>
+                <option *ngFor="let category of categories" attr.value={{category.id}}
+                    [selected]="savedItem && category.id===savedItem.category?.id ? true : null">{{category.name}}
+                </option>
+            </select>
+            <button class="btn btn-success" type="button" (click)="openCategoryCreateModal()" aria-label="Create item">
+                <svg class="bi" width="32" height="32" fill="currentColor">
+                    <use xlink:href="bootstrap-icons.svg#plus" />
+                </svg>
+            </button>
+        </div>
 
-            <div class="input-group">
-                <label for="name" class="col-form-label col-2">Comments:</label>
-                <input type="text" id="comments" formControlName="comments" class="form-control" />
-            </div>
+        <div class="input-group">
+            <label for="name" class="col-form-label col-2">Comments:</label>
+            <input type="text" id="comments" formControlName="comments" class="form-control" />
+        </div>
     </form>
 
 
@@ -67,7 +77,8 @@
 
 <div class="modal-footer">
     <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal('close')"> Close</button>
-    <button type="button" class="btn btn-primary" [disabled]="!form.valid" (click)="onSubmit('changes saved!')">Save</button>
+    <button type="button" class="btn btn-primary" [disabled]="!form.valid"
+        (click)="onSubmit('changes saved!')">Save</button>
 </div>
 
 <div class="container">

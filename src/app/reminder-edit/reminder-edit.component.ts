@@ -15,7 +15,7 @@ import { constants } from '../_constants';
 @Component({
   selector: 'app-reminder-edit',
   templateUrl: './reminder-edit.component.html',
-  styleUrls: ['./reminder-edit.component.css']
+  styleUrls: ['./reminder-edit.component.scss']
 })
 export class ReminderEditComponent implements OnInit {
 

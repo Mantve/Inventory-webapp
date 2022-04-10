@@ -6,6 +6,7 @@ import { CategoryEditComponent } from '../category-edit/category-edit.component'
 import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
+import { RoomEditComponent } from '../room-edit/room-edit.component';
 import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
 import { RoomService } from '../services/room.service';
@@ -14,7 +15,7 @@ import { constants } from '../_constants';
 @Component({
   selector: 'app-item-edit',
   templateUrl: './item-edit.component.html',
-  styleUrls: ['./item-edit.component.css']
+  styleUrls: ['./item-edit.component.scss']
 })
 export class ItemEditComponent implements OnInit {
 
@@ -122,8 +123,6 @@ export class ItemEditComponent implements OnInit {
       }, error => console.error(error))
   }
 
-
-
   onRoomChange() {
     let select = document.querySelector("#roomId") as HTMLSelectElement;
     let roomNo = Number(select.value);
@@ -170,6 +169,19 @@ export class ItemEditComponent implements OnInit {
     });
   }
 
+  openCreateRoomModal() {
+    const modalRef = this.modalService.open(RoomEditComponent, constants.ngbModalConfig);
+    let data = {
+      new: true
+    }
+    modalRef.componentInstance.fromParent = data;
+    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.result.then((result) => {
+      this.loadRooms();
+    }, (reason) => {
+    });
+  }
+  
   statusChangeEvent(state: string) {
     switch (state) {
 

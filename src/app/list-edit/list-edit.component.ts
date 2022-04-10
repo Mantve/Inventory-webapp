@@ -7,7 +7,7 @@ import { ListService } from '../services/list.service';
 @Component({
   selector: 'app-list-edit',
   templateUrl: './list-edit.component.html',
-  styleUrls: ['./list-edit.component.css']
+  styleUrls: ['./list-edit.component.scss']
 })
 export class ListEditComponent implements OnInit {
   @Input() fromParent: any;

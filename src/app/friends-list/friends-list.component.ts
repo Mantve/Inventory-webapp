@@ -11,7 +11,7 @@ import { constants } from '../_constants';
 @Component({
   selector: 'app-friends-list',
   templateUrl: './friends-list.component.html',
-  styleUrls: ['./friends-list.component.css']
+  styleUrls: ['./friends-list.component.scss']
 })
 export class FriendsListComponent implements OnInit {
 

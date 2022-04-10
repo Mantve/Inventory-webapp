@@ -1,0 +1,35 @@
+$white:    #fff !default;
+$gray-100: #f8f9fa !default;
+$gray-200: #e9ecef !default;
+$gray-300: #dee2e6 !default;
+$gray-400: #ced4da !default;
+$gray-500: #adb5bd !default;
+$gray-600: #6c757d !default;
+$gray-700: #495057 !default;
+$gray-800: #343a40 !default;
+$gray-900: #212529 !default;
+$black:    #000 !default;
+
+/* You can add global styles to this file, and also import other style files */
+$primary: teal;
+$danger: rgb(200, 0, 0);
+$list-group-bg: $gray-100;
+$list-group-hover-bg: $gray-200;
+
+@import "../node_modules/bootstrap/scss/bootstrap";
+
+@each $color, $value in $colors {
+  .bg-#{$color} {
+    background-color: $value;
+  }
+}
+
+@each $variant, $color in $grays {
+    .bg-gray-#{$variant} {
+        background: $color !important;
+    }
+}
+
+.container {
+    background: $gray-100;
+}

@@ -7,7 +7,7 @@ import { MessageService } from '../services/message.service';
 @Component({
   selector: 'app-friend-request-send',
   templateUrl: './friend-request-send.component.html',
-  styleUrls: ['./friend-request-send.component.css']
+  styleUrls: ['./friend-request-send.component.scss']
 })
 export class FriendRequestSendComponent  {
   form!: FormGroup;

@@ -4,24 +4,26 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { RoomEditComponent } from '../room-edit/room-edit.component';
 import { AuthenticationService } from '../services/authentication.service';
+import { PushService } from '../services/push.service';
 import { constants } from '../_constants';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+  styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
 
-  readonly VAPID_PUBLIC_KEY = "BIVRDkY314VGwydMAeG-q0_VUDwbfs4zvBAKjJ57UCbWIr4e8DHFhPgfu1x94O_EsGxNPkuCFeM-2Y3SmSnv8Ao";
+  readonly VAPID_PUBLIC_KEY = "BH9yHJHYt5LdgvVw1ixIpV8B6KUEWV90u_MEIjDG3FC3MwGF-Ao0Q7mZ9cwFT6AYua0wbgTBXxbQyKB1Ww3_BNk";
 
   constructor(
-    private modalService: NgbModal, 
+    private swPush: SwPush,
+    private modalService: NgbModal,
     private toastr: ToastrService,
-     private authService: AuthenticationService,
-     private swPush: SwPush,
-       // private newsletterService: NewsletterService
-        ) { }
+    private authService: AuthenticationService,
+    private _pushService: PushService
+  ) { }
+
 
   authStatus!: boolean
   ngOnInit(): void {
@@ -63,8 +65,18 @@ export class HomeComponent implements OnInit {
     this.swPush.requestSubscription({
         serverPublicKey: this.VAPID_PUBLIC_KEY
     })
-    .then(sub => { console.log(JSON.stringify(sub));})
-    //.then(sub => this.newsletterService.addPushSubscriber(sub).subscribe())
+    .then(sub => { 
+     let data = JSON.parse( JSON.stringify(sub));
+    
+     this._pushService.create(
+      {
+        username: this.getUsername(),
+        endpoint: data.endpoint,
+        expirationdate: data.expirationTime,
+        p256dh: data.keys.p256dh,
+        auth: data.keys.auth
+      }
+    ).subscribe()})
     .catch(err => console.error("Could not subscribe to notifications", err));
 }
 }

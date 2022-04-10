@@ -12,7 +12,8 @@
             <select class="form-select" (change)="onRoomChange()" id="roomId" formControlName="roomId">
                 <option [ngValue]="null" selected>-- Select a room --</option>
                 <option *ngFor="let room of rooms" attr.value={{room.id}}
-                    [selected]="(((savedReminder && room.id===savedReminder.item.room.id) || (fromParent.new && fromParent.roomId && room.id===fromParent.roomId)) ? true : null)">
+                    [selected]="(((savedReminder && room.id===savedReminder.item.room.id) 
+                    || (fromParent.new && fromParent.roomId && room.id===fromParent.roomId)) ? true : null)">
                     {{room.name}}</option>
             </select>
         </div>
@@ -21,7 +22,8 @@
             <select class="form-select" id="parentItemId" formControlName="itemId">
                 <option [ngValue]="null" selected>-- Not selected --</option>
                 <option *ngFor="let item of items" attr.value={{item.id}}
-                    [selected]="(((savedReminder && item.id===savedReminder.item.id) || (fromParent.new && fromParent.itemId && item.id===fromParent.itemId)) ? true : null)">
+                    [selected]="(((savedReminder && item.id===savedReminder.item.id) 
+                    || (fromParent.new && fromParent.itemId && item.id===fromParent.itemId)) ? true : null)">
                     {{item.name}}</option>
             </select>
             <button class="btn btn-success" type="button" (click)="openItemCreateModal()" aria-label="Create item">

@@ -6,7 +6,7 @@ import { ListService } from '../services/list.service';
 @Component({
   selector: 'app-list-create',
   templateUrl: './list-create.component.html',
-  styleUrls: ['./list-create.component.css']
+  styleUrls: ['./list-create.component.scss']
 })
 export class ListCreateComponent  {
   @Input() fromParent: any;

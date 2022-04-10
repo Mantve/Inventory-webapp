@@ -9,7 +9,7 @@ import { RoomService } from '../services/room.service';
 @Component({
   selector: 'app-room-share',
   templateUrl: './room-share.component.html',
-  styleUrls: ['./room-share.component.css']
+  styleUrls: ['./room-share.component.scss']
 })
 export class RoomShareComponent implements OnInit {
 

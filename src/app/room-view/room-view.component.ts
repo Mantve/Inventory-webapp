@@ -17,7 +17,7 @@ import { RoomShareComponent } from '../room-share/room-share.component';
 @Component({
   selector: 'app-room-view',
   templateUrl: './room-view.component.html',
-  styleUrls: ['./room-view.component.css']
+  styleUrls: ['./room-view.component.scss']
 })
 export class RoomViewComponent implements OnInit {
 
