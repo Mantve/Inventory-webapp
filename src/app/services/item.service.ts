@@ -26,6 +26,10 @@ export class ItemService {
     return this.http.get<ItemResponseDto[]>(`${this._envUrl.urlAddress}/api/item/all/${roomId}`, { withCredentials: true });
   }
 
+  public search(search: string) {
+    return this.http.get<ItemResponseDto[]>(`${this._envUrl.urlAddress}/api/item/search/${search}`, { withCredentials: true });
+  }
+
   public get(itemId: number) {
     return this.http.get<ItemResponseDto>(`${this._envUrl.urlAddress}/api/item/${itemId}`, { withCredentials: true });
   }

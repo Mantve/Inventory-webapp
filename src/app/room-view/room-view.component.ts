@@ -13,6 +13,8 @@ import { DeletionConfirmationModalComponent } from '../deletion-confirmation-mod
 import { ItemEditComponent } from '../item-edit/item-edit.component';
 import { AuthenticationService } from '../services/authentication.service';
 import { RoomShareComponent } from '../room-share/room-share.component';
+import { CategoryService } from '../services/category.service';
+import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
 
 @Component({
   selector: 'app-room-view',
@@ -23,7 +25,8 @@ export class RoomViewComponent implements OnInit {
 
   roomNo!: number;
   room!: RoomResponseDto;
-  items!: Array<RecursiveItemResponseDto>;
+  items: Array<RecursiveItemResponseDto> = [];
+  categories: Array<CategoryResponseDto> = [];
   username!: string
 
   constructor(
@@ -33,6 +36,7 @@ export class RoomViewComponent implements OnInit {
     private modalService: NgbModal,
     private toastr: ToastrService,
     private _itemService: ItemService,
+    private _categoryService: CategoryService,
     private _authenticationService: AuthenticationService) {      
     }
 
@@ -46,6 +50,7 @@ export class RoomViewComponent implements OnInit {
       this.roomNo = params['roomNo'];
       this.loadRoom(this.roomNo);
       this.loadItems(this.roomNo);
+      this.loadCategoriesFromRoom(this.roomNo);
     });
   }
 
@@ -125,6 +130,13 @@ export class RoomViewComponent implements OnInit {
     }, (error) => {
       this.loadRoom(roomNo);
     });
+  }
+
+  loadCategoriesFromRoom(roomNo: number) {
+    this._categoryService.getAllFromRoom(roomNo).subscribe(
+      res => {
+        this.categories = res;
+      }, error => console.error(error))
   }
 
   statusChangeEvent(state: string) {

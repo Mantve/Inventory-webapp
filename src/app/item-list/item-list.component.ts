@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
 import { RecursiveItemResponseDto } from '../models/response/recursiveItemResponseDto.model';
 
@@ -10,6 +11,7 @@ import { RecursiveItemResponseDto } from '../models/response/recursiveItemRespon
 export class ItemListComponent  {
 
   @Input() items!: Array<RecursiveItemResponseDto>;
+  @Input() categories!: Array<CategoryResponseDto>;
   constructor() { }
 
 }

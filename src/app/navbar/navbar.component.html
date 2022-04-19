@@ -1,12 +1,12 @@
 <header class="navbar navbar-dark sticky-top bg-dark flex-nowrap p-0 shadow">
     <a class="navbar-brand me-0 px-3" href="#">Inventory system</a>
 
-    <input class="form-control form-control-dark w-100 " type="text" placeholder="Search" aria-label="Search">
-    <!-- 
-       <div class="navbar-nav" id="sidebarMenu">
-        <div class="nav-item text-nowrap">
-            <a class="nav-link px-3" href="#">Sign out</a>
-        </div>
-    </div>
--->
+    <input #searchBox class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"
+        id="searchBox" (input)="search(searchBox.value)">
+
+    <ul class="navbar-nav px-3">
+        <li class="nav-item text-nowrap" *ngFor="let item of items$ | async">
+            <a class="nav-link" [routerLink]="['/item', item.id]">{{item.name}}</a>
+        </li>
+    </ul>
 </header>

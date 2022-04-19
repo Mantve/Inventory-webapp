@@ -14,7 +14,7 @@ import { constants } from '../_constants';
 })
 export class HomeComponent implements OnInit {
 
-  readonly VAPID_PUBLIC_KEY = "BH9yHJHYt5LdgvVw1ixIpV8B6KUEWV90u_MEIjDG3FC3MwGF-Ao0Q7mZ9cwFT6AYua0wbgTBXxbQyKB1Ww3_BNk";
+  readonly VAPID_PUBLIC_KEY = "BDOaLm7zuUkci586E7e9Gks7sXbUJdcz_D4qGEI0Iz3606GxSYSECKKE6z6P49Kx2l5UDmBJ_q2UiOy2TjlXvHY";
 
   constructor(
     private swPush: SwPush,

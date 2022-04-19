@@ -1,9 +1,14 @@
 <div class="container">
+    <div class="col" *ngFor="let category of categories">
+        <span class="badge rounded-pill bg-warning text-dark">{{category.name}}</span>
+    </div>
+</div>
+
+<div class="container">
     <ul class="list-group">
         <ng-container *ngTemplateOutlet="recursiveitemsTmpl; context:{ items: items }"></ng-container>
     </ul>
 </div>
-
 
 <ng-template #recursiveitemsTmpl let-items="items">
     <div class="d-flex gap-2 w-100 justify-content-left align-items-center border-0 border-start"
