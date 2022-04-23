@@ -1,27 +1,30 @@
-<div class="container">
-    <div class="col" *ngFor="let category of categories">
-        <span class="badge rounded-pill bg-warning text-dark">{{category.name}}</span>
+<div class="container d-flex justify-content-left mb-3">
+    <div class="row me-3" *ngFor="let category of categories">
+        <span class="badge rounded-pill text-dark" type="button" (click)="onCategorySelected(category)"
+            [ngClass]="isCategorySelected(category)? 'bg-primary' : 'bg-warning'">{{category.name}}</span>
     </div>
 </div>
 
 <div class="container">
     <ul class="list-group">
-        <ng-container *ngTemplateOutlet="recursiveitemsTmpl; context:{ items: items }"></ng-container>
+        <ng-container *ngTemplateOutlet="recursiveitemsTmpl;
+         context:{ items: getItemsByCategories(selectedCategories, items) }"></ng-container>
     </ul>
 </div>
 
+
 <ng-template #recursiveitemsTmpl let-items="items">
-    <div class="d-flex gap-2 w-100 justify-content-left align-items-center border-0 border-start"
+    <div class="d-flex  w-100 justify-content-left align-items-center border-0 border-start"
         *ngFor="let item of items" data-bs-toggle="collapse" attr.data-bs-target="#item{{item.id}}"
         aria-expanded="false">
         <div class="w-100">
-            <div class="d-flex">
+            <div class="d-flex list-group-item list-group-item-action d-flex gap-3 py-3 border border-0 ">
                 <svg type="button" class="bi align-self-center" *ngIf="item.items.length> 0" width="32" height="32"
                     fill="currentColor">
                     <!--button for expanding children-->
                     <use xlink:href="bootstrap-icons.svg#plus" />
                 </svg>
-                <a class="list-group-item list-group-item-action d-flex gap-3 py-3 border border-0 w-100"
+                <div type="button" class="gap-2 w-100"
                     attr.aria-controls="item{{item.id}}" [routerLink]="['/item/'+item.id]" routerLinkActive="active"
                     [routerLinkActiveOptions]="{exact: true}">
                     <!-- the item itself-->
@@ -31,15 +34,22 @@
                             <h6 class="mb-0">{{item.name}}</h6>
                             <p class="mb-0 opacity-75">{{item.comments}}</p>
                         </div>
-                        <small class="opacity-50 text-nowrap">{{item.category.name}}</small>
+                            <small class="opacity-50 text-nowrap mx-3">{{item.category.name}}</small>
                     </div>
-                </a>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-success border-0"
+                (click)="openListSelectModal(item)" aria-label="Add to list">
+                <svg class="bi" width="24" height="24" fill="currentColor">
+                    <use xlink:href="bootstrap-icons.svg#list-check" />
+                </svg>
+            </button>
             </div>
 
             <ul class="list-group ps-5" *ngIf="item.items.length > 0">
                 <!--children-->
                 <div class="collapse" attr.id="item{{item.id}}">
-                    <ng-container *ngTemplateOutlet="recursiveitemsTmpl; context:{ items: item.items }">
+                    <ng-container *ngTemplateOutlet="recursiveitemsTmpl; 
+                    context:{ items: getItemsByCategories(selectedCategories, item.items) }">
                     </ng-container>
                 </div>
             </ul>

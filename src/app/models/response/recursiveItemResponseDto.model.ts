@@ -6,7 +6,7 @@ export interface RecursiveItemResponseDto {
     id: number,
     name: string,
     quantity: number,
-    categoryDto: CategoryResponseDto,
+    category: CategoryResponseDto,
     comments: string,
     room: RoomResponseDto,
     items:Array<RecursiveItemResponseDto>,

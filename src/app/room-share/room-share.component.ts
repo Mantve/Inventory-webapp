@@ -30,7 +30,7 @@ export class RoomShareComponent implements OnInit {
 
   isSharedWith( username: string)
   {
-      return this.room.sharedWith.some(x=> x.username === username);
+      return this.room?.sharedWith?.some(x=> x?.username === username);
   }
 
   loadFriends() {

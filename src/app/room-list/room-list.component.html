@@ -1,0 +1,38 @@
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-xl-3" *ngFor="let room of rooms">
+            <div class="card shadow-sm border-secondary">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between gap-2 align-items-center ">
+                        <h5 class="card-title w-100 h-100" type="button" style="position: static;"
+                            [routerLink]="['/room/'+room.id]" routerLinkActive="active"
+                            [routerLinkActiveOptions]="{exact: true}">{{room.name}}</h5>
+                        <button class="btn btn-outline-secondary border-0 h-100" data-bs-toggle="dropdown"
+                            id="dropdownMenuButton1" aria-label="Actions" aria-expanded="false">
+                            <i class="bi bi-three-dots-vertical"></i>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a type="button" class="dropdown-item" (click)="openRoomEditModal(room.id)"
+                                    aria-label="Edit list">Edit</a></li>
+                            <li><a type="button" class="dropdown-item" (click)="openRoomDeleteModal(room.id, room.name)"
+                                    aria-label="Delete list">Delete</a></li>
+                        </ul>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex align-self-center">
+                        <div *ngFor="let user of room.sharedWith">
+                            <span *ngIf="user.username === room.author.username"
+                                class="badge bg-dark m-1">{{user.username}}</span>
+                        </div>
+                        <div *ngFor="let user of room.sharedWith">
+                            <span *ngIf="user.username !== room.author.username"
+                                class="badge bg-secondary m-1">{{user.username}}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

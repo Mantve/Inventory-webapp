@@ -5,7 +5,9 @@ import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
 import { ItemEditComponent } from '../item-edit/item-edit.component';
+import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
 import { RecursiveItemResponseDto } from '../models/response/recursiveItemResponseDto.model';
+import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
 import { constants } from '../_constants';
 
@@ -18,7 +20,7 @@ export class ItemViewComponent implements OnInit {
 
   itemNo!: number;
   item!: RecursiveItemResponseDto;
-  
+  categories: Array<CategoryResponseDto> = [];
 
   constructor(
   
@@ -26,14 +28,24 @@ export class ItemViewComponent implements OnInit {
     private route: ActivatedRoute,
     private modalService: NgbModal,
     private toastr: ToastrService,
-    private _itemService: ItemService) {
+    private _itemService: ItemService,
+    private _categoryService: CategoryService
+    ) {
   }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
       this.itemNo = params['itemNo'];
       this.loadItem(this.itemNo);
+      this.loadCategoriesFromItem(this.itemNo);
     });
+  }
+
+  loadCategoriesFromItem(roomNo: number) {
+    this._categoryService.getAllFromItem(roomNo).subscribe(
+      res => {
+        this.categories = res;
+      }, error => console.error(error))
   }
 
   loadItem(itemNo: number) {

@@ -22,7 +22,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
     this.registerForm = this.formBuilder.group({
-      username: new FormControl('', [Validators.required, Validators.maxLength(15), Validators.pattern('^[a-zA-Z ]*$')]),
+      username: new FormControl('', [Validators.required, Validators.maxLength(15), Validators.pattern('^[a-zA-Z0-9]+$')]),
       password: new FormControl('', [Validators.required]),
       confirm: new FormControl('',[Validators.required])
   }, {

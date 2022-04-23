@@ -33,6 +33,8 @@ import { ItemListComponent } from './item-list/item-list.component';
 import { RoomShareComponent } from './room-share/room-share.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { ListSelectComponent } from './list-select/list-select.component';
+import { RoomListComponent } from './room-list/room-list.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -74,7 +76,9 @@ const routes: Routes = [
     ReminderListComponent,
     ReminderEditComponent,
     ItemListComponent,
-    RoomShareComponent
+    RoomShareComponent,
+    ListSelectComponent,
+    RoomListComponent
   ],
   imports: [
     HttpClientModule,

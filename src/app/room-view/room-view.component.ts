@@ -114,6 +114,7 @@ export class RoomViewComponent implements OnInit {
     modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
       this.loadItems(this.roomNo);
+      this.loadCategoriesFromRoom(this.roomNo);
     }, (reason) => {
     });
   }

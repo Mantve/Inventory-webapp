@@ -1,0 +1,34 @@
+<div class="modal-header">
+    <h5 class="modal-title">Add to list</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+</div>
+
+<div class="modal-body">
+    <div class="container shadow-sm p-3 bg-body rounded">
+        <div class="list-group" *ngIf="lists">
+            <div class="d-flex justify-content-between " *ngFor="let list of lists">
+                <label class="list-group-item d-flex gap-3 w-100 ">
+                    <span class="p-2 w-100 d-flex justify-content-between">
+                        <strong class="">{{list.name}}</strong>
+                        <small class="d-block text-muted">Items: {{list.itemCount}} </small> 
+                    </span>
+                    <button type="button" class="btn btn-sm btn-outline-success border-0"
+                    (click)="createListItem(fromParent.item.id, list.id)" aria-label="Add to list">
+                    <svg class="bi" width="24" height="24" fill="currentColor">
+                        <use xlink:href="bootstrap-icons.svg#plus-lg" />
+                    </svg>
+                </button>
+                </label>
+            </div>
+            <button class="btn btn-sm btn-outline-success w-100 position-relative" (click)="openListCreateModal()"
+            aria-label="New list">
+            <strong>New list</strong>
+        </button>
+        </div>
+    </div>
+</div>
+
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal('close')"> Close</button>
+</div>

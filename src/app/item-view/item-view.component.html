@@ -1,7 +1,12 @@
 <div *ngIf="item">
     <div
         class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom px-3">
-        <h1 class="h2">{{item.name}}</h1>
+        <div>
+            <div class="d-flex justify-content-between gap-3">
+                <h2>{{item.name}}</h2>
+            </div>
+        </div>
+
         <div class="btn-toolbar mb-2 mb-md-0">
             <!-- TODO: do we need spacing?-->
             <button type="button" class="btn btn-sm btn-outline-success"
@@ -25,7 +30,7 @@
         </div>
     </div>
 
-    <app-item-list [items]="item.items"></app-item-list>
+    <app-item-list [items]="item.items" [categories]="categories"></app-item-list>
 
 
 </div>

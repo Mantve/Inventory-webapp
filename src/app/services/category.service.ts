@@ -21,6 +21,10 @@ export class CategoryService {
     return this.http.get<CategoryResponseDto[]>(`${this._envUrl.urlAddress}/api/room/${id}/categories`, { withCredentials: true });
   }
 
+  public getAllFromItem(id: number) {
+    return this.http.get<CategoryResponseDto[]>(`${this._envUrl.urlAddress}/api/item/${id}/categories`, { withCredentials: true });
+  }
+  
   public get(id: number) {
     return this.http.get<CategoryResponseDto>(`${this._envUrl.urlAddress}/api/category/${id}`, { withCredentials: true });
   }
