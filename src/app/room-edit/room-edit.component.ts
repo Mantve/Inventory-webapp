@@ -5,17 +5,17 @@ import { RoomResponseDto } from '../models/response/roomResponseDto.model';
 import { UserResponseDto } from '../models/response/userResponseDto.model';
 import { AuthenticationService } from '../services/authentication.service';
 import { RoomService } from '../services/room.service';
+import { ValidatedForm } from '../validators/validatedForm';
 
 @Component({
   selector: 'app-room-edit',
   templateUrl: './room-edit.component.html',
   styleUrls: ['./room-edit.component.scss']
 })
-export class RoomEditComponent implements OnInit {
+export class RoomEditComponent extends ValidatedForm implements OnInit {
 
   @Input() fromParent: any;
   @Output() editEvent = new EventEmitter<string>();
-  form!: FormGroup;
   room!: RoomResponseDto;
 
   constructor(
@@ -23,20 +23,13 @@ export class RoomEditComponent implements OnInit {
     public _activeModal: NgbActiveModal,
     public _roomService: RoomService  ) {
       
+    super();
     this.form = this._formBuilder.group({
       name: ["", [Validators.required, Validators.maxLength(30)]],
       sharedWith: []
     });
   }
 
-  public validateControl = (controlName: string) => {
-    return this.form.controls[controlName].invalid && this.form.controls[controlName].touched
-  }
-
-  public hasError = (controlName: string, errorName: string) => {
-    return this.form.controls[controlName].hasError(errorName)
-  }
-  
   ngOnInit(): void {
     if (!this.fromParent.new) {
       this._roomService.get(this.fromParent.roomNo).subscribe(result => {

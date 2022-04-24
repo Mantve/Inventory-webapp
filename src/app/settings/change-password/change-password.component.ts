@@ -1,24 +1,23 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
-import { MessageType } from 'src/app/models/enums/messageType.model';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { MustMatch } from 'src/app/validators/mustmatch';
+import { ValidatedForm } from 'src/app/validators/validatedForm';
 
 @Component({
   selector: 'app-change-password',
   templateUrl: './change-password.component.html',
   styleUrls: ['./change-password.component.scss']
 })
-export class ChangePasswordComponent {
-
-  form!: FormGroup;
+export class ChangePasswordComponent extends ValidatedForm{
 
   constructor(
     private _toastr: ToastrService,
     private _formBuilder: FormBuilder,
     private _authenicationService: AuthenticationService,
   ) {
+    super();
     this.form = this._formBuilder.group({
       oldPassword: [null, Validators.required],
       newPassword: [null, Validators.required],
@@ -26,14 +25,6 @@ export class ChangePasswordComponent {
     },{
       validator: MustMatch('newPassword', 'confirmPassword')
     });
-  }
-
-  public hasError = (controlName: string, errorName: string) => {
-    return this.form.controls[controlName].hasError(errorName)
-  }
-
-  public validateControl = (controlName: string) => {
-    return this.form.controls[controlName].invalid && this.form.controls[controlName].touched
   }
 
   changePassword() {

@@ -3,16 +3,16 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { ListResponseDto } from '../models/response/listResponseDto.model';
 import { ListService } from '../services/list.service';
+import { ValidatedForm } from '../validators/validatedForm';
 
 @Component({
   selector: 'app-list-edit',
   templateUrl: './list-edit.component.html',
   styleUrls: ['./list-edit.component.scss']
 })
-export class ListEditComponent implements OnInit {
+export class ListEditComponent extends ValidatedForm implements OnInit {
   @Input() fromParent: any;
   @Output() editEvent = new EventEmitter<string>();
-  form!: FormGroup;
   list!: ListResponseDto;
 
   constructor(
@@ -20,20 +20,13 @@ export class ListEditComponent implements OnInit {
     public activeModal: NgbActiveModal,
     public _listService: ListService
   ) {
+    super();
     this.form = this._formBuilder.group({
       id: [0, Validators.required],
       name: ["", Validators.required]
     });
   }
 
-  public validateControl = (controlName: string) => {
-    return this.form.controls[controlName].invalid && this.form.controls[controlName].touched
-  }
-
-  public hasError = (controlName: string, errorName: string) => {
-    return this.form.controls[controlName].hasError(errorName)
-  }
-  
   ngOnInit(): void {
     this._listService.get(this.fromParent.listNo).subscribe(result => {
       this.list = result

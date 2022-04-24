@@ -10,6 +10,7 @@ import { RoomEditComponent } from '../room-edit/room-edit.component';
 import { CategoryService } from '../services/category.service';
 import { ItemService } from '../services/item.service';
 import { RoomService } from '../services/room.service';
+import { ValidatedForm } from '../validators/validatedForm';
 import { constants } from '../_constants';
 
 @Component({
@@ -17,12 +18,10 @@ import { constants } from '../_constants';
   templateUrl: './item-edit.component.html',
   styleUrls: ['./item-edit.component.scss']
 })
-export class ItemEditComponent implements OnInit {
-
+export class ItemEditComponent extends ValidatedForm implements OnInit {
 
   @Input() fromParent: any;
   @Output() editEvent = new EventEmitter<string>();
-  form!: FormGroup;
   rooms!: Array<RoomResponseDto>;
   items!: Array<ItemResponseDto>;
   categories!: Array<CategoryResponseDto>
@@ -37,6 +36,7 @@ export class ItemEditComponent implements OnInit {
     private _roomService: RoomService,
     private _categoryService: CategoryService
   ) {
+    super();
     this.form = this._formBuilder.group({
       name: ["", [Validators.required, Validators.maxLength(50)]],
       quantity: ["1", [Validators.required,Validators.min(0),Validators.max(9999999)]],
@@ -46,14 +46,6 @@ export class ItemEditComponent implements OnInit {
       comments: ["",[Validators.maxLength(200)]],
       roomId: [, Validators.required]
     });
-  }
-
-  public validateControl = (controlName: string) => {
-    return this.form.controls[controlName].invalid && this.form.controls[controlName].touched
-  }
-
-  public hasError = (controlName: string, errorName: string) => {
-    return this.form.controls[controlName].hasError(errorName)
   }
   
   ngOnInit(): void {

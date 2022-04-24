@@ -5,14 +5,15 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { RoomService } from 'src/app/services/room.service';
+import { ValidatedForm } from 'src/app/validators/validatedForm';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-  public loginForm!: FormGroup;
+export class LoginComponent extends ValidatedForm implements OnInit {
+  
   public errorMessage: string = '';
   public showError!: boolean;
   private _returnUrl!: string;
@@ -21,23 +22,17 @@ export class LoginComponent implements OnInit {
     private _router: Router,
     private _route: ActivatedRoute,
     private _toastr: ToastrService,
-    private _roomService: RoomService) { }
+    private _roomService: RoomService) {
+    super();
+  }
 
   ngOnInit(): void {
-    this.loginForm = new FormGroup({
+    this.form = new FormGroup({
       username: new FormControl("", [Validators.required, Validators.maxLength(15), Validators.pattern('^[a-zA-Z0-9]+$')]),
       password: new FormControl("", [Validators.required, Validators.maxLength(100)])
     })
 
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
-  }
-
-  public validateControl = (controlName: string) => {
-    return this.loginForm.controls[controlName].invalid && this.loginForm.controls[controlName].touched
-  }
-
-  public hasError = (controlName: string, errorName: string) => {
-    return this.loginForm.controls[controlName].hasError(errorName)
   }
 
   public loginUser = (loginFormValue: any) => {

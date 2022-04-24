@@ -5,23 +5,25 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { MustMatch } from 'src/app/validators/mustmatch';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ToastrService } from 'ngx-toastr';
+import { ValidatedForm } from 'src/app/validators/validatedForm';
 
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
   styleUrls: ['./register.component.scss']
 })
-export class RegisterComponent implements OnInit {
-  registerForm!: FormGroup;
+export class RegisterComponent extends ValidatedForm implements OnInit {
   private _returnUrl!: string;
   public errorMessage: string = '';
   public showError!: boolean;
 
-  constructor(private formBuilder: FormBuilder, private _authService: AuthenticationService, private _router: Router,  private _route: ActivatedRoute, private _toastr: ToastrService) { }
+  constructor(private formBuilder: FormBuilder, private _authService: AuthenticationService, private _router: Router,  private _route: ActivatedRoute, private _toastr: ToastrService) {
+    super();
+  }
 
   ngOnInit(): void {
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
-    this.registerForm = this.formBuilder.group({
+    this.form = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
       username: new FormControl('', [Validators.required, Validators.maxLength(15), Validators.pattern('^[a-zA-Z0-9]+$')]),
       password: new FormControl('', [Validators.required, Validators.maxLength(100)]),
@@ -29,14 +31,6 @@ export class RegisterComponent implements OnInit {
   }, {
       validator: MustMatch('password', 'confirm')
   });
-  }
-
-  public validateControl = (controlName: string) => {
-    return this.registerForm.controls[controlName].invalid && this.registerForm.controls[controlName].touched
-  }
-
-  public hasError = (controlName: string, errorName: string) => {
-    return this.registerForm.controls[controlName].hasError(errorName)
   }
 
   public registerUser = (registerFormValue: any) => {

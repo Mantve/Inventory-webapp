@@ -4,7 +4,7 @@
         <div *ngIf="showError" class="alert alert-danger" role="alert">
             {{errorMessage}}
         </div>
-        <form [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm.value)">
+        <form [formGroup]="form" autocomplete="off" novalidate (ngSubmit)="registerUser(form.value)">
             <label for="email" class="col-form-label ">Email:</label>
             <div class="col-md-5">
                 <input type="text" id="email" formControlName="email" class="form-control" />
@@ -50,7 +50,7 @@
             </div>
             <br>
             <div class="col-md-1">
-                <button type="submit" class="btn btn-info" [disabled]="!registerForm.valid">Register</button>
+                <button type="submit" class="btn btn-info" [disabled]="!form.valid">Register</button>
             </div>
         </form>
     </div>

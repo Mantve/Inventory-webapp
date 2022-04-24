@@ -6,7 +6,7 @@
             {{errorMessage}}
         </div>
 
-        <form [formGroup]="loginForm" autocomplete="off" novalidate (ngSubmit)="loginUser(loginForm.value)">
+        <form [formGroup]="form" autocomplete="off" novalidate (ngSubmit)="loginUser(form.value)">
 
                 <label for="username" class="col-form-label">Username:</label>
                 <div class="col-md-5">
@@ -32,7 +32,7 @@
 
             <br>
                 <div class="col-md-1">
-                    <button type="submit" class="btn btn-info" [disabled]="!loginForm.valid">Login</button>
+                    <button type="submit" class="btn btn-info" [disabled]="!form.valid">Login</button>
                 </div>
         </form>
     </div>

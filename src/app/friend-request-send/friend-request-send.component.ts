@@ -3,32 +3,25 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { MessageType } from '../models/enums/messageType.model';
 import { MessageService } from '../services/message.service';
+import { ValidatedForm } from '../validators/validatedForm';
 
 @Component({
   selector: 'app-friend-request-send',
   templateUrl: './friend-request-send.component.html',
   styleUrls: ['./friend-request-send.component.scss']
 })
-export class FriendRequestSendComponent  {
-  form!: FormGroup;
+export class FriendRequestSendComponent extends ValidatedForm {
 
   constructor(
     private _toastr: ToastrService,
     private _formBuilder: FormBuilder,
     private _messageService: MessageService) {
+    super();
     this.form = this._formBuilder.group({
       recipientName: [null, [Validators.required, Validators.maxLength(15)]],
       contents: ["",[Validators.maxLength(100)]],
       messageType:[MessageType.FriendRequest,Validators.required]
     });
-  }
-  
-  public validateControl = (controlName: string) => {
-    return this.form.controls[controlName].invalid && this.form.controls[controlName].touched
-  }
-
-  public hasError = (controlName: string, errorName: string) => {
-    return this.form.controls[controlName].hasError(errorName)
   }
   
 sendRequest(){
