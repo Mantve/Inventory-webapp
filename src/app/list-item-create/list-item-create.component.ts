@@ -19,7 +19,7 @@ import { constants } from '../_constants';
 export class ListItemCreateComponent implements OnInit {
 
   @Input() fromParent: any;
-  @Output() createEvent = new EventEmitter<string>();
+  @Output() modalEvent = new EventEmitter<string>();
   selectedRoom!: number
   form!: FormGroup;
   rooms!: Array<RoomResponseDto>;
@@ -75,10 +75,10 @@ export class ListItemCreateComponent implements OnInit {
 
   onSubmit(sendData: any) {
     this._listItemService.create(this.form.value).subscribe((res: any) => {
-      this.createEvent.emit("listItem-create-success");
+      this.modalEvent.emit("listItem-create-success");
       this._activeModal.close(sendData);
     }, (error: any) => {
-      this.createEvent.emit("listItem-create-fail");
+      this.modalEvent.emit("listItem-create-fail");
       console.error(error)
     })
   }
@@ -93,7 +93,7 @@ export class ListItemCreateComponent implements OnInit {
       new:true
     };
     modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.componentInstance.modalEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
       this.loadItems(this.selectedRoom);
     }, (reason) => {
@@ -106,7 +106,7 @@ export class ListItemCreateComponent implements OnInit {
       new: true
     }
     modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.componentInstance.modalEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
       this.loadRooms();
     }, (reason) => {

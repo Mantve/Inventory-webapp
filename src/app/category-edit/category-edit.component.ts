@@ -13,7 +13,7 @@ import { ValidatedForm } from '../validators/validatedForm';
 export class CategoryEditComponent extends ValidatedForm implements OnInit {
 
   @Input() fromParent: any;
-  @Output() editEvent = new EventEmitter<string>();
+  @Output() modalEvent = new EventEmitter<string>();
   savedCategory!: CategoryResponseDto;
 
   constructor(
@@ -47,19 +47,19 @@ export class CategoryEditComponent extends ValidatedForm implements OnInit {
     if (!this.fromParent.new) {
 
       this._categoryService.update(this.fromParent.categoryNo, this.form.value).subscribe((res: any) => {
-        this.editEvent.emit("category-edit-success");
+        this.modalEvent.emit("category-edit-success");
         this._activeModal.close(sendData);
       }, (error: any) => {
-        this.editEvent.emit("category-edit-fail");
+        this.modalEvent.emit("category-edit-fail");
         console.error(error)
       })
     }
     else {
       this._categoryService.create(this.form.value).subscribe((res: any) => {
-        this.editEvent.emit("category-create-success");
+        this.modalEvent.emit("category-create-success");
         this._activeModal.close(sendData);
       }, (error: any) => {
-        this.editEvent.emit("category-create-fail");
+        this.modalEvent.emit("category-create-fail");
         console.error(error)
       })
     }

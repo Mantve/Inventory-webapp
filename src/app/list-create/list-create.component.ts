@@ -11,7 +11,7 @@ import { ValidatedForm } from '../validators/validatedForm';
 })
 export class ListCreateComponent extends ValidatedForm{
   @Input() fromParent: any;
-  @Output() createEvent = new EventEmitter<string>();
+  @Output() modalEvent = new EventEmitter<string>();
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -26,10 +26,10 @@ export class ListCreateComponent extends ValidatedForm{
 
   onSubmit(sendData: any) {
     this._listService.create(this.form.value).subscribe((res: any) => {
-      this.createEvent.emit("list-create-success");
+      this.modalEvent.emit("list-create-success");
       this._activeModal.close(sendData);
     }, (error: any) => {
-      this.createEvent.emit("list-create-fail");
+      this.modalEvent.emit("list-create-fail");
       console.error(error)
     })
   }

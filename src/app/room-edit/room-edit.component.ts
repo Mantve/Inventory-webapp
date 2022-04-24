@@ -15,7 +15,7 @@ import { ValidatedForm } from '../validators/validatedForm';
 export class RoomEditComponent extends ValidatedForm implements OnInit {
 
   @Input() fromParent: any;
-  @Output() editEvent = new EventEmitter<string>();
+  @Output() modalEvent = new EventEmitter<string>();
   room!: RoomResponseDto;
 
   constructor(
@@ -45,20 +45,20 @@ export class RoomEditComponent extends ValidatedForm implements OnInit {
     if (!this.fromParent.new) {
 
       this._roomService.update(this.fromParent.roomNo, this.form.value).subscribe((res: any) => {
-        this.editEvent.emit("room-edit-success");
+        this.modalEvent.emit("room-edit-success");
         this._activeModal.close(sendData);
       }, (error: any) => {
-        this.editEvent.emit("room-edit-fail");
+        this.modalEvent.emit("room-edit-fail");
         console.error(error)
       })
     }
     else {
       this._roomService.create(this.form.value).subscribe((res: any) => {
         this._roomService.sendRoomUpdateNotification();
-        this.editEvent.emit("room-create-success");
+        this.modalEvent.emit("room-create-success");
         this._activeModal.close(sendData);
       }, (error: any) => {
-        this.editEvent.emit("room-create-fail");
+        this.modalEvent.emit("room-create-fail");
         console.error(error)
       })
     }

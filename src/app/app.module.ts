@@ -38,6 +38,7 @@ import { RoomListComponent } from './room-list/room-list.component';
 import { SettingsComponent } from './settings/settings.component';
 import { ChangePasswordComponent } from './settings/change-password/change-password.component';
 import { ChangeEmailComponent } from './settings/change-email/change-email.component';
+import { GenericModal } from './genericModal';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
@@ -106,7 +107,7 @@ const routes: Routes = [
       registrationStrategy: 'registerWhenStable:30000'
     }),
   ],
-  providers: [],
+  providers: [GenericModal],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

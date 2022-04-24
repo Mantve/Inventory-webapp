@@ -16,7 +16,7 @@ import { constants } from '../_constants';
 export class ListSelectComponent implements OnInit {
 
   @Input() fromParent: any;
-  @Output() createEvent = new EventEmitter<string>();
+  @Output() modalEvent = new EventEmitter<string>();
   lists: Array<ListResponseDto> = [];
 
   constructor(
@@ -45,7 +45,7 @@ export class ListSelectComponent implements OnInit {
   openListCreateModal() {
     const modalRef = this.modalService.open(ListCreateComponent, constants.ngbModalConfig);
 
-    modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.componentInstance.modalEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
       this.loadLists();
     }, (reason) => {
@@ -60,13 +60,13 @@ export class ListSelectComponent implements OnInit {
     }
     console.log(this.fromParent);
     this._listItemService.create(listItemCreateDto).subscribe((res: any) => {
-      this.createEvent.emit("listItem-create-success");
+      this.modalEvent.emit("listItem-create-success");
       this.loadLists();
 
       //this._activeModal.close(sendData);
     }
       , (error: any) => {
-        this.createEvent.emit("listItem-create-fail");
+        this.modalEvent.emit("listItem-create-fail");
         //this._activeModal.close(sendData);
       });
   }

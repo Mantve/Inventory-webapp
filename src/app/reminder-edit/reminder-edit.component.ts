@@ -21,7 +21,7 @@ export class ReminderEditComponent implements OnInit {
 
 
   @Input() fromParent: any;
-  @Output() editEvent = new EventEmitter<string>();
+  @Output() modalEvent = new EventEmitter<string>();
   selectedRoom!: number
   frequencies = Object.keys(RepeatFrequency).filter(k => isNaN(Number(k)));
   form!: FormGroup;
@@ -99,19 +99,19 @@ export class ReminderEditComponent implements OnInit {
   onSubmit(sendData: any) {
     if (!this.fromParent.new) {
       this._reminderService.update(this.fromParent.reminderId ,this.form.value).subscribe((res: any) => {
-        this.editEvent.emit("listItem-create-success");
+        this.modalEvent.emit("listItem-create-success");
         this._activeModal.close(sendData);
       }, (error: any) => {
-        this.editEvent.emit("listItem-create-fail");
+        this.modalEvent.emit("listItem-create-fail");
         console.error(error)
       })
     }
     else {
     this._reminderService.create(this.form.value).subscribe((res: any) => {
-      this.editEvent.emit("listItem-create-success");
+      this.modalEvent.emit("listItem-create-success");
       this._activeModal.close(sendData);
     }, (error: any) => {
-      this.editEvent.emit("listItem-create-fail");
+      this.modalEvent.emit("listItem-create-fail");
       console.error(error)
     })
   }
@@ -127,7 +127,7 @@ export class ReminderEditComponent implements OnInit {
       new:true
     }
     modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.componentInstance.modalEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
       this.loadItems(this.selectedRoom);
     }, (reason) => {

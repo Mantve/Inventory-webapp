@@ -12,7 +12,7 @@ import { ValidatedForm } from '../validators/validatedForm';
 })
 export class ListEditComponent extends ValidatedForm implements OnInit {
   @Input() fromParent: any;
-  @Output() editEvent = new EventEmitter<string>();
+  @Output() modalEvent = new EventEmitter<string>();
   list!: ListResponseDto;
 
   constructor(
@@ -39,10 +39,10 @@ export class ListEditComponent extends ValidatedForm implements OnInit {
 
   onSubmit(sendData: any) {
     this._listService.update(this.fromParent.listNo, this.form.value).subscribe((res: any) => {
-      this.editEvent.emit("room-edit-success");
+      this.modalEvent.emit("room-edit-success");
       this.activeModal.close(sendData);
     }, (error: any) => {
-      this.editEvent.emit("room-edit-fail");
+      this.modalEvent.emit("room-edit-fail");
       console.error(error)
     })
   }

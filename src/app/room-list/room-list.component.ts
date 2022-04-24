@@ -41,7 +41,7 @@ export class RoomListComponent implements OnInit {
     }
 
     modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.componentInstance.modalEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((res) => {
       this.getRooms();
     }, (error) => {
@@ -61,7 +61,7 @@ export class RoomListComponent implements OnInit {
     }
 
     modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.deleteEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.componentInstance.modalEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((res) => {
       this.getRooms();
     }, (error) => {

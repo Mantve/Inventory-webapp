@@ -15,6 +15,7 @@ import { AuthenticationService } from '../services/authentication.service';
 import { RoomShareComponent } from '../room-share/room-share.component';
 import { CategoryService } from '../services/category.service';
 import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
+import { GenericModal } from '../genericModal';
 
 @Component({
   selector: 'app-room-view',
@@ -30,15 +31,14 @@ export class RoomViewComponent implements OnInit {
   username!: string
 
   constructor(
+    private _genericModal: GenericModal,
     private _roomService: RoomService,
     private _router: Router,
     private route: ActivatedRoute,
-    private modalService: NgbModal,
-    private toastr: ToastrService,
     private _itemService: ItemService,
     private _categoryService: CategoryService,
-    private _authenticationService: AuthenticationService) {      
-    }
+    private _authenticationService: AuthenticationService) {
+  }
 
   ngOnInit(): void {
     this._authenticationService.getUser().subscribe(
@@ -68,9 +68,8 @@ export class RoomViewComponent implements OnInit {
       }, error => console.error(error))
   }
 
-  openRoomDeleteModal(roomNo: number, name: string) {
-    const modalRef = this.modalService.open(DeletionConfirmationModalComponent,constants.ngbModalConfig);
 
+  openRoomDeleteModal(roomNo: number, name: string) {
     let data = {
       type: "room",
       name: name,
@@ -80,57 +79,28 @@ export class RoomViewComponent implements OnInit {
         this._roomService.delete(roomNo)
     }
 
-    modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.deleteEvent.subscribe((res: string) => this.statusChangeEvent(res))
-    modalRef.result.then((res) => {
-    }, (error) => {
-    });
+    this._genericModal.openModal(DeletionConfirmationModalComponent, data, () => { this._router.navigate([this.route.parent]);}, () => { });
   }
 
   openRoomEditModal(roomNo: number) {
-    const modalRef = this.modalService.open(RoomEditComponent,constants.ngbModalConfig);
-
-    let data = {
-      roomNo: roomNo
-    }
-
-    modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
-    modalRef.result.then((res) => {
-      this.loadRoom(roomNo);
-    }, (error) => {
-    });
+    this._genericModal.openModal(RoomEditComponent, {roomNo: roomNo}, () => { this.loadRoom(roomNo) }, () => { });
   }
 
   openItemCreateModal(roomNo: number) {
-    const modalRef = this.modalService.open(ItemEditComponent,constants.ngbModalConfig);
 
-      let data = {
-        roomNo: roomNo,
-        new:true
-      }
+    let data = {
+      roomNo: roomNo,
+      new:true
+    }
 
-    modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
-    modalRef.result.then((result) => {
-      this.loadItems(this.roomNo);
+    this._genericModal.openModal(ItemEditComponent, data, () => {
+       this.loadItems(this.roomNo);
       this.loadCategoriesFromRoom(this.roomNo);
-    }, (reason) => {
-    });
+    }, () => { });
   }
 
   openRoomShareModal(roomNo: number) {
-    const modalRef = this.modalService.open(RoomShareComponent,constants.ngbModalConfig);
-    let data = {
-      roomNo: roomNo
-    }
-
-    modalRef.componentInstance.fromParent = data;
-    modalRef.result.then((res) => {
-      this.loadRoom(roomNo);
-    }, (error) => {
-      this.loadRoom(roomNo);
-    });
+    this._genericModal.openModal(RoomShareComponent, {roomNo: roomNo}, () => { this.loadRoom(roomNo) }, () => { this.loadRoom(roomNo) });
   }
 
   loadCategoriesFromRoom(roomNo: number) {
@@ -140,34 +110,5 @@ export class RoomViewComponent implements OnInit {
       }, error => console.error(error))
   }
 
-  statusChangeEvent(state: string) {
-    switch (state) {
-
-      case "room-delete-success":
-        this.toastr.success('Room has been deleted successfully', 'Success');
-        this._router.navigate([this.route.parent]);
-        break;
-
-      case "room-delete-fail":
-        this.toastr.error('An error occurred while deleting the room', 'Error');
-        break;
-
-      case "item-create-success":
-        this.toastr.success('Item was created successfully', 'Success');
-        break;
-
-      case "item-create-fail":
-        this.toastr.error('An error occurred while creating the item', 'Error');
-        break;
-
-        case "room-edit-success":
-          this.toastr.success('Room was modified successfully', 'Success');
-          break;
   
-        case "room-edit-fail":
-          this.toastr.error('An error occurred while saving changes', 'Error');
-          break;
-      default:
-    }
-  }
 }

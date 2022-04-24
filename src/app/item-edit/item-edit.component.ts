@@ -3,6 +3,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
+import { GenericModal } from '../genericModal';
 import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
@@ -21,13 +22,14 @@ import { constants } from '../_constants';
 export class ItemEditComponent extends ValidatedForm implements OnInit {
 
   @Input() fromParent: any;
-  @Output() editEvent = new EventEmitter<string>();
+  @Output() modalEvent = new EventEmitter<string>();
   rooms!: Array<RoomResponseDto>;
   items!: Array<ItemResponseDto>;
   categories!: Array<CategoryResponseDto>
   savedItem!: ItemResponseDto;
 
   constructor(
+    private _genericModal: GenericModal,
     private _formBuilder: FormBuilder,
     private _activeModal: NgbActiveModal,
     private modalService: NgbModal,
@@ -134,19 +136,19 @@ export class ItemEditComponent extends ValidatedForm implements OnInit {
   onSubmit(sendData: any) {
     if (!this.fromParent.new) {
       this._itemService.update(this.fromParent.itemNo, this.form.value).subscribe((res: any) => {
-        this.editEvent.emit("item-edit-success");
+        this.modalEvent.emit("item-edit-success");
         this._activeModal.close(sendData);
       }, (error: any) => {
-        this.editEvent.emit("item-edit-fail");
+        this.modalEvent.emit("item-edit-fail");
         console.error(error)
       })
     }
     else {
       this._itemService.create(this.form.value).subscribe((res: any) => {
-        this.editEvent.emit("item-create-success");
+        this.modalEvent.emit("item-create-success");
         this._activeModal.close(sendData);
       }, (error: any) => {
-        this.editEvent.emit("item-create-fail");
+        this.modalEvent.emit("item-create-fail");
         console.error(error)
       })
     }
@@ -157,44 +159,12 @@ export class ItemEditComponent extends ValidatedForm implements OnInit {
   }
 
   openCategoryCreateModal() {
-    const modalRef = this.modalService.open(CategoryEditComponent, constants.ngbModalConfig);
-    let data = {
-      new: true
-    }
-    modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
-    modalRef.result.then((result) => {
-      this.loadCategories();
-    }, (reason) => {
-    });
+    this._genericModal.openModal(CategoryEditComponent, { new: true}, () => { this.loadCategories() }, () => { });
   }
 
   openCreateRoomModal() {
-    const modalRef = this.modalService.open(RoomEditComponent, constants.ngbModalConfig);
-    let data = {
-      new: true
-    }
-    modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
-    modalRef.result.then((result) => {
-      this.loadRooms();
-    }, (reason) => {
-    });
+    this._genericModal.openModal(RoomEditComponent, { new: true}, () => { this.loadRooms() }, () => { });
   }
   
-  statusChangeEvent(state: string) {
-    switch (state) {
-
-      case "category-create-success":
-        this.toastr.success('Category was created successfully', 'Success');
-        break;
-
-      case "category-create-fail":
-        this.toastr.error('An error occurred while creating the category', 'Error');
-        break;
-
-      default:
-    }
-  }
 
 }

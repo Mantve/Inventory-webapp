@@ -69,7 +69,7 @@ export class FriendRequestListComponent implements OnInit {
     }
 
     modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.deleteEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.componentInstance.modalEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((res) => {
       this._authenticationService.sendFriendStateChangeNotification();
     }, (error) => {

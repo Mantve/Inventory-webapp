@@ -8,7 +8,7 @@ import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 })
 export class DeletionConfirmationModalComponent  {
   @Input() fromParent: any;
-  @Output() deleteEvent = new EventEmitter<string>();
+  @Output() modalEvent = new EventEmitter<string>();
 
   constructor(
     private _activeModal: NgbActiveModal) {
@@ -20,10 +20,10 @@ export class DeletionConfirmationModalComponent  {
   
   onSubmit(sendData: any) {
     this.fromParent.onSubmit().subscribe((res: any) => {
-      this.deleteEvent.emit(this.fromParent.successMessage);
+      this.modalEvent.emit(this.fromParent.successMessage);
       this._activeModal.close(sendData);
     }, (error: any) => {
-      this.deleteEvent.emit(this.fromParent.failMessage);
+      this.modalEvent.emit(this.fromParent.failMessage);
       console.error(error)
     })
   }

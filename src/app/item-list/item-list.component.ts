@@ -76,7 +76,7 @@ export class ItemListComponent implements OnInit {
       item: item
     }
     modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.componentInstance.modalEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
     }, (reason) => {
     });

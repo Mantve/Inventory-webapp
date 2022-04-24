@@ -57,7 +57,7 @@ export class ListViewComponent implements OnInit {
     }
 
     modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.deleteEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.componentInstance.modalEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((res) => {
       this.loadList(this.listNo);
     }, (error) => {
@@ -72,7 +72,7 @@ export class ListViewComponent implements OnInit {
     }
 
     modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.createEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.componentInstance.modalEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
       this.loadList(this.listNo);
     }, (reason) => {

@@ -36,7 +36,7 @@ export class HomeComponent implements OnInit {
       new: true
     }
     modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
+    modalRef.componentInstance.modalEvent.subscribe((res: string) => this.statusChangeEvent(res))
     modalRef.result.then((result) => {
     }, (reason) => {
     });

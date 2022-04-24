@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
+import { GenericModal } from '../genericModal';
 import { ReminderResponseDto } from '../models/response/reminderResponseDto.model';
 import { ReminderEditComponent } from '../reminder-edit/reminder-edit.component';
 import { ReminderService } from '../services/reminder.service';
@@ -19,6 +20,7 @@ export class ReminderListComponent implements OnInit {
   reminders!: Array<ReminderResponseDto>;
 
   constructor(
+    private _genericModal: GenericModal,
     private _reminderService: ReminderService,
     private _router: Router,
     private route: ActivatedRoute,
@@ -40,8 +42,6 @@ export class ReminderListComponent implements OnInit {
   }
 
   openReminderDeleteModal(reminderNo: number, name: string) {
-    const modalRef = this.modalService.open(DeletionConfirmationModalComponent, constants.ngbModalConfig);
-
     let data = {
       type: "reminder",
       name: "reminder for " + name,
@@ -50,43 +50,25 @@ export class ReminderListComponent implements OnInit {
       onSubmit: (): Observable<object> =>
         this._reminderService.delete(reminderNo)
     }
-
-    modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.deleteEvent.subscribe((res: string) => this.statusChangeEvent(res))
-    modalRef.result.then((res) => {
+    this._genericModal.openModal(DeletionConfirmationModalComponent, data, () => { this.loadReminders(); }, () => {
       this.loadReminders();
-    }, (error) => {
-      this.loadReminders();
-    });
+    }
+    )
   }
 
   openReminderEditModal(reminderId: number) {
-    const modalRef = this.modalService.open(ReminderEditComponent, constants.ngbModalConfig);
     let data = {
       reminderId: reminderId
     }
-
-    modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
-    modalRef.result.then((res) => {
-      this.loadReminders();
-    }, (error) => {
-    });
+    this._genericModal.openModal(ReminderEditComponent, data, () => { this.loadReminders(); }, () => { });
   }
 
   openReminderCreateModal() {
-    const modalRef = this.modalService.open(ReminderEditComponent, constants.ngbModalConfig);
 
     let data = {
       new: true
     }
-
-    modalRef.componentInstance.fromParent = data;
-    modalRef.componentInstance.editEvent.subscribe((res: string) => this.statusChangeEvent(res))
-    modalRef.result.then((result) => {
-      this.loadReminders();
-    }, (reason) => {
-    });
+    this._genericModal.openModal(ReminderEditComponent, data, () => { this.loadReminders(); }, () => { });
   }
 
   onSortChange() {
@@ -120,33 +102,4 @@ export class ReminderListComponent implements OnInit {
     });
   }
 
-  statusChangeEvent(state: string) {
-    switch (state) {
-
-      case "reminder-delete-success":
-        this.toastr.success('Reminder has been deleted successfully', 'Success');
-        break;
-
-      case "reminder-delete-fail":
-        this.toastr.error('An error occurred while deleting the reminder', 'Error');
-        break;
-
-      case "reminder-create-success":
-        this.toastr.success('Reminder was created successfully', 'Success');
-        break;
-
-      case "reminder-create-fail":
-        this.toastr.error('An error occurred while creating the reminder', 'Error');
-        break;
-
-      case "reminder-edit-success":
-        this.toastr.success('Reminder was modified successfully', 'Success');
-        break;
-
-      case "reminder-edit-fail":
-        this.toastr.error('An error occurred while saving changes', 'Error');
-        break;
-      default:
-    }
-  }
 }
