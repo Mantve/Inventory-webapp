@@ -17,13 +17,22 @@ export class FriendRequestSendComponent  {
     private _formBuilder: FormBuilder,
     private _messageService: MessageService) {
     this.form = this._formBuilder.group({
-      recipientName: [null, Validators.required],
-      contents: [""],
+      recipientName: [null, [Validators.required, Validators.maxLength(15)]],
+      contents: ["",[Validators.maxLength(100)]],
       messageType:[MessageType.FriendRequest,Validators.required]
     });
   }
   
+  public validateControl = (controlName: string) => {
+    return this.form.controls[controlName].invalid && this.form.controls[controlName].touched
+  }
+
+  public hasError = (controlName: string, errorName: string) => {
+    return this.form.controls[controlName].hasError(errorName)
+  }
+  
 sendRequest(){
+  
   this._messageService.create(this.form.value).subscribe((res: any) => {
     this._toastr.success('Friend request has been sent successfully', 'Success');
 

@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit {
 
   items$!: Observable<ItemResponseDto[]>;
   private searchTerms = new Subject<string>();
+  searchTerm = '';
 
   constructor(
     private _itemService: ItemService
@@ -35,4 +36,8 @@ export class NavbarComponent implements OnInit {
     );
   }
 
+  clearSearch() {
+    this.searchTerm = '';
+    this.search('');
+  }
 }

@@ -1,101 +1,104 @@
-<div class="flex-shrink-0 py-4 px-3 bg-white" style="width: 280px;">
-    <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
-        <svg class="bi" width="32" height="24" fill="currentColor">
-            <use xlink:href="bootstrap-icons.svg#house-door" />
-        </svg>
+<nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
 
-        <span class="fs-5 fw-semibold">Menu</span>
-    </a>
-    <ul class="list-unstyled ps-0">
-        <li class="mb-1" *ngIf='isUserAuthenticated'>
-            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                data-bs-target="#home-collapse" aria-expanded="true">
-                Home
-            </button>
-            <div class="collapse show" id="home-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li>
-                        <a class="link-dark rounded" [routerLink]="['/home']" routerLinkActive="active"
-                            [routerLinkActiveOptions]="{exact: true}">Overview</a>
-                    </li>
-                    <li>
-                        <a class="link-dark rounded" [routerLink]="['/categories']" routerLinkActive="active"
-                            [routerLinkActiveOptions]="{exact: true}">Categories</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="mb-1" *ngIf='isUserAuthenticated'>
-            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                data-bs-target="#dashboard-collapse" aria-expanded="false">
-                Rooms
-            </button>
-            <div class="collapse show" id="dashboard-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li *ngFor="let room of rooms">
-                        <a class="link-dark rounded" [routerLink]="['/room/'+room.id]" routerLinkActive="active"
-                            [routerLinkActiveOptions]="{exact: true}">{{room.name}}</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="mb-1" *ngIf='isUserAuthenticated'>
-            <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
-                data-bs-target="#orders-collapse" aria-expanded="false">
-                Convenience
-            </button>
-            <div class="collapse show" id="orders-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li>
-                        <a class="link-dark rounded" [routerLink]="['/reminders']" routerLinkActive="active"
-                            [routerLinkActiveOptions]="{exact: true}">Reminders</a>
-                    </li>
-                    <li>
-                        <a class="link-dark rounded" [routerLink]="['/lists']" routerLinkActive="active"
-                            [routerLinkActiveOptions]="{exact: true}">Lists</a>
-                    </li>
-                    <li>
-                        <a class="link-dark rounded" [routerLink]="['/friends']" routerLinkActive="active"
-                            [routerLinkActiveOptions]="{exact: true}">Friends</a>
-                    </li>
-                </ul>
-            </div>
-        </li>
-        <li class="border-top my-3" *ngIf='isUserAuthenticated'></li>
-        <li class="mb-1">
-            <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
-                data-bs-target="#account-collapse" aria-expanded="true">
-                Account
-            </button>
-            <div class="collapse show" id="account-collapse">
-                <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <div *ngIf='!isUserAuthenticated'>
+    <div class="flex-shrink-0 py-4 px-3 bg-white" style="width: 100%;">
+        <a href="/" class="d-flex align-items-center pb-3 mb-3 link-dark text-decoration-none border-bottom">
+            <svg class="bi" width="32" height="24" fill="currentColor">
+                <use xlink:href="bootstrap-icons.svg#house-door" />
+            </svg>
 
-                        <li>
-                            <a class="link-dark rounded" [routerLink]="['/authentication/register']"
-                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Register</a>
-                        </li>
-                        <li>
-                            <a class="link-dark rounded" [routerLink]="['/authentication/login']"
-                                routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Login</a>
-                        </li>
-                    </div>
-                    <div *ngIf='isUserAuthenticated'>
-                        <li>
-                            <a class="link-dark rounded" [routerLink]="['/home']" routerLinkActive="active"
-                                [routerLinkActiveOptions]="{exact: true}">Profile</a>
-                        </li>
+            <span class="fs-5 fw-semibold">Menu</span>
+        </a>
+        <ul class="list-unstyled ps-0">
+            <li class="mb-1" *ngIf='isUserAuthenticated'>
+                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
+                    data-bs-target="#home-collapse" aria-expanded="true">
+                    Home
+                </button>
+                <div class="collapse show" id="home-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
                         <li>
                             <a class="link-dark rounded" [routerLink]="['/home']" routerLinkActive="active"
-                                [routerLinkActiveOptions]="{exact: true}">Settings</a>
+                                [routerLinkActiveOptions]="{exact: true}">Overview</a>
                         </li>
-                        <li (click)="logout()">
-                            <a class="link-dark rounded" [routerLink]="['/home']" routerLinkActive="active"
-                                [routerLinkActiveOptions]="{exact: true}">Sign Out</a>
+                        <li>
+                            <a class="link-dark rounded" [routerLink]="['/categories']" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact: true}">Categories</a>
                         </li>
-                    </div>
-                </ul>
-            </div>
-        </li>
-    </ul>
-</div>
+                    </ul>
+                </div>
+            </li>
+            <li class="mb-1" *ngIf='isUserAuthenticated'>
+                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
+                    data-bs-target="#dashboard-collapse" aria-expanded="false">
+                    Rooms
+                </button>
+                <div class="collapse show" id="dashboard-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li *ngFor="let room of rooms">
+                            <a class="link-dark rounded" [routerLink]="['/room/'+room.id]" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact: true}">{{room.name}}</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="mb-1" *ngIf='isUserAuthenticated'>
+                <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse"
+                    data-bs-target="#orders-collapse" aria-expanded="false">
+                    Convenience
+                </button>
+                <div class="collapse show" id="orders-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <li>
+                            <a class="link-dark rounded" [routerLink]="['/reminders']" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact: true}">Reminders</a>
+                        </li>
+                        <li>
+                            <a class="link-dark rounded" [routerLink]="['/lists']" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact: true}">Lists</a>
+                        </li>
+                        <li>
+                            <a class="link-dark rounded" [routerLink]="['/friends']" routerLinkActive="active"
+                                [routerLinkActiveOptions]="{exact: true}">Friends</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+            <li class="border-top my-3" *ngIf='isUserAuthenticated'></li>
+            <li class="mb-1">
+                <button class="btn btn-toggle align-items-center rounded" data-bs-toggle="collapse"
+                    data-bs-target="#account-collapse" aria-expanded="true">
+                    Account
+                </button>
+                <div class="collapse show" id="account-collapse">
+                    <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                        <div *ngIf='!isUserAuthenticated'>
+
+                            <li>
+                                <a class="link-dark rounded" [routerLink]="['/authentication/register']"
+                                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Register</a>
+                            </li>
+                            <li>
+                                <a class="link-dark rounded" [routerLink]="['/authentication/login']"
+                                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Login</a>
+                            </li>
+                        </div>
+                        <div *ngIf='isUserAuthenticated'>
+                            <li>
+                                <a class="link-dark rounded" [routerLink]="['/profile']" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{exact: true}">Profile</a>
+                            </li>
+                            <li>
+                                <a class="link-dark rounded" [routerLink]="['/settings']" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{exact: true}">Settings</a>
+                            </li>
+                            <li (click)="logout()">
+                                <a class="link-dark rounded" [routerLink]="['/home']" routerLinkActive="active"
+                                    [routerLinkActiveOptions]="{exact: true}">Logout</a>
+                            </li>
+                        </div>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</nav>

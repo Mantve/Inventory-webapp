@@ -1,12 +1,30 @@
 <header class="navbar navbar-dark sticky-top bg-dark flex-nowrap p-0 shadow">
-    <a class="navbar-brand me-0 px-3 " href="#">Inventory system</a>
+
+    <button class="btn btn-dark border-0 d-md-none collapsed" type="button" data-bs-toggle="collapse"
+    data-bs-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+       <span class="navbar-toggler-icon"></span>
+     </button>
+    <a class="navbar-brand bg-dark me-0 px-3 " href="#">Inventory system</a>
 
     <div  class="w-100">
-        <input #searchBox class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"
-        id="searchBox" (input)="search(searchBox.value)">
-        <ul class="navbar-nav px-3">
+
+        <div class="d-flex">
+
+            <input #searchBox class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search"
+            id="searchBox" [(ngModel)]="searchTerm" (input)="search(searchTerm)">
+            
+            <button type="button" class="btn btn-sm btn-dark border-0" (click)="clearSearch()" aria-label="Clear search">
+                <svg class="bi" width="24" height="24" fill="currentColor">
+                    <use xlink:href="bootstrap-icons.svg#x" />
+                </svg>
+            </button>
+
+
+        </div>
+
+        <ul class="navbar-nav px-3 position-absolute bg-dark w-100 start-0">
             <li class="nav-item text-nowrap float" *ngFor="let item of items$ | async">
-                <a class="nav-link" [routerLink]="['/item', item.id]">{{item.name}}</a>
+                <a class="nav-link" (click)="clearSearch()" [routerLink]="['/item', item.id]">{{item.name}}</a>
             </li>
         </ul>
     </div>

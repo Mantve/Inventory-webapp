@@ -24,17 +24,25 @@ export class RoomEditComponent implements OnInit {
     public _roomService: RoomService  ) {
       
     this.form = this._formBuilder.group({
-      name: ["", Validators.required],
+      name: ["", [Validators.required, Validators.maxLength(30)]],
       sharedWith: []
     });
   }
 
+  public validateControl = (controlName: string) => {
+    return this.form.controls[controlName].invalid && this.form.controls[controlName].touched
+  }
+
+  public hasError = (controlName: string, errorName: string) => {
+    return this.form.controls[controlName].hasError(errorName)
+  }
+  
   ngOnInit(): void {
     if (!this.fromParent.new) {
       this._roomService.get(this.fromParent.roomNo).subscribe(result => {
         this.room = result
         this.form = this._formBuilder.group({
-          name: [result.name, Validators.required]
+          name: [result.name,  [Validators.required, Validators.maxLength(30)]]
         });
       })
     }

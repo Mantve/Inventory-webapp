@@ -5,31 +5,53 @@
             {{errorMessage}}
         </div>
         <form [formGroup]="registerForm" autocomplete="off" novalidate (ngSubmit)="registerUser(registerForm.value)">
-                <label for="username" class="col-form-label ">Username:</label>
-                <div class="col-md-5">
-                    <input type="text" id="username" formControlName="username" class="form-control" />
-                </div>
+            <label for="email" class="col-form-label ">Email:</label>
+            <div class="col-md-5">
+                <input type="text" id="email" formControlName="email" class="form-control" />
+            </div>
+            <div class="col-md-5 text-danger" *ngIf="validateControl('email')">
+                <em *ngIf="hasError('email', 'required')">Email is required</em>
+                <em *ngIf="hasError('email', 'email')">Email is not valid</em>
+                <em *ngIf="hasError('email', 'maxlength')">Email cannot be longer than 50
+                    characters</em>
+            </div>
 
-                <label for="password" class="col-form-label ">Password:</label>
-                <div class="col-md-5">
-                    <input type="password" id="password" formControlName="password" class="form-control" />
-                </div>
-                <div class="col-md-5">
-                    <em *ngIf="validateControl('password') && hasError('password', 'required')">Password is required</em>
-                </div>
+            <label for="username" class="col-form-label ">Username:</label>
+            <div class="col-md-5">
+                <input type="text" id="username" formControlName="username" class="form-control" />
+            </div>
+            <div class="col-md-5 text-danger" *ngIf="validateControl('username')">
+                <em *ngIf="hasError('username', 'required')">Username is required</em>
+                <em *ngIf="hasError('username', 'pattern')">Username can not contain
+                    symbols</em>
+                <em *ngIf="hasError('username', 'maxlength')">Username cannot be longer
+                    than 15 characters</em>
+            </div>
 
-                <label for="confirm" class="col-form-label">Confirm Password:</label>
-                <div class="col-md-5">
-                    <input type="password" id="confirm" formControlName="confirm" class="form-control" />
-                </div>
-                <div class="col-md-5">
-                    <em *ngIf="validateControl('confirm') && hasError('confirm', 'mustMatch')">Passwords do not match</em>
-                    <em *ngIf="validateControl('confirm') && hasError('confirm', 'required')">Password is required</em>
-                </div>
+            <label for="password" class="col-form-label ">Password:</label>
+            <div class="col-md-5">
+                <input type="password" id="password" formControlName="password" class="form-control" />
+            </div>
+            <div class="col-md-5 text-danger" *ngIf="validateControl('password')">
+                <em *ngIf="hasError('password', 'required')">Password is required</em>
+                <em *ngIf="hasError('password', 'maxlength')">Password cannot be longer
+                    than 100 characters</em>
+            </div>
+
+            <label for="confirm" class="col-form-label">Confirm Password:</label>
+            <div class="col-md-5">
+                <input type="password" id="confirm" formControlName="confirm" class="form-control" />
+            </div>
+            <div class="col-md-5 text-danger" *ngIf="validateControl('confirm')">
+                <em *ngIf="hasError('confirm', 'mustMatch')">Passwords do not match</em>
+                <em *ngIf="hasError('confirm', 'required')">Password is required</em>
+                <em *ngIf="hasError('confirm', 'maxlength')">Password cannot be longer
+                    than 100 characters</em>
+            </div>
             <br>
-                <div class="col-md-1">
-                    <button type="submit" class="btn btn-info" [disabled]="!registerForm.valid">Register</button>
-                </div>
+            <div class="col-md-1">
+                <button type="submit" class="btn btn-info" [disabled]="!registerForm.valid">Register</button>
+            </div>
         </form>
     </div>
 </div>

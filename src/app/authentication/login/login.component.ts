@@ -25,8 +25,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = new FormGroup({
-      username: new FormControl("", [Validators.required]),
-      password: new FormControl("", [Validators.required])
+      username: new FormControl("", [Validators.required, Validators.maxLength(15), Validators.pattern('^[a-zA-Z0-9]+$')]),
+      password: new FormControl("", [Validators.required, Validators.maxLength(100)])
     })
 
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
@@ -54,7 +54,7 @@ export class LoginComponent implements OnInit {
         this._authService.sendAuthStateChangeNotification(res.status === 200);
         if (res.status === 200) {
           localStorage.setItem('user',JSON.stringify(res.body));
-          sessionStorage.setItem('loggedAt', Date.now().toString());
+          localStorage.setItem('loggedAt', Date.now().toString());
           this._roomService.sendRoomUpdateNotification();
           this._toastr.success('Logged in successfully', 'Success');
         }

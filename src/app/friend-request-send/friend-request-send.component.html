@@ -3,10 +3,19 @@
         <div class="col-sm-7">
             <input type="text" id="recipientName" formControlName="recipientName" class="form-control" />
         </div>
+        <div class="col-sm-7 text-danger" *ngIf="validateControl('recipientName')">
+            <em *ngIf="hasError('recipientName', 'required')">Username is required</em>
+            <em *ngIf="hasError('recipientName', 'maxlength')">Username cannot be longer than 30
+                characters</em>
+        </div>
 
         <label for="name" class="col-form-label col-sm-5">Include a message:</label>
         <div class="col-sm-7">
             <input type="text" id="contents" formControlName="contents" class="form-control" />
+        </div>
+        <div class="col-sm-7 text-danger" *ngIf="validateControl('contents')">
+            <em *ngIf="hasError('contents', 'maxlength')">Message cannot be longer than 100
+                characters</em>
         </div>
 </form>
 <button type="button" class="btn btn-success" (click)="sendRequest()">Send Request</button>

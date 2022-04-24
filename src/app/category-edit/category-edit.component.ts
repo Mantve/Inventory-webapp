@@ -22,10 +22,18 @@ export class CategoryEditComponent implements OnInit {
     private _activeModal: NgbActiveModal,
     private _categoryService: CategoryService) {
     this.form = this._formBuilder.group({
-      id: [0, Validators.required],
-      name: ["", Validators.required],
-      description: [""]
+      id: [0, [Validators.required]],
+      name: ["", [Validators.required, Validators.maxLength(30)]],
+      description: ["", [ Validators.maxLength(100)]]
     });
+  }
+
+  public validateControl = (controlName: string) => {
+    return this.form.controls[controlName].invalid && this.form.controls[controlName].touched
+  }
+
+  public hasError = (controlName: string, errorName: string) => {
+    return this.form.controls[controlName].hasError(errorName)
   }
 
   ngOnInit(): void {
@@ -34,9 +42,9 @@ export class CategoryEditComponent implements OnInit {
       this._categoryService.get(this.fromParent.categoryNo).subscribe(result => {
         this.savedCategory = result
         this.form = this._formBuilder.group({
-          id: [result.id, Validators.required],
-          name: [result.name, Validators.required],
-          description: [result.description]
+          id: [result.id, [Validators.required]],
+          name: [result.name, [Validators.required, Validators.maxLength(30)]],
+          description: [result.description, [ Validators.maxLength(100)]]
         });
       })
     }

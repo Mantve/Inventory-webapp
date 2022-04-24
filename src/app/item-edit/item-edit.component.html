@@ -11,20 +11,35 @@
         <div class="input-group">
             <label for="name" class="col-form-label col-2">Name:</label>
             <input type="text" id="name" formControlName="name" class="form-control" />
+            <div class="p-3 col-2 text-danger" *ngIf="validateControl('name')">
+                <em *ngIf="hasError('name', 'required')">Name is required</em>
+                <em *ngIf="hasError('name', 'maxlength')">Name cannot be longer than 50
+                    characters</em>
+            </div>
         </div>
 
         <div class="input-group">
-            <label for="name" class="col-form-label col-2">Quantity:</label>
+            <label for="quantity" class="col-form-label col-2">Quantity:</label>
             <input type="number" min="0" id="quantity" formControlName="quantity" class="form-control" />
+            <div class="p-3 col-2 text-danger" *ngIf="validateControl('quantity')">
+                <em *ngIf="hasError('quantity', 'required')">Quantity is required</em>
+                <em *ngIf="hasError('quantity', 'min')">Quantity cannot be lower than 0</em>
+                <em *ngIf="hasError('quantity', 'max')">Max quantity reached</em>
+            </div>
         </div>
 
         <div class="input-group">
-            <label for="name" class="col-form-label col-2">Value:</label>
+            <label for="value" class="col-form-label col-2">Value:</label>
             <input type="number" id="value" formControlName="value" class="form-control" />
+            <div class="p-3 col-2 text-danger" *ngIf="validateControl('value')">
+                <em *ngIf="hasError('value', 'required')">Value is required</em>
+                <em *ngIf="hasError('value', 'min')">Value cannot be lower than 0</em>
+                <em *ngIf="hasError('value', 'max')">Max value reached</em>
+            </div>
         </div>
 
         <div class="input-group">
-            <label for="name" class="col-form-label col-2">Location:</label>
+            <label for="roomId" class="col-form-label col-2">Location:</label>
             <select class="form-select" (change)="onRoomChange()" id="roomId" formControlName="roomId">
                 <option [ngValue]="null" selected>-- Select a room --</option>
                 <option *ngFor="let room of rooms" attr.value={{room.id}}
@@ -40,7 +55,7 @@
         </div>
 
         <div class="input-group">
-            <label for="name" class="col-form-label col-2">Detailed location:</label>
+            <label for="parentItemId" class="col-form-label col-2">Detailed location:</label>
             <select class="form-select" id="parentItemId" formControlName="parentItemId">
                 <option [ngValue]="null" selected>-- Not selected --</option>
                 <option *ngFor="let item of items" attr.value={{item.id}}
@@ -51,7 +66,7 @@
         </div>
 
         <div class="input-group">
-            <label for="name" class="col-form-label col-2">Category:</label>
+            <label for="categoryId" class="col-form-label col-2">Category:</label>
             <select class="form-select" id="categoryId" formControlName="categoryId">
                 <option selected [ngValue]="null">-- Select a category --</option>
                 <option *ngFor="let category of categories" attr.value={{category.id}}
@@ -66,12 +81,13 @@
         </div>
 
         <div class="input-group">
-            <label for="name" class="col-form-label col-2">Comments:</label>
+            <label for="comments" class="col-form-label col-2">Comments:</label>
             <input type="text" id="comments" formControlName="comments" class="form-control" />
+            <div class="p-3 col-2 text-danger" *ngIf="validateControl('comments')">
+                <em *ngIf="hasError('comments', 'maxlength')">Comment cannot be longer than 200 characters</em>
+            </div>
         </div>
     </form>
-
-
 </div>
 
 <div class="modal-footer">

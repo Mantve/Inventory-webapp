@@ -43,7 +43,7 @@ export class SidebarComponent implements OnInit {
 
   public logout = () => {
     localStorage.removeItem('user');
-    sessionStorage.removeItem('loggedAt');
+    localStorage.removeItem('loggedAt');
     this._authService.logout('api/logout')
       .subscribe(res => {
         this._toastr.success('Logged out successfully', 'Success');

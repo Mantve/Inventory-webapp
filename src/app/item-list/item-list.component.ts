@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ListSelectComponent } from '../list-select/list-select.component';
@@ -13,15 +13,42 @@ import { constants } from '../_constants';
   templateUrl: './item-list.component.html',
   styleUrls: ['./item-list.component.scss']
 })
-export class ItemListComponent {
+export class ItemListComponent implements OnInit {
 
   @Input() items!: Array<RecursiveItemResponseDto>;
   @Input() categories!: Array<CategoryResponseDto>;
+  @Input() roomId!: number;
+  @Input() parentItemId!: number;
   selectedCategories: Array<CategoryResponseDto> = [];
+  expandedItems: { [id: number]: boolean } = {};
   constructor(
     private modalService: NgbModal,
     private toastr: ToastrService
   ) { }
+
+  ngOnInit() {
+    if (this.roomId) {
+      sessionStorage.getItem("room" + this.roomId) ? this.expandedItems = JSON.parse(sessionStorage.getItem("room" + this.roomId)!) : this.expandedItems = {};
+    }
+    else {
+      sessionStorage.getItem("item" + this.roomId) ? this.expandedItems = JSON.parse(sessionStorage.getItem("item" + this.roomId)!) : this.expandedItems = [];
+    }
+  }
+
+  isItemExpanded(item: RecursiveItemResponseDto) : boolean {
+    console.log(item, this.expandedItems[item.id]);
+    return this.expandedItems[item.id];
+  }
+
+  expandItem(item: RecursiveItemResponseDto) {
+    this.expandedItems[item.id] = !this.expandedItems[item.id];
+    if (this.roomId) {
+      sessionStorage.setItem("room" + this.roomId, JSON.stringify(this.expandedItems));
+    }
+    else {
+      sessionStorage.setItem("item" + this.roomId, JSON.stringify(this.expandedItems));
+    }
+  }
 
   onCategorySelected(category: CategoryResponseDto) {
     if (this.selectedCategories.includes(category)) {

@@ -21,7 +21,7 @@
                     <div class="clearfix"></div>
                 </div>
                 <div class="card-footer">
-                    <div class="d-flex align-self-center">
+                    <div class="d-flex flex-wrap align-self-center">
                         <div *ngFor="let user of room.sharedWith">
                             <span *ngIf="user.username === room.author.username"
                                 class="badge bg-dark m-1">{{user.username}}</span>

@@ -38,16 +38,24 @@ export class ItemEditComponent implements OnInit {
     private _categoryService: CategoryService
   ) {
     this.form = this._formBuilder.group({
-      name: ["", Validators.required],
-      quantity: ["1", Validators.required],
-      value: ["0", Validators.required],
+      name: ["", [Validators.required, Validators.maxLength(50)]],
+      quantity: ["1", [Validators.required,Validators.min(0),Validators.max(9999999)]],
+      value: ["0", [Validators.required,Validators.min(0),Validators.max(9999999)]],
       categoryId: [, Validators.required],
       parentItemId: [],
-      comments: [""],
+      comments: ["",[Validators.maxLength(200)]],
       roomId: [, Validators.required]
     });
   }
 
+  public validateControl = (controlName: string) => {
+    return this.form.controls[controlName].invalid && this.form.controls[controlName].touched
+  }
+
+  public hasError = (controlName: string, errorName: string) => {
+    return this.form.controls[controlName].hasError(errorName)
+  }
+  
   ngOnInit(): void {
     if (!this.fromParent.new) {
       this._itemService.get(this.fromParent.itemNo).subscribe(result => {
@@ -56,12 +64,12 @@ export class ItemEditComponent implements OnInit {
         this.loadCategories(result.room.id);
         this.loadItems(result.room.id);
         this.form = this._formBuilder.group({
-          name: [result.name, Validators.required],
-          quantity: [result.quantity, Validators.required],
-          value: [result.value, Validators.required],
+          name: [result.name, [Validators.required, Validators.maxLength(50)]],
+          quantity: [result.quantity, [Validators.required,Validators.min(0),Validators.max(9999999)]],
+          value: [result.value, [Validators.required,Validators.min(0),Validators.max(9999999)]],
           categoryId: [result.category?.id, Validators.required],
           parentItemId: [result.parentItem?.id],
-          comments: [result.comments],
+          comments: [result.comments,[Validators.maxLength(200)]],
           roomId: [result.room.id, Validators.required]
         });
       })

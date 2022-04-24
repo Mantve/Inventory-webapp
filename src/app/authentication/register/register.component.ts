@@ -22,9 +22,10 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this._returnUrl = this._route.snapshot.queryParams['returnUrl'] || '/';
     this.registerForm = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email, Validators.maxLength(50)]],
       username: new FormControl('', [Validators.required, Validators.maxLength(15), Validators.pattern('^[a-zA-Z0-9]+$')]),
-      password: new FormControl('', [Validators.required]),
-      confirm: new FormControl('',[Validators.required])
+      password: new FormControl('', [Validators.required, Validators.maxLength(100)]),
+      confirm: new FormControl('',[Validators.required, Validators.maxLength(100)])
   }, {
       validator: MustMatch('password', 'confirm')
   });
@@ -45,6 +46,7 @@ export class RegisterComponent implements OnInit {
     const user: RegistrationDto = {
       username: formValues.username,
       password: formValues.password,
+      email: formValues.email
     };
 
     this._authService.registerUser("api/register", user)

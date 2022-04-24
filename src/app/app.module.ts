@@ -35,9 +35,13 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { ListSelectComponent } from './list-select/list-select.component';
 import { RoomListComponent } from './room-list/room-list.component';
+import { SettingsComponent } from './settings/settings.component';
+import { ChangePasswordComponent } from './settings/change-password/change-password.component';
+import { ChangeEmailComponent } from './settings/change-email/change-email.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'settings', component: SettingsComponent },
   { path: 'lists', component: ListListComponent },
   { path: 'reminders', component: ReminderListComponent },
   { path: 'list/:listNo', component: ListViewComponent },
@@ -78,7 +82,10 @@ const routes: Routes = [
     ItemListComponent,
     RoomShareComponent,
     ListSelectComponent,
-    RoomListComponent
+    RoomListComponent,
+    SettingsComponent,
+    ChangePasswordComponent,
+    ChangeEmailComponent
   ],
   imports: [
     HttpClientModule,

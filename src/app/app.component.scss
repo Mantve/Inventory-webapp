@@ -1,5 +1,10 @@
 .app {
     min-width: 100%;
     display: grid;
-    grid-template-columns: auto 1fr;
+    grid-template-columns: 280px 1fr;
+
+    @media only screen and (max-width: 766px) {
+      grid-template-columns: 1fr;
+      grid-template-rows: auto 1fr;
+    }
   }

@@ -26,6 +26,14 @@ export class ListEditComponent implements OnInit {
     });
   }
 
+  public validateControl = (controlName: string) => {
+    return this.form.controls[controlName].invalid && this.form.controls[controlName].touched
+  }
+
+  public hasError = (controlName: string, errorName: string) => {
+    return this.form.controls[controlName].hasError(errorName)
+  }
+  
   ngOnInit(): void {
     this._listService.get(this.fromParent.listNo).subscribe(result => {
       this.list = result

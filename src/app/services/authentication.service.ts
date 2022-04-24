@@ -1,4 +1,5 @@
 import { RegistrationDto } from '../models/request/registrationDto.model';
+import {UserUpdateDto} from '../models/request/userUpdateDto.model';
 import { RegistrationResponseDto } from './../models/response/registrationResponseDto.model';
 import { UserResponseDto } from './../models/response/userResponseDto.model';
 import { HttpClient } from '@angular/common/http';
@@ -7,6 +8,7 @@ import { EnvironmentUrlService } from './environment-url.service';
 import { UserForAuthenticationDto } from '../models/request/userForAuthenticationDto.model';
 import { Subject } from 'rxjs';
 import jwtDecode from 'jwt-decode';
+import { PasswordUpdateDto } from '../models/request/passwordUpdateDto.model';
 
 @Injectable({
   providedIn: 'root'
@@ -57,6 +59,14 @@ export class AuthenticationService {
     return this._http.post(this.createCompleteRoute('api/friends/'+messageId, this._envUrl.urlAddress),"",  { withCredentials: true });
   }
 
+  public updateUser = (data: UserUpdateDto) => {
+    return this._http.put(this.createCompleteRoute('api/user', this._envUrl.urlAddress), data,  { withCredentials: true });
+  }
+
+  public changePassword = (data:PasswordUpdateDto) => {
+    return this._http.put(this.createCompleteRoute('api/changePassword', this._envUrl.urlAddress), data,  { withCredentials: true });
+  }
+
   public unfriend = (username:string) => {
     return this._http.delete(this.createCompleteRoute('api/friends/'+username, this._envUrl.urlAddress), { withCredentials: true });
   }
@@ -77,7 +87,7 @@ export class AuthenticationService {
 
  
   public isLogged = () => {
-    let loginDate = sessionStorage.getItem('loggedAt');
+    let loginDate = localStorage.getItem('loggedAt');
     if (!loginDate || loginDate == ""){
       console.log("no token found")
       return false;
