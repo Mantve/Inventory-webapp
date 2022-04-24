@@ -40,14 +40,14 @@ export class CategoryListComponent implements OnInit {
   }
 
   openCategoryDeleteModal(categoryNo: number, name: string) {
-    const modalRef = this.modalService.open(DeletionConfirmationModalComponent,constants.ngbModalConfig);
-   
+    const modalRef = this.modalService.open(DeletionConfirmationModalComponent, constants.ngbModalConfig);
+
     let data = {
       type: "category",
       name: name,
       successMessage: "category-delete-success",
       failMessage: "category-delete-fail",
-      onSubmit:  (): Observable<object> => 
+      onSubmit: (): Observable<object> =>
         this._categoryService.delete(categoryNo)
     }
 
@@ -60,7 +60,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   openCategoryEditModal(categoryNo: number) {
-    const modalRef = this.modalService.open(CategoryEditComponent,constants.ngbModalConfig);
+    const modalRef = this.modalService.open(CategoryEditComponent, constants.ngbModalConfig);
 
     let data = {
       categoryNo: categoryNo
@@ -75,7 +75,7 @@ export class CategoryListComponent implements OnInit {
   }
 
   openCategoryCreateModal() {
-    const modalRef = this.modalService.open(CategoryEditComponent,constants.ngbModalConfig);
+    const modalRef = this.modalService.open(CategoryEditComponent, constants.ngbModalConfig);
 
     let data = {
       new: true
@@ -107,17 +107,17 @@ export class CategoryListComponent implements OnInit {
         this.toastr.error('An error occurred while creating the category', 'Error');
         break;
 
-        case "category-edit-success":
-          this.toastr.success('category was modified successfully', 'Success');
-          break;
-  
-        case "category-edit-fail":
-          this.toastr.error('An error occurred while category saving changes', 'Error');
-          break;
-          case "item-edit-success":
-            this.toastr.success('Item has been modified successfully', 'Success');
-            break;
-    
+      case "category-edit-success":
+        this.toastr.success('category was modified successfully', 'Success');
+        break;
+
+      case "category-edit-fail":
+        this.toastr.error('An error occurred while category saving changes', 'Error');
+        break;
+      case "item-edit-success":
+        this.toastr.success('Item has been modified successfully', 'Success');
+        break;
+
     }
   }
 }
