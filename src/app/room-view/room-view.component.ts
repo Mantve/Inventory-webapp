@@ -55,7 +55,7 @@ export class RoomViewComponent implements OnInit {
   }
 
   loadItems(roomNo: number) {
-    this._itemService.getAllRecursive(roomNo).subscribe(
+    this._itemService.getAllRecursiveRoom(roomNo).subscribe(
       res => {
         this.items = res;
       }, error => console.error(error))
@@ -75,32 +75,38 @@ export class RoomViewComponent implements OnInit {
       name: name,
       successMessage: "room-delete-success",
       failMessage: "room-delete-fail",
-      onSubmit:  (): Observable<object> => 
+      onSubmit: (): Observable<object> =>
         this._roomService.delete(roomNo)
     }
 
-    this._genericModal.openModal(DeletionConfirmationModalComponent, data, () => { this._router.navigate([this.route.parent]);}, () => { });
+    this._genericModal.openModal(DeletionConfirmationModalComponent, data, () => {
+      this._roomService.sendRoomUpdateNotification();
+    console.log([this.route.snapshot.parent]);
+      this._router.navigate([this.route.snapshot.parent]);
+    }, () => {
+      this._roomService.sendRoomUpdateNotification();
+    });
   }
 
   openRoomEditModal(roomNo: number) {
-    this._genericModal.openModal(RoomEditComponent, {roomNo: roomNo}, () => { this.loadRoom(roomNo) }, () => { });
+    this._genericModal.openModal(RoomEditComponent, { roomNo: roomNo }, () => { this.loadRoom(roomNo) }, () => { });
   }
 
   openItemCreateModal(roomNo: number) {
 
     let data = {
       roomNo: roomNo,
-      new:true
+      new: true
     }
 
     this._genericModal.openModal(ItemEditComponent, data, () => {
-       this.loadItems(this.roomNo);
+      this.loadItems(this.roomNo);
       this.loadCategoriesFromRoom(this.roomNo);
     }, () => { });
   }
 
   openRoomShareModal(roomNo: number) {
-    this._genericModal.openModal(RoomShareComponent, {roomNo: roomNo}, () => { this.loadRoom(roomNo) }, () => { this.loadRoom(roomNo) });
+    this._genericModal.openModal(RoomShareComponent, { roomNo: roomNo }, () => { this.loadRoom(roomNo) }, () => { this.loadRoom(roomNo) });
   }
 
   loadCategoriesFromRoom(roomNo: number) {
@@ -110,5 +116,5 @@ export class RoomViewComponent implements OnInit {
       }, error => console.error(error))
   }
 
-  
+
 }

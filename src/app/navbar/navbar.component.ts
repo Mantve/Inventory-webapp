@@ -3,6 +3,7 @@ import { Observable, of, Subject } from 'rxjs';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
 import { ItemService } from '../services/item.service';
 import { debounceTime, distinctUntilChanged, switchMap } from 'rxjs/operators';
+import { AuthenticationService } from '../services/authentication.service';
 
 @Component({
   selector: 'app-navbar',
@@ -16,11 +17,14 @@ export class NavbarComponent implements OnInit {
   searchTerm = '';
 
   constructor(
+    private _authService: AuthenticationService,
     private _itemService: ItemService
   ) { }
 
   search(term: string): void {
-    this.searchTerms.next(term);
+    if (this._authService.isLogged()) {
+      this.searchTerms.next(term);
+    }
   }
 
   ngOnInit(): void {

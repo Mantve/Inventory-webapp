@@ -58,7 +58,7 @@
             <label for="parentItemId" class="col-form-label col-2">Detailed location:</label>
             <select class="form-select" id="parentItemId" formControlName="parentItemId">
                 <option [ngValue]="null" selected>-- Not selected --</option>
-                <option *ngFor="let item of items" attr.value={{item.id}}
+                <option *ngFor="let item of childrenItems" attr.value={{item.id}}
                     [selected]="(((savedItem && item.id===savedItem.parentItem?.id) || 
                     (fromParent.new && fromParent.itemNo && item.id===fromParent.itemNo)) ? true : null) ">
                     {{item.name}}</option>

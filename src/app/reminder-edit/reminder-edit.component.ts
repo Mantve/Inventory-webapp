@@ -74,7 +74,7 @@ export class ReminderEditComponent implements OnInit {
   }
 
   loadItems(roomNo: number) {
-    this._itemService.getAll(roomNo).subscribe(
+    this._itemService.getAllRoom(roomNo).subscribe(
       res => {
         res.sort((a, b) => a.name.localeCompare(b.name));
         this.items = res;

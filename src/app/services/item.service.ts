@@ -14,16 +14,20 @@ export class ItemService {
 
   constructor(private http: HttpClient, private _envUrl: EnvironmentUrlService) { }
 
-  public getAllRecursive(roomId: number) {
-    return this.http.get<RecursiveItemResponseDto[]>(`${this._envUrl.urlAddress}/api/item/all/recursive/${roomId}`, { withCredentials: true });
+  public getAllRecursiveRoom(roomId: number) {
+    return this.http.get<RecursiveItemResponseDto[]>(`${this._envUrl.urlAddress}/api/room/${roomId}/itemsRecursive`, { withCredentials: true });
   }
 
   public getRecursive(itemId: number) {
-    return this.http.get<RecursiveItemResponseDto>(`${this._envUrl.urlAddress}/api/item/recursive/${itemId}`, { withCredentials: true });
+    return this.http.get<RecursiveItemResponseDto>(`${this._envUrl.urlAddress}/api/item/${itemId}/recursive`, { withCredentials: true });
   }
 
-  public getAll(roomId: number) {
-    return this.http.get<ItemResponseDto[]>(`${this._envUrl.urlAddress}/api/item/all/${roomId}`, { withCredentials: true });
+  public getAllRoom(roomId: number) {
+    return this.http.get<ItemResponseDto[]>(`${this._envUrl.urlAddress}/api/room/${roomId}/items`, { withCredentials: true });
+  }
+
+  public getAll(itemId: number) {
+    return this.http.get<ItemResponseDto[]>(`${this._envUrl.urlAddress}/api/item/${itemId}/all`, { withCredentials: true });
   }
 
   public search(search: string) {

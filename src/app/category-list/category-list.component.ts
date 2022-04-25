@@ -1,14 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { CategoryEditComponent } from '../category-edit/category-edit.component';
 import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
 import { GenericModal } from '../genericModal';
 import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
 import { CategoryService } from '../services/category.service';
-import { constants } from '../_constants';
 
 @Component({
   selector: 'app-category-list',
@@ -22,11 +20,8 @@ export class CategoryListComponent implements OnInit {
 
   constructor(
     private _genericModal: GenericModal,
-    private _router: Router,
     private route: ActivatedRoute,
-    private _toastr: ToastrService,
-    private _categoryService: CategoryService,
-    private _modalService: NgbModal) {
+    private _categoryService: CategoryService) {
   }
 
   ngOnInit(): void {

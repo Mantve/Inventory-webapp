@@ -45,6 +45,7 @@ export class RoomEditComponent extends ValidatedForm implements OnInit {
     if (!this.fromParent.new) {
 
       this._roomService.update(this.fromParent.roomNo, this.form.value).subscribe((res: any) => {
+        this._roomService.sendRoomUpdateNotification();
         this.modalEvent.emit("room-edit-success");
         this._activeModal.close(sendData);
       }, (error: any) => {

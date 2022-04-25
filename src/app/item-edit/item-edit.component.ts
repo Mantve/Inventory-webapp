@@ -25,6 +25,7 @@ export class ItemEditComponent extends ValidatedForm implements OnInit {
   @Output() modalEvent = new EventEmitter<string>();
   rooms!: Array<RoomResponseDto>;
   items!: Array<ItemResponseDto>;
+  childrenItems!: Array<ItemResponseDto>;
   categories!: Array<CategoryResponseDto>
   savedItem!: ItemResponseDto;
 
@@ -56,7 +57,7 @@ export class ItemEditComponent extends ValidatedForm implements OnInit {
         this.savedItem = result
         this.loadRooms();
         this.loadCategories(result.room.id);
-        this.loadItems(result.room.id);
+        this.loadItems(result.room.id,this.fromParent.itemNo);
         this.form = this._formBuilder.group({
           name: [result.name, [Validators.required, Validators.maxLength(50)]],
           quantity: [result.quantity, [Validators.required,Validators.min(0),Validators.max(9999999)]],
@@ -76,7 +77,6 @@ export class ItemEditComponent extends ValidatedForm implements OnInit {
         parentItemId: this.fromParent.itemNo,
       })
       if (this.fromParent.roomNo) {
-        console.log(this.fromParent.roomNo)
         this.form.patchValue({
           roomId: this.fromParent.roomNo
         })
@@ -85,13 +85,32 @@ export class ItemEditComponent extends ValidatedForm implements OnInit {
 
   }
 
-  loadItems(roomNo: number) {
-    this._itemService.getAll(roomNo).subscribe(
+  loadItems(roomNo: number, itemNo?: number) {
+    this._itemService.getAllRoom(roomNo).subscribe(
       res => {
         res.sort((a, b) => a.name.localeCompare(b.name));
         this.items = res;
-
+        this.loadChildrenItems(itemNo);
       }, error => console.error(error))
+  }
+
+  loadChildrenItems(itemNo?: number) {
+    console.log("load children items")
+    console.log(itemNo)
+    if (itemNo) {
+    this._itemService.getAll(itemNo).subscribe(
+      res => {
+        res.sort((a, b) => a.name.localeCompare(b.name));
+        this.childrenItems = this.items.filter(x => !res.some(y => y.id === x.id));
+        console.log(res)
+        console.log(this.items)
+        console.log(this.childrenItems)
+        
+      }, error => console.error(error))
+    }
+    else {
+      this.childrenItems = this.items;
+    }
   }
 
   loadRooms() {

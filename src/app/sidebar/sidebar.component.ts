@@ -22,12 +22,16 @@ export class SidebarComponent implements OnInit {
       });
       this._roomService.roomChanged
       .subscribe(res => {
+        if(this.isUserAuthenticated) {
           this.getRooms();
+        }
       });
   }
 
   ngOnInit(): void {
+    if(this.isUserAuthenticated) {
     this.getRooms();
+    }
   }
 
   public getRooms() {

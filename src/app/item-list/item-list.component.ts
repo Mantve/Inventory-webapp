@@ -3,9 +3,11 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ListSelectComponent } from '../list-select/list-select.component';
 import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
+import { ItemUpdateDto } from '../models/request/itemUpdateDto.model';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
 import { RecursiveItemResponseDto } from '../models/response/recursiveItemResponseDto.model';
 import { RoomEditComponent } from '../room-edit/room-edit.component';
+import { ItemService } from '../services/item.service';
 import { constants } from '../_constants';
 
 @Component({
@@ -22,9 +24,11 @@ export class ItemListComponent implements OnInit {
   selectedCategories: Array<CategoryResponseDto> = [];
   expandedItems: { [id: number]: boolean } = {};
   constructor(
+    private _itemService: ItemService,
     private modalService: NgbModal,
-    private toastr: ToastrService
+    private toastr: ToastrService,
   ) { }
+
 
   ngOnInit() {
     if (this.roomId) {
@@ -36,7 +40,6 @@ export class ItemListComponent implements OnInit {
   }
 
   isItemExpanded(item: RecursiveItemResponseDto) : boolean {
-    console.log(item, this.expandedItems[item.id]);
     return this.expandedItems[item.id];
   }
 
@@ -49,6 +52,22 @@ export class ItemListComponent implements OnInit {
       sessionStorage.setItem("item" + this.roomId, JSON.stringify(this.expandedItems));
     }
   }
+
+  changeQuantity(item: RecursiveItemResponseDto, quantity: number) {
+    item.quantity += quantity;
+    let itemUpdateDto: ItemUpdateDto = {
+      name: item.name,
+      quantity: item.quantity,
+      value: item.value,
+      categoryId: item.category.id,
+      parentItemId: item.parentItem.id,
+      comments: item.comments,
+      roomId: item.room.id
+    };
+    this._itemService.update(item.id, itemUpdateDto).subscribe((res: any) => {
+    }, (error: any) => {
+      console.error(error)
+    })  }
 
   onCategorySelected(category: CategoryResponseDto) {
     if (this.selectedCategories.includes(category)) {
