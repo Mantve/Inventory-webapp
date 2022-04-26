@@ -9,5 +9,6 @@ export interface ItemResponseDto {
     category: CategoryResponseDto,
     comments: string,
     room: RoomResponseDto,
-    parentItem: ItemResponseDto
+    parentItem: ItemResponseDto,
+    sold: boolean
 }

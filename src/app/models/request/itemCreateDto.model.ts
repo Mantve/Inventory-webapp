@@ -5,5 +5,5 @@ export interface ItemCreateDto {
     categoryId:number,
     parentItemId?:number
     comments: string,
-    roomId: number
+    roomId: number,
 }

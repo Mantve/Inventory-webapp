@@ -11,7 +11,7 @@ export class DeletionConfirmationModalComponent  {
   @Output() modalEvent = new EventEmitter<string>();
 
   constructor(
-    private _activeModal: NgbActiveModal) {
+    public _activeModal: NgbActiveModal) {
   }
 
   closeModal(sendData: any) {

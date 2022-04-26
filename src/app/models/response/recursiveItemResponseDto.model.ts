@@ -11,5 +11,6 @@ export interface RecursiveItemResponseDto {
     comments: string,
     room: RoomResponseDto,
     items:Array<RecursiveItemResponseDto>,
-    parentItem:ItemResponseDto
+    parentItem:ItemResponseDto,
+    sold: boolean
 }

@@ -1,0 +1,35 @@
+<div 
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom px-3">
+    <h2>Sold items</h2>
+</div>
+
+<div class="container p-2 d-flex align-items-center justify-content-center">
+    <div class=" shadow-sm rounded bg-gray-400 p-3 d-flex align-items-center justify-content-center flex-column">
+        <h3>By selling these items, you saved:</h3>
+        <h2> <b>{{getItemValueSum()}}€</b></h2>
+    </div>
+</div>
+
+<div class="container shadow-sm px-3 mb-5 bg-body rounded">
+    <div class="list-group" *ngIf="items">
+        <div class="d-flex justify-content-between border" *ngFor="let item of items">
+            <label class="list-group-item d-flex gap-3 w-100 border-0">
+                <span class="pt-1 form-checked-content w-100">
+                    <strong class="w-100" type="button" [routerLink]="['/item/'+item.id]"
+                        routerLinkActive="active"
+                        [routerLinkActiveOptions]="{exact: true}">{{item.name}}</strong>
+                    <small class="d-block text-muted">
+                        {{item.name}} </small>
+                </span>
+            </label>
+            <div>
+                <button type="button" class="w-100 h-100 btn btn-sm btn-outline-danger border-0 position-relative"
+                    (click)="openItemDeleteModal(item, item.name)" aria-label="Delete item">
+                    <svg class="bi" width="24" height="24" fill="currentColor">
+                        <use xlink:href="bootstrap-icons.svg#trash-fill" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

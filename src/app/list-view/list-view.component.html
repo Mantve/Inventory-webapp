@@ -1,4 +1,9 @@
-<div class="container shadow-sm p-3 mb-5 bg-body rounded">
+<div *ngIf="list"
+    class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom px-3">
+    <h2>{{list.name}}</h2>
+</div>
+
+<div class="container shadow-sm px-3 mb-5 bg-body rounded">
     <div class="list-group" *ngIf="list">
         <div class="d-flex justify-content-between border" *ngFor="let listItem of list.items">
             <label class="list-group-item d-flex gap-3 w-100 border-0">

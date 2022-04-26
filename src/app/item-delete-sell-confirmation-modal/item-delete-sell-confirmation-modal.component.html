@@ -1,0 +1,13 @@
+<div class="modal-header">
+    <h5 class="modal-title">Delete or sell the {{fromParent.type}}?</h5>
+    <button type="button" class="btn-close" (click)="closeModal('dismiss')" data-bs-dismiss="modal" aria-label="Close"></button>
+
+</div>
+<div class="modal-body">
+    <p> Would you like to delete or sell the <b>{{ fromParent.name }}</b>?</p>
+</div>
+<div class="modal-footer">
+    <button type="button" class="btn btn-secondary" data-dismiss="modal" (click)="closeModal('close')"> Close</button>
+    <button type="button" class="btn btn-warning" (click)="onSell()">Sell</button>
+    <button type="button" class="btn btn-danger" (click)="onSubmit('changes saved!')">Delete</button>
+</div>

@@ -38,6 +38,10 @@ export class ItemService {
     return this.http.get<ItemResponseDto>(`${this._envUrl.urlAddress}/api/item/${itemId}`, { withCredentials: true });
   }
 
+  public getSold() {
+    return this.http.get<ItemResponseDto[]>(`${this._envUrl.urlAddress}/api/item/sold`, { withCredentials: true });
+  }
+
   public create(data: ItemCreateDto) {
     return this.http.post(`${this._envUrl.urlAddress}/api/item`, data, { withCredentials: true });
   }

@@ -22,13 +22,25 @@
                 </svg>
             </button>
             <button type="button" class="btn btn-sm btn-outline-danger"
-                (click)="openItemDeleteModal(item.id, item.name)" aria-label="Delete item">
+                (click)="openItemDeleteModal(item, item.name)" aria-label="Delete item">
                 <svg class="bi" width="24" height="24" fill="currentColor">
                     <use xlink:href="bootstrap-icons.svg#trash-fill" />
                 </svg>
             </button>
         </div>
     </div>
+
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a [routerLink]="['/room/'+item.room.id]" routerLinkActive="active"
+                    [routerLinkActiveOptions]="{exact: true}">{{item.room.name}}</a></li>
+            <li *ngIf="item.parentItem && item.parentItem.parentItem" class="breadcrumb-item"> ... </li>
+            <li *ngIf="item.parentItem" class="breadcrumb-item"><a [routerLink]="['/item/'+item.parentItem.id]"
+                    routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">{{item.parentItem.name}}</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">{{item.name}}</li>
+        </ol>
+    </nav>
 
     <app-item-list [items]="item.items" [categories]="categories" [parentItemId]="item.id"></app-item-list>
 

@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
 import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
+import { ItemDeleteSellConfirmationModalComponent } from '../item-delete-sell-confirmation-modal/item-delete-sell-confirmation-modal.component';
 import { ItemEditComponent } from '../item-edit/item-edit.component';
 import { CategoryResponseDto } from '../models/response/categoryResponseDto.model';
 import { RecursiveItemResponseDto } from '../models/response/recursiveItemResponseDto.model';
@@ -52,19 +53,21 @@ export class ItemViewComponent implements OnInit {
     this._itemService.getRecursive(itemNo).subscribe(
       res => {
         this.item = res ;
+        console.log(this.item);
       }, error => console.error(error))
   }
 
-  openItemDeleteModal(itemNo: number, name: string) {
-    const modalRef = this.modalService.open(DeletionConfirmationModalComponent,constants.ngbModalConfig);
+  openItemDeleteModal(item: RecursiveItemResponseDto, name: string) {
+    const modalRef = this.modalService.open(ItemDeleteSellConfirmationModalComponent,constants.ngbModalConfig);
 
     let data = {
+      item: item,
       type: "item",
       name: name,
       successMessage: "item-delete-success",
       failMessage: "item-delete-fail",
       onSubmit:  (): Observable<object> => 
-        this._itemService.delete(itemNo)
+        this._itemService.delete(item.id)
     }
 
     modalRef.componentInstance.fromParent = data;

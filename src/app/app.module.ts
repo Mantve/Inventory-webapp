@@ -39,9 +39,12 @@ import { SettingsComponent } from './settings/settings.component';
 import { ChangePasswordComponent } from './settings/change-password/change-password.component';
 import { ChangeEmailComponent } from './settings/change-email/change-email.component';
 import { GenericModal } from './genericModal';
+import { ItemDeleteSellConfirmationModalComponent } from './item-delete-sell-confirmation-modal/item-delete-sell-confirmation-modal.component';
+import { ListSoldItemsComponent } from './list-sold-items/list-sold-items.component';
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
+  { path: 'soldItems', component: ListSoldItemsComponent },
   { path: 'settings', component: SettingsComponent },
   { path: 'lists', component: ListListComponent },
   { path: 'reminders', component: ReminderListComponent },
@@ -86,7 +89,9 @@ const routes: Routes = [
     RoomListComponent,
     SettingsComponent,
     ChangePasswordComponent,
-    ChangeEmailComponent
+    ChangeEmailComponent,
+    ItemDeleteSellConfirmationModalComponent,
+    ListSoldItemsComponent
   ],
   imports: [
     HttpClientModule,

@@ -62,7 +62,8 @@ export class ItemListComponent implements OnInit {
       categoryId: item.category.id,
       parentItemId: item.parentItem.id,
       comments: item.comments,
-      roomId: item.room.id
+      roomId: item.room.id,
+      sold: item.sold
     };
     this._itemService.update(item.id, itemUpdateDto).subscribe((res: any) => {
     }, (error: any) => {

@@ -5,5 +5,6 @@ export interface ItemUpdateDto {
     categoryId:number,
     parentItemId:number
     comments: string,
-    roomId: number
+    roomId: number,
+    sold: boolean
 }
