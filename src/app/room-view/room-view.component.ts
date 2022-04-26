@@ -81,7 +81,6 @@ export class RoomViewComponent implements OnInit {
 
     this._genericModal.openModal(DeletionConfirmationModalComponent, data, () => {
       this._roomService.sendRoomUpdateNotification();
-    console.log([this.route.snapshot.parent]);
       this._router.navigate([this.route.snapshot.parent]);
     }, () => {
       this._roomService.sendRoomUpdateNotification();

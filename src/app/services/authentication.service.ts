@@ -89,7 +89,6 @@ export class AuthenticationService {
   public isLogged = () => {
     let loginDate = localStorage.getItem('loggedAt');
     if (!loginDate || loginDate == ""){
-      console.log("no token found")
       return false;
     }
     if (Number(loginDate) < new Date().getTime()/1000)

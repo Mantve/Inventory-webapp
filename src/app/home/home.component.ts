@@ -12,22 +12,17 @@ import { constants } from '../_constants';
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent {
 
-  readonly VAPID_PUBLIC_KEY = "BDOaLm7zuUkci586E7e9Gks7sXbUJdcz_D4qGEI0Iz3606GxSYSECKKE6z6P49Kx2l5UDmBJ_q2UiOy2TjlXvHY";
 
   constructor(
-    private swPush: SwPush,
     private modalService: NgbModal,
     private toastr: ToastrService,
-    private authService: AuthenticationService,
-    private _pushService: PushService
+    private _authService: AuthenticationService,
   ) { }
 
-
-  authStatus!: boolean
-  ngOnInit(): void {
-    this.authStatus = this.authService.isLogged();
+  isLogged() {
+    return this._authService.isLogged();
   }
 
   openCreateRoomModal() {
@@ -57,26 +52,7 @@ export class HomeComponent implements OnInit {
   }
 
   getUsername() {
-    return this.authService.getName();
+    return this._authService.getName();
   }
 
-  subscribeToNotifications() {
-
-    this.swPush.requestSubscription({
-        serverPublicKey: this.VAPID_PUBLIC_KEY
-    })
-    .then(sub => { 
-     let data = JSON.parse( JSON.stringify(sub));
-    
-     this._pushService.create(
-      {
-        username: this.getUsername(),
-        endpoint: data.endpoint,
-        expirationdate: data.expirationTime,
-        p256dh: data.keys.p256dh,
-        auth: data.keys.auth
-      }
-    ).subscribe()})
-    .catch(err => console.error("Could not subscribe to notifications", err));
-}
 }

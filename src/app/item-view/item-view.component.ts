@@ -53,7 +53,6 @@ export class ItemViewComponent implements OnInit {
     this._itemService.getRecursive(itemNo).subscribe(
       res => {
         this.item = res ;
-        console.log(this.item);
       }, error => console.error(error))
   }
 

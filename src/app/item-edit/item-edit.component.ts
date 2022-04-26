@@ -95,17 +95,11 @@ export class ItemEditComponent extends ValidatedForm implements OnInit {
   }
 
   loadChildrenItems(itemNo?: number) {
-    console.log("load children items")
-    console.log(itemNo)
     if (itemNo) {
     this._itemService.getAll(itemNo).subscribe(
       res => {
         res.sort((a, b) => a.name.localeCompare(b.name));
         this.childrenItems = this.items.filter(x => !res.some(y => y.id === x.id));
-        console.log(res)
-        console.log(this.items)
-        console.log(this.childrenItems)
-        
       }, error => console.error(error))
     }
     else {
@@ -149,7 +143,6 @@ export class ItemEditComponent extends ValidatedForm implements OnInit {
     let roomNo = Number(select.value);
     this.loadItems(roomNo);
     this.loadCategories(roomNo);
-    console.log("room changed"+roomNo);
   }
 
   onSubmit(sendData: any) {

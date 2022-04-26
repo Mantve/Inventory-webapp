@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { DeletionConfirmationModalComponent } from '../deletion-confirmation-modal/deletion-confirmation-modal.component';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
 import { RoomEditComponent } from '../room-edit/room-edit.component';
+import { AuthenticationService } from '../services/authentication.service';
 import { RoomService } from '../services/room.service';
 import { constants } from '../_constants';
 
@@ -19,6 +20,7 @@ export class RoomListComponent implements OnInit {
   rooms: Array<RoomResponseDto> = [];
   constructor(
     private _roomService: RoomService,
+    private _authenticationService: AuthenticationService,
     private _router: Router,
     private route: ActivatedRoute,
     private _toastr: ToastrService,
@@ -30,7 +32,9 @@ export class RoomListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.getRooms();
+    if (this._authenticationService.isLogged()) {
+      this.getRooms();
+    }
   }
 
   openRoomEditModal(roomNo: number) {
@@ -88,13 +92,13 @@ export class RoomListComponent implements OnInit {
         this._toastr.error('An error occurred while deleting the room', 'Error');
         break;
 
-        case "room-edit-success":
-          this._toastr.success('Room was modified successfully', 'Success');
-          break;
-  
-        case "room-edit-fail":
-          this._toastr.error('An error occurred while saving changes', 'Error');
-          break;
+      case "room-edit-success":
+        this._toastr.success('Room was modified successfully', 'Success');
+        break;
+
+      case "room-edit-fail":
+        this._toastr.error('An error occurred while saving changes', 'Error');
+        break;
       default:
     }
   }

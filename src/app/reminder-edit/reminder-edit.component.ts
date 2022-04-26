@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { SwPush } from '@angular/service-worker';
 import { NgbActiveModal, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ItemEditComponent } from '../item-edit/item-edit.component';
@@ -7,7 +8,9 @@ import { RepeatFrequency } from '../models/enums/repeatFrequency.model';
 import { ItemResponseDto } from '../models/response/itemResponseDto.model';
 import { ReminderResponseDto } from '../models/response/reminderResponseDto.model';
 import { RoomResponseDto } from '../models/response/roomResponseDto.model';
+import { AuthenticationService } from '../services/authentication.service';
 import { ItemService } from '../services/item.service';
+import { PushService } from '../services/push.service';
 import { ReminderService } from '../services/reminder.service';
 import { RoomService } from '../services/room.service';
 import { constants } from '../_constants';
@@ -36,7 +39,8 @@ export class ReminderEditComponent implements OnInit {
     private toastr: ToastrService,
     private _itemService: ItemService,
     private _roomService: RoomService,
-    private _reminderService: ReminderService
+    private _reminderService: ReminderService,
+
   ) {
 
     this.form = this._formBuilder.group({
@@ -49,11 +53,9 @@ export class ReminderEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    console.log(this.fromParent)
     if(!this.fromParent.new){
       this._reminderService.get(this.fromParent.reminderId).subscribe(
         res => {
-          console.log(res)
           this.savedReminder = res;
           this.loadRooms();
           this.loadItems(this.savedReminder.item.room.id);
@@ -73,6 +75,7 @@ export class ReminderEditComponent implements OnInit {
     }
   }
 
+
   loadItems(roomNo: number) {
     this._itemService.getAllRoom(roomNo).subscribe(
       res => {
@@ -90,7 +93,6 @@ export class ReminderEditComponent implements OnInit {
   }
 
   onRoomChange() {
-    console.log("room change")
     let select = document.querySelector("#roomId") as HTMLSelectElement;
     this.selectedRoom = Number(select.value);
     this.loadItems(this.selectedRoom);

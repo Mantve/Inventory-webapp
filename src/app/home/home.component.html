@@ -1,18 +1,18 @@
-<div *ngIf="authStatus === true"
+<div 
     class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom  px-3">
-    <h2>Welcome, {{getUsername()}}</h2>
-    <div class="btn-toolbar mb-2 mb-md-0">
+    <h2 *ngIf="isLogged()">Welcome, {{getUsername()}}!</h2>
+    <h2 *ngIf="!isLogged()">Welcome! To access the contents, please login!</h2>
+    <div *ngIf="isLogged()" class="btn-toolbar mb-2 mb-md-0">
         <button class="btn btn-success" (click)="openCreateRoomModal()" aria-label="Create room">
             New room
         </button>
     </div>
 </div>
+<!--
 <img src="https://thumbs.gfycat.com/CaringScientificEmperorshrimp-size_restricted.gif">
+--> 
 
-<button class="button button-primary" (click)="subscribeToNotifications()">
-    Subscribe to notifications
-  </button>
 
-  <div class="my-5">
+  <div *ngIf="isLogged()" class="my-5">
     <app-room-list ></app-room-list>
   </div>

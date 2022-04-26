@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { SwPush } from '@angular/service-worker';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { Observable } from 'rxjs';
@@ -7,6 +8,8 @@ import { DeletionConfirmationModalComponent } from '../deletion-confirmation-mod
 import { GenericModal } from '../genericModal';
 import { ReminderResponseDto } from '../models/response/reminderResponseDto.model';
 import { ReminderEditComponent } from '../reminder-edit/reminder-edit.component';
+import { AuthenticationService } from '../services/authentication.service';
+import { PushService } from '../services/push.service';
 import { ReminderService } from '../services/reminder.service';
 import { constants } from '../_constants';
 
@@ -25,12 +28,40 @@ export class ReminderListComponent implements OnInit {
     private _router: Router,
     private route: ActivatedRoute,
     private modalService: NgbModal,
-    private toastr: ToastrService,) {
+    private toastr: ToastrService,
+    private authService: AuthenticationService,
+    private _pushService: PushService,
+    private swPush: SwPush) {
   }
 
   ngOnInit(): void {
     this.loadReminders();
+    this.subscribeToNotifications();
+  }
 
+  getUsername() {
+    return this.authService.getName();
+  }
+
+  subscribeToNotifications() {
+
+    this.swPush.requestSubscription({
+      serverPublicKey: constants.VapidPublicKey
+    })
+      .then(sub => {
+        let data = JSON.parse(JSON.stringify(sub));
+
+        this._pushService.create(
+          {
+            username: this.getUsername(),
+            endpoint: data.endpoint,
+            expirationdate: data.expirationTime,
+            p256dh: data.keys.p256dh,
+            auth: data.keys.auth
+          }
+        ).subscribe()
+      })
+      .catch(err => console.error("Could not subscribe to notifications", err));
   }
 
   loadReminders() {

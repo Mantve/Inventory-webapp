@@ -58,7 +58,6 @@ export class ListSelectComponent implements OnInit {
       parentListId: listId,
       completed: false
     }
-    console.log(this.fromParent);
     this._listItemService.create(listItemCreateDto).subscribe((res: any) => {
       this.modalEvent.emit("listItem-create-success");
       this.loadLists();
